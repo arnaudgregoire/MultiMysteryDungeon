@@ -4,15 +4,18 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
  
+const routes = require('./routes/main');
+const secureRoutes = require('./routes/secure');
+
 // create an instance of an express app
 const app = express();
-
-const routes = require('./routes/main');
  
 // update express settings
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
+
 app.use('/', routes);
+app.use('/', secureRoutes);
 
 // catch all other routes
 app.use((req, res, next) => {
