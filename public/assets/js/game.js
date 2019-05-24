@@ -14,6 +14,7 @@ class Highscore extends Phaser.Scene {
   }
 
   create() {
+    this.socket = io();
     this.add.bitmapText(100, 110, 'arcade', 'RANK  SCORE   NAME').setTint(0xffffff);
 
     for (let i = 1; i < 6; i++) {

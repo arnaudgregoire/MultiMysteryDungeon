@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const Io = require ('./sockets/mainSocket');
 
 const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
@@ -23,6 +24,9 @@ mongoose.connection.on('connected', function () {
 
 // create an instance of an express app
 const app = express();
+//create server instance
+const server = require('http').Server(app);
+const io = new Io(server);
 
 // update express settings
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
@@ -58,7 +62,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message });
 });
 
+
 // have the server start listening on the provided port
-app.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log(`Server started on port ${process.env.PORT || 3000}`);
 });
