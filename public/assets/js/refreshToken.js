@@ -13,7 +13,7 @@ function getCookie(cname) {
   }
   return "";
 }
- 
+
 setInterval(function() {
   $.ajax({
     type: 'POST',
