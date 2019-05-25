@@ -6,10 +6,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const Io = require ('./sockets/mainSocket');
 
 const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
+
+const path = require('path');
+const jsdom = require('jsdom');
+const Datauri = require('datauri');
 
 // setup mongo connection
 const uri = process.env.MONGO_CONNECTION_URL;
@@ -26,7 +29,9 @@ mongoose.connection.on('connected', function () {
 const app = express();
 //create server instance
 const server = require('http').Server(app);
-const io = new Io(server);
+const io = require('socket.io').listen(server);
+const datauri = new Datauri();
+const { JSDOM } = jsdom;
 
 // update express settings
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
@@ -63,7 +68,34 @@ app.use((err, req, res, next) => {
 });
 
 
-// have the server start listening on the provided port
-server.listen(process.env.PORT || 3000, () => {
-  console.log(`Server started on port ${process.env.PORT || 3000}`);
-});
+function setupServer() {
+  JSDOM.fromFile(path.join(__dirname, 'server/index.html'), {
+    // To run the scripts in the html file
+    runScripts: "dangerously",
+    // Also load supported external resources
+    resources: "usable",
+    // So requestAnimatinFrame events fire
+    pretendToBeVisual: true
+  }).then((dom) => {
+
+    dom.window.URL.createObjectURL = (blob) => {
+      if (blob){
+        return datauri.format(blob.type, blob[Object.getOwnPropertySymbols(blob)[0]]._buffer).content;
+      }
+    };
+
+    dom.window.URL.revokeObjectURL = (objectURL) => {};
+    
+    dom.window.gameLoaded = () => {
+      dom.window.io = io;
+      // have the server start listening on the provided port
+      server.listen(process.env.PORT || 3000, function () {
+        console.log(`Listening on ${server.address().port}`);
+      });
+    };
+  }).catch((error) => {
+    console.log(error.message);
+  });
+}
+ 
+setupServer();
