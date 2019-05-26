@@ -15,12 +15,19 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image('ship', 'assets/spaceShips_001.png');
   this.load.image('otherPlayer', 'assets/enemyBlack5.png');
+  this.load.image('tiles','assets/test_tileset.png');
+  this.load.tilemapTiledJSON('map','assets/test_map.json');
 }
  
 function create() {
   var self = this;
   this.socket = io();
   this.players = this.add.group();
+
+  const map = this.make.tilemap({key:'map'});
+  const tileset = map.addTilesetImage('test_tileset', 'tiles');
+  
+  const layer = map.createStaticLayer('world', tileset, 0, 0);    
  
   this.socket.on('currentPlayers', function (players) {
     Object.keys(players).forEach(function (id) {
