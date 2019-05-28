@@ -98,10 +98,8 @@ function update() {
 
 
 function displayPlayers(self, playerInfo, sprite) {
-  const player = self.add.sprite(playerInfo.x, playerInfo.y, sprite).setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-  //player.anims.play('sprites');
-  if (playerInfo.team === 'blue') player.setTint(0x0000ff);
-  else player.setTint(0xff0000);
+  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite1').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+  player.anims.play('test');
   player.playerId = playerInfo.playerId;
   self.players.add(player);
 }
