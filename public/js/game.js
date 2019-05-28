@@ -32,17 +32,14 @@ function create() {
   const layer = map.createStaticLayer('world', tileset, 0, 0);    
  
   this.socket.on('currentPlayers', function (players) {
+    console.log(players);
     Object.keys(players).forEach(function (id) {
-      if (players[id].playerId === self.socket.id) {
-        displayPlayers(self, players[id], 'ship');
-      } else {
-        displayPlayers(self, players[id], 'otherPlayer');
-      }
+      displayPlayers(self, players[id]);
     });
   });
  
   this.socket.on('newPlayer', function (playerInfo) {
-    displayPlayers(self, playerInfo, 'otherPlayer');
+    displayPlayers(self, playerInfo);
   });
  
   this.socket.on('disconnect', function (playerId) {
@@ -57,7 +54,6 @@ function create() {
     Object.keys(players).forEach(function (id) {
       self.players.getChildren().forEach(function (player) {
         if (players[id].playerId === player.playerId) {
-          player.setRotation(players[id].rotation);
           player.setPosition(players[id].x, players[id].y);
         }
       });
@@ -68,6 +64,7 @@ function create() {
   this.leftKeyPressed = false;
   this.rightKeyPressed = false;
   this.upKeyPressed = false;
+  this.downKeyPressed = false;
 }
  
 function update() {
@@ -75,44 +72,92 @@ function update() {
   const left = this.leftKeyPressed;
   const right = this.rightKeyPressed;
   const up = this.upKeyPressed;
+  const down = this.downKeyPressed;
   
-  if (this.cursors.left.isDown) {
-    this.leftKeyPressed = true;
-  } else if (this.cursors.right.isDown) {
-    this.rightKeyPressed = true;
-  } else {
-    this.leftKeyPressed = false;
-    this.rightKeyPressed = false;
+  // Horizontal movement
+  if (this.cursors.left.isDown)
+  {
+      this.leftKeyPressed = true;
   }
-  
-  if (this.cursors.up.isDown) {
-    this.upKeyPressed = true;
-  } else {
-    this.upKeyPressed = false;
+  else{
+      this.leftKeyPressed = false;
   }
+  if (this.cursors.right.isDown)
+  {
+      this.rightKeyPressed = true;
+  }
+  else{
+     this.rightKeyPressed = false;
+  }
+
+  // Vertical movement
+  if (this.cursors.up.isDown)
+  {
+      this.upKeyPressed = true;
+  }
+  else{
+     this.upKeyPressed = false;
+  }
+  if (this.cursors.down.isDown)
+  {
+      this.downKeyPressed = true;
+  }
+  else{
+      this.downKeyPressed = false;
+  }  
   
-  if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed) {
-    this.socket.emit('playerInput', { left: this.leftKeyPressed , right: this.rightKeyPressed, up: this.upKeyPressed });
+  if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed || down != this.downKeyPressed) {
+    this.socket.emit('playerInput', { left: this.leftKeyPressed , right: this.rightKeyPressed, up: this.upKeyPressed, down: this.downKeyPressed });
   }
 }
 
 
-function displayPlayers(self, playerInfo, sprite) {
-  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite1').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-  player.anims.play('test');
+function displayPlayers(self, playerInfo) {
+  console.log(playerInfo);
+  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite1');
+  player.anims.play(playerInfo.sprite);
   player.playerId = playerInfo.playerId;
   self.players.add(player);
 }
 
 function createAnimations(self) {
-  //  animation with key 'left', we don't need left and right as we will use one and flip the sprite
-  let frameNames = self.anims.generateFrameNames('sprites', {
-      start:1,
-      end:8,
-      prefix:'sprite'
-    });
+  //  animation with key 'left'
+  self.anims.create({
+     key: 'left',
+    frames:  self.anims.generateFrameNames('sprites', {frames: [21,12,7], prefix:'sprite'}),
+    frameRate: 4,
+    repeat: -1 
+  });
 
-  self.anims.create({ key: 'test', frames: frameNames, frameRate: 10, repeat: -1 });
+  self.anims.create({
+    key: 'idleleft',
+   frames:  self.anims.generateFrameNames('sprites', {frames: [21,7], prefix:'sprite'}),
+   frameRate: 4,
+   repeat: -1 
+ });
+  
+  //  animation with key 'right'
+  self.anims.create({
+    key: 'right',
+    frames:  self.anims.generateFrameNames('sprites', {frames: [21,12,7], prefix:'sprite'}),
+    frameRate: 4,
+    repeat: -1 
+  });
 
+  //  animation with key 'up'
+  self.anims.create({
+    key: 'up',
+    frames:  self.anims.generateFrameNames('sprites', {frames: [14,26,4], prefix:'sprite'}),
+    frameRate: 4,
+    repeat: -1 
+  });
+
+  //  animation with key 'down'
+  self.anims.create({
+    key: 'down',
+    frames:  self.anims.generateFrameNames('sprites', {frames: [5,1,6], prefix:'sprite'}),
+    frameRate: 4,
+    repeat: -1 
+  });
 }
  
