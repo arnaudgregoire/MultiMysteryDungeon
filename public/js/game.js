@@ -32,7 +32,6 @@ function create() {
   const layer = map.createStaticLayer('world', tileset, 0, 0);    
  
   this.socket.on('currentPlayers', function (players) {
-    console.log(players);
     Object.keys(players).forEach(function (id) {
       displayPlayers(self, players[id]);
     });
@@ -42,6 +41,12 @@ function create() {
     displayPlayers(self, playerInfo);
   });
  
+  /*
+  When the  disconnect event is fired, we take that player’s id and we remove that player’s ship from the game.
+  We do this by calling the  getChildren() method on our  players group.
+  The  getChildren() method will return an array of all the game objects that are in that group,
+  and from there we use the  forEach() method to loop through that array.
+  */
   this.socket.on('disconnect', function (playerId) {
     self.players.getChildren().forEach(function (player) {
       if (playerId === player.playerId) {
