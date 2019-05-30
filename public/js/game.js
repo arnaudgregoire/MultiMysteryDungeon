@@ -13,9 +13,9 @@ var config = {
 var game = new Phaser.Game(config);
  
 function preload() {
-  this.load.image('tiles','../assets/test_tileset.png');
-  this.load.tilemapTiledJSON('map','../assets/test_map.json');
-  this.load.multiatlas('sprites','../assets/test_sprites.json');
+  this.load.image('tiles','../../assets/test_tileset.png');
+  this.load.tilemapTiledJSON('map','../../assets/test_map.json');
+  this.load.multiatlas('sprites','../../assets/test_sprites.json');
 }
  
 function create() {

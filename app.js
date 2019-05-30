@@ -41,14 +41,18 @@ app.use(cookieParser());
 // require passport auth
 require('./auth/auth');
 
+app.use(express.static(__dirname));
+
 app.get('/game.html', passport.authenticate('jwt', { session : false }), function (req, res) {
   res.sendFile(__dirname + '/public/game.html');
 });
 
-app.use(express.static(__dirname + '/public'));
-
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/index.html', function (req, res) {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 // main routes
@@ -62,14 +66,13 @@ app.use((req, res, next) => {
 
 // handle errors
 app.use((err, req, res, next) => {
-  // TODO: add note about updating this
   console.log(err.message);
   res.status(err.status || 500).json({ error: err.message });
 });
 
 
 function setupServer() {
-  JSDOM.fromFile(path.join(__dirname, 'server/index.html'), {
+  JSDOM.fromFile(__dirname + '/server/dom/index.html', {
     // To run the scripts in the html file
     runScripts: "dangerously",
     // Also load supported external resources
