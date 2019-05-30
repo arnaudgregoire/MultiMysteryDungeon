@@ -1,14 +1,22 @@
-var config = {
+const config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
   width: 800,
   height: 600,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: false,
+      gravity: { y: 0 }
+    }
+  },
   scene: {
     preload: preload,
     create: create,
     update: update
-  }
-};
+  },
+  autoFocus: false
+}
 // https://phasertutorials.com/creating-a-simple-multiplayer-game-in-phaser-3-with-an-authoritative-server-part-2/
 var game = new Phaser.Game(config);
  
@@ -22,14 +30,14 @@ function create() {
   var self = this;
   this.socket = io();
   // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
-  this.players = this.add.group();
+  this.players = this.physics.add.group();
   createAnimations(self);
 
   this.map = this.make.tilemap({key:'map'});
   const tileset = this.map.addTilesetImage('test_tileset', 'tiles');
-  
-  const layer = this.map.createStaticLayer('world', tileset, 0, 0);    
- 
+  const worldLayer = this.map.createStaticLayer('world', tileset, 0, 0);   
+
+
   // We used  socket.on to listen for the  currentPlayers event, and when this event is triggered,
   // the function we provided will be called with the  players object that we passed from our server.
   this.socket.on('currentPlayers', function (players) {
@@ -124,7 +132,7 @@ We stored the playerId so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
-  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite1').setOrigin(0.5, 0.5);
+  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite5').setOrigin(0.5, 0.5);
   player.anims.play(playerInfo.sprite);
   player.playerId = playerInfo.playerId;
   player.sprite = playerInfo.sprite;
