@@ -29,4 +29,6 @@ Cause im nice, i help you to your journey with magmar's sprites:
 
 ![magmar sprites](assets/magmar.png)
 
+Save all your changes in JSON-TP-Array, on file sprites.json
+
 Once you done, create a damn good pull request with all of your juicy changes.
