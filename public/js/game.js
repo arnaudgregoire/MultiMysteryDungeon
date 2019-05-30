@@ -1,8 +1,9 @@
 const config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
-  width: 800,
+  width: 1000,
   height: 600,
+  zoom:1.1,
   physics: {
     default: 'arcade',
     arcade: {
@@ -149,6 +150,7 @@ function setCamera(self, map, hero){
     const camera = self.cameras.main;
     camera.startFollow(hero);
     camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
+    camera.zoom = 2;
 }
 
 function createAnimations(self) {
