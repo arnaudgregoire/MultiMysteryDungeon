@@ -24,3 +24,9 @@
     - 3 for left up
     - 4 for up
   - Replace d with the sprite number. For example, there is three sprites moving left, so their number will be 0-1-2. If only one sprite fit the category, the number will be zero
+
+Cause im nice, i help you to your journey with magmar's sprites:
+
+![magmar sprites](assets/magmar.png)
+
+Once you done, create a damn good pull request with all of your juicy changes.
