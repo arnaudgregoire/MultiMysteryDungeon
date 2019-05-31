@@ -146,10 +146,17 @@ function setOrientation(player, input){
 /*
 Set action that the player is doing
 Possibles actions are : 0: moving, 1: physical attack, 2: special attack, 3: hurt, 4: sleep
-TODO support other actions than moving
+TODO support other actions than moving and idle
 */
 function setAction(player, input) {
-  player.action = '0';
+  //check if the player is moving in any directions, if not he is idle
+  if(!(input.right || input.down || input.left || input.right)){
+    player.action = '5';
+  }
+  // TODO implement more logic than if not afk then moving 
+  else{
+    player.action = '0';
+  }
 }
 
 /**
@@ -171,6 +178,7 @@ function addPlayer(self, playerInfo) {
   player.playerId = playerInfo.playerId;
   player.action = playerInfo.action;
   player.orientation = playerInfo.orientation;
+  self.physics.add.collider(player, self.players);
   self.players.add(player);
 }
  

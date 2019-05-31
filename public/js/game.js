@@ -186,6 +186,7 @@ If the animation has not been used before, the animation is created
 function displayPlayer(self, player){
   // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
   let spriteKey = getSpriteKey(player);
+  console.log(spriteKey);
   // if sprite not already loaded, we create it
   if(!self.anims.exists(spriteKey)){
     createAnimations(self, player.pokedex_idx);

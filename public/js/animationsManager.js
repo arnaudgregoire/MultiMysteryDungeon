@@ -46,5 +46,12 @@ function createAnimations(phaser_game, pokedex_idx){
             frameRate: 2,
             repeat: -1 
         });
+        // idle sprite
+        phaser_game.anims.create({
+            key: pokedex_idx + '_5_' + orientation,
+            frames:  phaser_game.anims.generateFrameNames('sprites', {frames: [0,1], prefix: pokedex_idx + '_0_' + orientation + '_'}),
+            frameRate: 1,
+            repeat: -1 
+        });
     });
 }
