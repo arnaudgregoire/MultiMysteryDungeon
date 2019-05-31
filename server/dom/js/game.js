@@ -38,12 +38,13 @@ function create() {
   const spawnPoint = this.map.findObject("Objects", obj => obj.name === "spawn_point");
 
   io.on('connection', function (socket) {
-    
+    pokedex = [1,2,7];
     console.log('a user connected');
     // create a new player and add it to our players object
     players[socket.id] = {
       x: spawnPoint.x,
       y: spawnPoint.y,
+      pokedex_idx: pokedex[randomIntFromInterval(0,2)],
       playerId: socket.id,
       input: {
         left: false,
@@ -51,7 +52,8 @@ function create() {
         up: false,
         down: false
       },
-      sprite: 'left'
+      orientation: 'left',
+      action: '0'
     };
     // add player to server
     addPlayer(self, players[socket.id]);
@@ -79,54 +81,113 @@ function create() {
  
 function update() {
   this.players.getChildren().forEach((player) => {
-    player.setVelocity(0);
     const input = players[player.playerId].input;
-    if (input.left) {
-      player.setVelocityX(-80);
-      players[player.playerId].sprite = 'left';
-    } 
-    if (input.right) {
-      player.setVelocityX(80);
-      players[player.playerId].sprite = 'right';
-    } 
-    if (input.down) {
-      player.setVelocityY(80);
-      players[player.playerId].sprite = 'down';
-    }
-    if (input.up) {
-      player.setVelocityY(-80);
-      players[player.playerId].sprite = 'up';
-    }
-  
+    setMovement(player, input);
+    setOrientation(player, input);
+    setAction(player, input);
     players[player.playerId].x = player.x;
     players[player.playerId].y = player.y;
+    players[player.playerId].orientation = player.orientation;
+    players[player.playerId].action = player.action;
   });
-  //this.physics.world.wrap(this.players, 5);
   io.emit('playerUpdates', players);
 }
 
+/*
+set Movement speed splayer depending of player input
+*/
+function setMovement(player, input){
+  player.setVelocity(0);
+  if (input.left) {
+    player.setVelocityX(-80);
+  } 
+  if (input.right) {
+    player.setVelocityX(80);
+  } 
+  if (input.down) {
+    player.setVelocityY(80);
+  }
+  if (input.up) {
+    player.setVelocityY(-80);
+  }
+}
+
+/*
+Set orientation of the player, it will be used to render proper pokemon sprite client side
+Possible orientation are : down, downleft, left, upleft, up, upright, right, downright
+*/
+function setOrientation(player, input){
+  if(input.left && input.up){
+    player.orientation = 'upleft'
+  }
+  else if(input.left && input.down){
+    player.orientation = 'downleft'
+  }
+  else if(input.right && input.up){
+    player.orientation = 'upright'
+  }
+  else if(input.right && input.down){
+    player.orientation = 'downright'
+  }
+  else if (input.right) {
+    player.orientation = 'right'
+  }
+  else if(input.left){
+    player.orientation = 'left'
+  }
+  else if(input.up){
+    player.orientation = 'up'
+  }
+  else if(input.down){
+    player.orientation = 'down'
+  }
+}
+
+/*
+Set action that the player is doing
+Possibles actions are : 0: moving, 1: physical attack, 2: special attack, 3: hurt, 4: sleep
+TODO support other actions than moving
+*/
+function setAction(player, input) {
+  player.action = '0';
+}
+
+/**
+ * Handle keyboard input send by client
+ */
 function handlePlayerInput(self, playerId, input) {
   self.players.getChildren().forEach((player) => {
     if (playerId === player.playerId) {
       players[player.playerId].input = input;
     }
   });
-
-  
 }
 
+/*
+Add a new player server side, this new player will have a down moving sprite hitbox.
+*/
 function addPlayer(self, playerInfo) {
-  const player = self.physics.add.image(playerInfo.x, playerInfo.y, 'sprites','sprite1').setOrigin(0.5, 0.5);
+  const player = self.physics.add.image(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedex_idx + '_0_0_0').setOrigin(0.5, 0.5);
   player.playerId = playerInfo.playerId;
+  player.action = playerInfo.action;
+  player.orientation = playerInfo.orientation;
   self.players.add(player);
 }
  
+/*
+Remove player from existing phaser game
+*/
 function removePlayer(self, playerId) {
   self.players.getChildren().forEach((player) => {
     if (playerId === player.playerId) {
       player.destroy();
     }
   });
+}
+
+function randomIntFromInterval(min,max) // min and max included
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
 }
  
 const game = new Phaser.Game(config);

@@ -74,15 +74,11 @@ function create() {
           player.setPosition(players[id].x, players[id].y);
           //if the actual animation sprite currently played client side is different from the server one,
           // the client start to play and save the new sprite
-          if(player.sprite != players[id].sprite){
-            if(players[id].sprite == 'left'){
-              player.flipX = false;
-            }
-            else{
-              player.flipX = true;
-            }
-            player.sprite = players[id].sprite;
-            player.anims.play(players[id].sprite);
+          if(player.orientation != players[id].orientation
+            || player.action != players[id].action){
+            player.action = players[id].action;
+            player.orientation = players[id].orientation;
+            displayPlayer(self, player);
           }
         }
       });
@@ -133,10 +129,13 @@ We stored the playerId so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
-  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', 'sprite5').setOrigin(0.5, 0.5);
-  player.anims.play(playerInfo.sprite);
+  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedex_idx + '_0_0_0').setOrigin(0.5, 0.5);
   player.playerId = playerInfo.playerId;
-  player.sprite = playerInfo.sprite;
+  player.orientation = playerInfo.orientation;
+  player.action = playerInfo.action;
+  player.pokedex_idx = playerInfo.pokedex_idx;
+  displayPlayer(self, player);
+
   if(player.playerId == self.socket.id){
     //we set the camera on the player hero
     setCamera(self, self.map, player);
@@ -144,53 +143,53 @@ function displayPlayers(self, playerInfo) {
   self.players.add(player);
 }
 
+/*
+Set the camera on the pokemon that player is controlling
+*/
 function setCamera(self, map, hero){
     // Phaser supports multiple cameras, but you can access the default camera like this:
-    console.log(hero);
     const camera = self.cameras.main;
     camera.startFollow(hero);
     camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
     camera.zoom = 2;
 }
 
-function createAnimations(self) {
-  //  animation with key 'left'
-  self.anims.create({
-     key: 'left',
-    frames:  self.anims.generateFrameNames('sprites', {frames: [21,12,7], prefix:'sprite'}),
-    frameRate: 4,
-    repeat: -1 
-  });
-
-  self.anims.create({
-    key: 'idleleft',
-   frames:  self.anims.generateFrameNames('sprites', {frames: [21,7], prefix:'sprite'}),
-   frameRate: 4,
-   repeat: -1 
- });
-  
-  //  animation with key 'right'
-  self.anims.create({
-    key: 'right',
-    frames:  self.anims.generateFrameNames('sprites', {frames: [21,12,7], prefix:'sprite'}),
-    frameRate: 4,
-    repeat: -1
-  });
-
-  //  animation with key 'up'
-  self.anims.create({
-    key: 'up',
-    frames:  self.anims.generateFrameNames('sprites', {frames: [14,26,4], prefix:'sprite'}),
-    frameRate: 4,
-    repeat: -1 
-  });
-
-  //  animation with key 'down'
-  self.anims.create({
-    key: 'down',
-    frames:  self.anims.generateFrameNames('sprites', {frames: [5,1,6], prefix:'sprite'}),
-    frameRate: 4,
-    repeat: -1 
-  });
+/**
+ * Get the sprite key corresponding to player orientation and action
+ * for example a squirtle moving down will be 7_0_0
+ */
+function getSpriteKey(player) {
+  let orientationTable = {"down":0, "downleft":1, "left":2, "upleft":3, "up":4, "upright":3, "right":2, "downright":1};
+  let key = "";
+  key += player.pokedex_idx;
+  key += "_";
+  key += player.action;
+  key += "_";
+  key += orientationTable[player.orientation];
+  return key;
 }
- 
+
+/*
+Change the animation on phaser
+change the flipX value to, cause we only load down, left, upleft and downleft sprites and then flip them for right etc ...
+*/
+function playAnimation(player, spriteKey){
+  let flipxTable = {"down":false, "downleft":false, "left":false, "upleft":false, "up":false, "upright":true, "right":true, "downright":true};
+  player.flipX = flipxTable[player.orientation];
+  player.anims.play(spriteKey);
+}
+
+/*
+Display one player animation, by playing his new animation. Only called if something (orientation or action) changed server side
+If the animation has not been used before, the animation is created
+*/
+function displayPlayer(self, player){
+  // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
+  let spriteKey = getSpriteKey(player);
+  // if sprite not already loaded, we create it
+  if(!self.anims.exists(spriteKey)){
+    createAnimations(self, player.pokedex_idx);
+  }
+  // We play the new correct animation
+  playAnimation(player, spriteKey);
+}
