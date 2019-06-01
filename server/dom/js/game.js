@@ -76,8 +76,8 @@ function create() {
       // remove player from server
       removePlayer(self, player_id);
       // remove this player from our players object
-      delete players[player_id];
-      // emit a message to all players to remove this player
+      // save player properties in db
+      window.savePlayer(players[player_id]);
       io.emit('disconnect', player_id);
     });
 

@@ -10,6 +10,7 @@ const passport = require('passport');
 const ios = require('socket.io-express-session');
 const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
+const DbManager = require('./server/dbManager');
 
 const path = require('path');
 const jsdom = require('jsdom');
@@ -37,6 +38,7 @@ passport.deserializeUser(function(user, done) {
 });
 // create an instance of an express app
 const app = express();
+
 //create server instance
 const server = require('http').Server(app);
 const io = require('socket.io').listen(server);
@@ -53,6 +55,12 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 // require passport auth
 require('./auth/auth');
 
@@ -96,6 +104,9 @@ function setupServer() {
     pretendToBeVisual: true
   }).then((dom) => {
 
+    dom.window.savePlayer = function (player) {
+      DbManager.savePlayer(player);
+    }
     dom.window.URL.createObjectURL = (blob) => {
       if (blob){
         return datauri.format(blob.type, blob[Object.getOwnPropertySymbols(blob)[0]]._buffer).content;
