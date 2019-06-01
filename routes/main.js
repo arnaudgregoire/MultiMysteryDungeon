@@ -9,7 +9,7 @@ router.get('/status', (req, res, next) => {
   res.status(200).json({ status: 'ok' });
 });
 
-router.post('/signup', passport.authenticate('signup', { session: false }), async (req, res, next) => {
+router.post('/signup', passport.authenticate('signup', { session: true }), async (req, res, next) => {
   res.status(200).json({ message: 'signup successful' });
 });
 
@@ -20,7 +20,7 @@ router.post('/login', async (req, res, next) => {
         const error = new Error('An Error occured');
         return next(error);
       }
-      req.login(user, { session: false }, async (error) => {
+      req.login(user, { session: true }, async (error) => {
         if (error) return next(error);
         const body = {
           _id: user._id,
@@ -56,7 +56,6 @@ router.post('/token', (req, res) => {
   if (refreshToken in tokenList) {
     const body = { email: tokenList[refreshToken].email, _id: tokenList[refreshToken]._id };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
-
     // update jwt
     res.cookie('jwt', token);
     tokenList[refreshToken].token = token;

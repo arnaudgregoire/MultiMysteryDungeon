@@ -38,14 +38,23 @@ function create() {
   const spawnPoint = this.map.findObject("Objects", obj => obj.name === "spawn_point");
 
   io.on('connection', function (socket) {
+    let player_id = socket.handshake.session.passport.user._id;
+    let player_email = socket.handshake.session.passport.user.email;
     pokedex = [1,2,7];
-    console.log('a user connected');
+    console.log( player_email +' user connected');
     // create a new player and add it to our players object
-    players[socket.id] = {
+    /*
+    x : pokemon position on map
+    y : same
+    pokedex_idx : the pokedex number of the pokemon Ex Charmander 4
+    playerId : the id of the player
+    */
+    players[player_id] = {
       x: spawnPoint.x,
       y: spawnPoint.y,
       pokedex_idx: pokedex[randomIntFromInterval(0,2)],
-      playerId: socket.id,
+      socketId: socket.id,
+      playerId: player_id,
       input: {
         left: false,
         right: false,
@@ -56,25 +65,25 @@ function create() {
       action: '0'
     };
     // add player to server
-    addPlayer(self, players[socket.id]);
+    addPlayer(self, players[player_id]);
     // send the players object to the new player
     socket.emit('currentPlayers', players);
     // update all other players of the new player
-    socket.broadcast.emit('newPlayer', players[socket.id]);
+    socket.broadcast.emit('newPlayer', players[player_id]);
  
     socket.on('disconnect', function () {
       console.log('user disconnected');
       // remove player from server
-      removePlayer(self, socket.id);
+      removePlayer(self, player_id);
       // remove this player from our players object
-      delete players[socket.id];
+      delete players[player_id];
       // emit a message to all players to remove this player
-      io.emit('disconnect', socket.id);
+      io.emit('disconnect', player_id);
     });
 
     // when a player moves, update the player data
     socket.on('playerInput', function (inputData) {
-      handlePlayerInput(self, socket.id, inputData);
+      handlePlayerInput(self, player_id, inputData);
     });
   });
 }

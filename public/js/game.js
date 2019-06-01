@@ -135,8 +135,7 @@ function displayPlayers(self, playerInfo) {
   player.action = playerInfo.action;
   player.pokedex_idx = playerInfo.pokedex_idx;
   displayPlayer(self, player);
-
-  if(player.playerId == self.socket.id){
+  if(player.socket_id == self.socket.id){
     //we set the camera on the player hero
     setCamera(self, self.map, player);
   }

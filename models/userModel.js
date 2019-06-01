@@ -16,10 +16,6 @@ const UserSchema = new Schema({
   name : {
     type: String,
     required: true
-  },
-  highScore : {
-    type: Number,
-    default: 0
   }
 });
 

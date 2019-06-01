@@ -22,8 +22,9 @@ passport.use('signup', new localStrategy({
 // handle user login
 passport.use('login', new localStrategy({
   usernameField: 'email',
-  passwordField: 'password'
-}, async (email, password, done) => {
+  passwordField: 'password',
+  passReqToCallback: true
+}, async (req, email, password, done) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
