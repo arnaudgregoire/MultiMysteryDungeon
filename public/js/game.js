@@ -129,13 +129,17 @@ We stored the playerId so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
+  console.log(playerInfo);
   const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedex_idx + '_0_0_0').setOrigin(0.5, 0.5);
   player.playerId = playerInfo.playerId;
   player.orientation = playerInfo.orientation;
   player.action = playerInfo.action;
   player.pokedex_idx = playerInfo.pokedex_idx;
+  player.socketId = playerInfo.socketId;
   displayPlayer(self, player);
-  if(player.socket_id == self.socket.id){
+  console.log(player.socketId);
+  console.log(self.socket.id);
+  if(player.socketId == self.socket.id){
     //we set the camera on the player hero
     setCamera(self, self.map, player);
   }
