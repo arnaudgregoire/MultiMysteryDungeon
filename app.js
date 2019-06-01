@@ -12,7 +12,6 @@ const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
 const DbManager = require('./server/dbManager');
 
-const path = require('path');
 const jsdom = require('jsdom');
 const Datauri = require('datauri');
 
@@ -29,10 +28,11 @@ mongoose.connection.on('connected', function () {
   console.log('connected to mongo');
 });
 
+// passport session shenaningans
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
+// more passport session shenaningans
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
@@ -46,21 +46,19 @@ const io = require('socket.io').listen(server);
 const datauri = new Datauri();
 const { JSDOM } = jsdom;
 
+// random sessions shenanigans link between socket.io and express session
 io.use(ios(session));
 // update express settings
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 app.use(cookieParser());
+// a session module
 app.use(session);
+// More session module
 app.use(passport.initialize());
+// More and more session module
 app.use(passport.session());
 
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-})
 // require passport auth
 require('./auth/auth');
 
