@@ -62,6 +62,7 @@ function create() {
   this.socket.on('disconnect', function (playerId) {
     self.players.getChildren().forEach(function (player) {
       if (playerId === player.playerId) {
+        console.log('player ' + playerId + 'removed');
         player.destroy();
       }
     });
@@ -129,11 +130,11 @@ We stored the playerId so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
-  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedex_idx + '_0_0_0').setOrigin(0.5, 0.5);
+  const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedexIdx + '_0_0_0').setOrigin(0.5, 0.5);
   player.playerId = playerInfo.playerId;
   player.orientation = playerInfo.orientation;
   player.action = playerInfo.action;
-  player.pokedex_idx = playerInfo.pokedex_idx;
+  player.pokedexIdx = playerInfo.pokedexIdx;
   player.socketId = playerInfo.socketId;
   displayPlayer(self, player);
   if(player.socketId == self.socket.id){
@@ -161,7 +162,7 @@ function setCamera(self, map, hero){
 function getSpriteKey(player) {
   let orientationTable = {"down":0, "downleft":1, "left":2, "upleft":3, "up":4, "upright":3, "right":2, "downright":1};
   let key = "";
-  key += player.pokedex_idx;
+  key += player.pokedexIdx;
   key += "_";
   key += player.action;
   key += "_";
@@ -188,7 +189,7 @@ function displayPlayer(self, player){
   let spriteKey = getSpriteKey(player);
   // if sprite not already loaded, we create it
   if(!self.anims.exists(spriteKey)){
-    createAnimations(self, player.pokedex_idx);
+    createAnimations(self, player.pokedexIdx);
   }
   // We play the new correct animation
   playAnimation(player, spriteKey);

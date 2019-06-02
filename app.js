@@ -103,7 +103,10 @@ function setupServer() {
   }).then((dom) => {
 
     dom.window.savePlayer = function (player) {
-      DbManager.savePlayer(player);
+      return DbManager.savePlayer(player);
+    }
+    dom.window.loadPlayer = function (playerId){
+      return DbManager.loadPlayer(playerId);
     }
     dom.window.URL.createObjectURL = (blob) => {
       if (blob){

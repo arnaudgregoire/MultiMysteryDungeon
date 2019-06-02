@@ -38,52 +38,43 @@ function create() {
   const spawnPoint = this.map.findObject("Objects", obj => obj.name === "spawn_point");
 
   io.on('connection', function (socket) {
-    let player_id = socket.handshake.session.passport.user._id;
+    let playerId = socket.handshake.session.passport.user._id;
     let player_email = socket.handshake.session.passport.user.email;
-    pokedex = [1,2,7];
-    console.log( player_email +' user connected');
-    // create a new player and add it to our players object
-    /*
-    x : pokemon position on map
-    y : same
-    pokedex_idx : the pokedex number of the pokemon Ex Charmander 4
-    playerId : the id of the player
-    */
-    players[player_id] = {
-      x: spawnPoint.x,
-      y: spawnPoint.y,
-      pokedex_idx: pokedex[randomIntFromInterval(0,2)],
-      socketId: socket.id,
-      playerId: player_id,
-      input: {
-        left: false,
-        right: false,
-        up: false,
-        down: false
-      },
-      orientation: 'left',
-      action: '0'
-    };
-    // add player to server
-    addPlayer(self, players[player_id]);
-    // send the players object to the new player
-    socket.emit('currentPlayers', players);
-    // update all other players of the new player
-    socket.broadcast.emit('newPlayer', players[player_id]);
- 
+    let pokedex = [1,2,7];
+    let randomPokedexNumber = pokedex[randomIntFromInterval(0,2)];
+    console.log( player_email +' connected');
+    // load a player and add it to our players object
+    window.loadPlayer(playerId).then((dbPlayer)=>{
+      players[playerId] = dbPlayer;
+      players[playerId].socketId = socket.id;
+      if(players[playerId].pokedexIdx == -1){
+        players[playerId].pokedexIdx = randomPokedexNumber;
+        players[playerId].x = spawnPoint.x;
+        players[playerId].y = spawnPoint.y;
+      }
+      //console.log(players[playerId]);
+      // add player to server
+      addPlayer(self, players[playerId]);
+      // send the players object to the new player
+      socket.emit('currentPlayers', players);
+      // update all other players of the new player
+      socket.broadcast.emit('newPlayer', players[playerId]);
+    })
+    
     socket.on('disconnect', function () {
-      console.log('user disconnected');
-      // remove player from server
-      removePlayer(self, player_id);
       // remove this player from our players object
       // save player properties in db
-      window.savePlayer(players[player_id]);
-      io.emit('disconnect', player_id);
+      window.savePlayer(players[playerId]).then((res)=>{
+        // remove player from server
+        removePlayer(self, playerId);
+        io.emit('disconnect', playerId);
+        console.log(player_email +' disconnected');
+      });
     });
 
     // when a player moves, update the player data
     socket.on('playerInput', function (inputData) {
-      handlePlayerInput(self, player_id, inputData);
+      handlePlayerInput(self, playerId, inputData);
     });
   });
 }
@@ -183,7 +174,7 @@ function handlePlayerInput(self, playerId, input) {
 Add a new player server side, this new player will have a down moving sprite hitbox.
 */
 function addPlayer(self, playerInfo) {
-  const player = self.physics.add.image(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedex_idx + '_0_0_0').setOrigin(0.5, 0.5);
+  const player = self.physics.add.image(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedexIdx + '_0_0_0').setOrigin(0.5, 0.5);
   player.playerId = playerInfo.playerId;
   player.action = playerInfo.action;
   player.orientation = playerInfo.orientation;
