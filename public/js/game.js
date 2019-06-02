@@ -52,6 +52,11 @@ function create() {
   this.socket.on('newPlayer', function (playerInfo) {
     displayPlayers(self, playerInfo);
   });
+
+  this.socket.on('alreadyLog', function (player_email) {
+    alert("Account (" + player_email + ") already in use");
+    window.location.replace('/index.html');
+  });
  
   /*
   When the  disconnect event is fired, we take that player’s id and we remove that player’s ship from the game.
@@ -62,7 +67,6 @@ function create() {
   this.socket.on('disconnect', function (playerId) {
     self.players.getChildren().forEach(function (player) {
       if (playerId === player.playerId) {
-        console.log('player ' + playerId + 'removed');
         player.destroy();
       }
     });

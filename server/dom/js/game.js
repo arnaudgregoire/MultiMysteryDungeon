@@ -43,33 +43,43 @@ function create() {
     let pokedex = [1,2,7];
     let randomPokedexNumber = pokedex[randomIntFromInterval(0,2)];
     console.log( player_email +' connected');
-    // load a player and add it to our players object
-    window.loadPlayer(playerId).then((dbPlayer)=>{
-      players[playerId] = dbPlayer;
-      players[playerId].socketId = socket.id;
-      if(players[playerId].pokedexIdx == -1){
-        players[playerId].pokedexIdx = randomPokedexNumber;
-        players[playerId].x = spawnPoint.x;
-        players[playerId].y = spawnPoint.y;
-      }
-      //console.log(players[playerId]);
-      // add player to server
-      addPlayer(self, players[playerId]);
-      // send the players object to the new player
-      socket.emit('currentPlayers', players);
-      // update all other players of the new player
-      socket.broadcast.emit('newPlayer', players[playerId]);
-    })
+    // if player not already in game, we add it
+    if(!players[playerId]){
+      // load a player and add it to our players object
+      window.loadPlayer(playerId).then((dbPlayer)=>{
+        players[playerId] = dbPlayer;
+        players[playerId].socketId = socket.id;
+        if(players[playerId].pokedexIdx == -1){
+          players[playerId].pokedexIdx = randomPokedexNumber;
+          players[playerId].x = spawnPoint.x;
+          players[playerId].y = spawnPoint.y;
+        }
+        // add player to server
+        addPlayer(self, players[playerId]);
+        // send the players object to the new player
+        socket.emit('currentPlayers', players);
+        // update all other players of the new player
+        socket.broadcast.emit('newPlayer', players[playerId]);
+      })
+    }
+    else{
+      socket.emit('alreadyLog',player_email);
+      socket.disconnect();
+    }
+
     
     socket.on('disconnect', function () {
-      // remove this player from our players object
-      // save player properties in db
-      window.savePlayer(players[playerId]).then((res)=>{
-        // remove player from server
-        removePlayer(self, playerId);
-        io.emit('disconnect', playerId);
-        console.log(player_email +' disconnected');
-      });
+      if(players[playerId]){
+        // remove this player from our players object
+        // save player properties in db
+        window.savePlayer(players[playerId]).then((res)=>{
+          // remove player from server
+          removePlayer(self, playerId);
+          io.emit('disconnect', playerId);
+          delete players[playerId];
+          console.log(player_email +' disconnected');
+        });
+      }
     });
 
     // when a player moves, update the player data
