@@ -3,7 +3,6 @@ const config = {
   parent: 'phaser-example',
   width: 1000,
   height: 600,
-  zoom:1.1,
   physics: {
     default: 'arcade',
     arcade: {
@@ -16,7 +15,10 @@ const config = {
     create: create,
     update: update
   },
-  autoFocus: false
+  autoFocus: false,
+  scale:{
+    mode: Phaser.Scale.FIT
+  }
 }
 // https://phasertutorials.com/creating-a-simple-multiplayer-game-in-phaser-3-with-an-authoritative-server-part-2/
 var game = new Phaser.Game(config);
