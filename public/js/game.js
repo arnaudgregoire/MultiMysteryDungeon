@@ -4,6 +4,7 @@ const config = {
   parent: 'phaser-example',
   width: 1000,
   height: 600,
+  pixelArt: true,
   physics: {
     default: 'arcade',
     arcade: {
@@ -36,7 +37,6 @@ function create() {
   // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
   this.players = this.physics.add.group();
   createAnimations(self);
-
   this.map = this.make.tilemap({key:'map'});
   const tileset = this.map.addTilesetImage('test_tileset', 'tiles');
   const worldLayer = this.map.createStaticLayer('world', tileset, 0, 0);   
