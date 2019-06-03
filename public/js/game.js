@@ -1,3 +1,4 @@
+"use strict";
 const config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
@@ -145,7 +146,7 @@ function displayPlayers(self, playerInfo) {
   displayPlayer(self, player);
   if(player.socketId == self.socket.id){
     //we set the camera on the player hero
-    setCamera(self, self.map, player);
+    setCamera(self, player);
   }
   self.players.add(player);
 }
@@ -153,12 +154,12 @@ function displayPlayers(self, playerInfo) {
 /*
 Set the camera on the pokemon that player is controlling
 */
-function setCamera(self, map, hero){
-    // Phaser supports multiple cameras, but you can access the default camera like this:
-    const camera = self.cameras.main;
-    camera.startFollow(hero);
-    camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-    camera.zoom = 2;
+function setCamera(self, hero){
+  // Phaser supports multiple cameras, but you can access the default camera like this:
+  const camera = self.cameras.main;
+  camera.startFollow(hero);
+  camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
+  camera.zoom = 2;
 }
 
 /**
@@ -166,8 +167,17 @@ function setCamera(self, map, hero){
  * for example a squirtle moving down will be 7_0_0
  */
 function getSpriteKey(player) {
-  let orientationTable = {"down":0, "downleft":1, "left":2, "upleft":3, "up":4, "upright":3, "right":2, "downright":1};
-  let key = "";
+  const orientationTable = {
+    "down": 0,
+    "downleft": 1,
+    "left": 2,
+    "upleft": 3,
+    "up": 4,
+    "upright": 3,
+    "right": 2,
+    "downright":1
+  };
+  var key = "";
   key += player.pokedexIdx;
   key += "_";
   key += player.action;
@@ -181,7 +191,7 @@ Change the animation on phaser
 change the flipX value to, cause we only load down, left, upleft and downleft sprites and then flip them for right etc ...
 */
 function playAnimation(player, spriteKey){
-  let flipxTable = {"down":false, "downleft":false, "left":false, "upleft":false, "up":false, "upright":true, "right":true, "downright":true};
+  var flipxTable = {"down":false, "downleft":false, "left":false, "upleft":false, "up":false, "upright":true, "right":true, "downright":true};
   player.flipX = flipxTable[player.orientation];
   player.anims.play(spriteKey);
 }
@@ -192,7 +202,7 @@ If the animation has not been used before, the animation is created
 */
 function displayPlayer(self, player){
   // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
-  let spriteKey = getSpriteKey(player);
+  var spriteKey = getSpriteKey(player);
   // if sprite not already loaded, we create it
   if(!self.anims.exists(spriteKey)){
     createAnimations(self, player.pokedexIdx);
