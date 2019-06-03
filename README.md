@@ -2,6 +2,7 @@
 
 # If you want to help, cause obviously no ones cares a half of a Spinarak
 
+  - Open Firefox
   - Go to https://www.leshylabs.com/apps/sstool/
   - drag and drop assets/sprites.png
   - drag and drop assets/sprites.json
