@@ -188,7 +188,8 @@ function addPlayer(self, playerInfo) {
   player.playerId = playerInfo.playerId;
   player.action = playerInfo.action;
   player.orientation = playerInfo.orientation;
-  self.physics.add.collider(player, self.players);
+  // if we want collisions between players, uncomment below line
+  //self.physics.add.collider(player, self.players);
   self.players.add(player);
 }
  
