@@ -23,7 +23,7 @@ class room{
 			if((MaxHigh-1)<=(MinLow+1)){
 				return true;
 			}
-		}
+		} 
 		return false;
 	}
 	
@@ -37,6 +37,52 @@ class room{
 		
 		return false;
 	}
+}
+
+class DelaunayTriangle{
+	constructor(x1,y1,x2,y2,x3,y3){
+		this.x1=x1;
+		this.y1=y1;
+		this.x2=y2;
+		this.y2=y2;
+		this.x3=x3;
+		this.y3=y3;
+	}
+	
+	get CircleCenter(){
+		//return surrounding circle center 
+	}
+	
+	isValid(ListPoints){
+		//no point inside the triangle ?
+	}
+	
+	isSurrounding(Point){
+		//is the point inside the triangle ?
+	}
+	
+	shift(otherTriangle){
+		//shift 2 invalid triangles to produce 2 valid ones
+	}
+	
+	
+	
+}
+
+function isTriangleValid(Triangle){
+	
+}
+
+function shift(Triangle1,Triangle2){
+	
+}
+
+function surroundingTriangle(TriangleList){
+	
+}
+
+function triangulate(PointList){
+	
 }
 
 
@@ -112,11 +158,11 @@ function getRandomInt(max) {
 
 
 var config = {
-	sizeX:15,
-	sizeY:15,
-	RoomCount:4,
-	minimumSize:2,
-	maximumSize:4
+	sizeX:30,
+	sizeY:30,
+	RoomCount:6,
+	minimumSize:3,
+	maximumSize:9
 };
 
 generateMap(config);
