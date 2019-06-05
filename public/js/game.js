@@ -36,6 +36,7 @@ function create() {
   this.socket = io();
   // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
   this.players = this.physics.add.group();
+  this.texts = this.physics.add.group();
   createAnimations(self);
   this.map = this.make.tilemap({key:'map'});
   const tileset = this.map.addTilesetImage('test_tileset', 'tiles');
@@ -73,6 +74,11 @@ function create() {
         player.destroy();
       }
     });
+    self.texts.getChildren().forEach(function (player) {
+      if (playerId === player.playerId) {
+        player.destroy();
+      }
+    });
   });
 
   this.socket.on('playerUpdates', function (players) {
@@ -90,6 +96,11 @@ function create() {
           }
         }
       });
+      self.texts.getChildren().forEach(function (player) {
+        if (players[id].playerId === player.playerId) {
+          player.setPosition(players[id].x, players[id].y);
+        }
+      })
     });
   });
 
@@ -143,12 +154,22 @@ function displayPlayers(self, playerInfo) {
   player.action = playerInfo.action;
   player.pokedexIdx = playerInfo.pokedexIdx;
   player.socketId = playerInfo.socketId;
+  player.name = playerInfo.name;
+  var text = self.add.text(playerInfo.x, playerInfo.y, playerInfo.name, {
+    fontSize: '15px',
+    fontFamily: 'Verdana',
+    color: '#ffffff',
+    align: 'center'
+  }).setOrigin(0.5,1.6);
+  text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 0);
+  text.playerId = playerInfo.playerId;
   displayPlayer(self, player);
   if(player.socketId == self.socket.id){
     //we set the camera on the player hero
     setCamera(self, player);
   }
   self.players.add(player);
+  self.texts.add(text);
 }
 
 /*
