@@ -41,8 +41,8 @@ function create() {
     let playerId = socket.handshake.session.passport.user._id;
     let player_email = socket.handshake.session.passport.user.email;
     let name = socket.handshake.session.passport.user.name;
-    let pokedex = [1,2,7];
-    let randomPokedexNumber = pokedex[randomIntFromInterval(0,2)];
+    let pokedex = [1,2,5,7,12,25];
+    let randomPokedexNumber = pokedex[randomIntFromInterval(0,pokedex.length - 1)];
     console.log( player_email +' connected');
     // if player not already in game, we add it
     if(!players[playerId]){
