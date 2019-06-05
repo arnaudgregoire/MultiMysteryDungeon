@@ -38,8 +38,10 @@ function create() {
   const spawnPoint = this.map.findObject("Objects", obj => obj.name === "spawn_point");
 
   io.on('connection', function (socket) {
+    console.log(socket.handshake.session.passport);
     let playerId = socket.handshake.session.passport.user._id;
     let player_email = socket.handshake.session.passport.user.email;
+    let name = socket.handshake.session.passport.user.name;
     let pokedex = [1,2,7];
     let randomPokedexNumber = pokedex[randomIntFromInterval(0,2)];
     console.log( player_email +' connected');
@@ -49,6 +51,7 @@ function create() {
       window.loadPlayer(playerId).then((dbPlayer)=>{
         players[playerId] = dbPlayer;
         players[playerId].socketId = socket.id;
+        players[playerId].name = name;
         if(players[playerId].pokedexIdx == -1){
           players[playerId].pokedexIdx = randomPokedexNumber;
           players[playerId].x = spawnPoint.x;
@@ -188,6 +191,7 @@ function addPlayer(self, playerInfo) {
   player.playerId = playerInfo.playerId;
   player.action = playerInfo.action;
   player.orientation = playerInfo.orientation;
+  player.name = playerInfo.name;
   // if we want collisions between players, uncomment below line
   //self.physics.add.collider(player, self.players);
   self.players.add(player);

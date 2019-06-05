@@ -24,7 +24,8 @@ router.post('/login', async (req, res, next) => {
         if (error) return next(error);
         const body = {
           _id: user._id,
-          email: user.email
+          email: user.email,
+          name: user.name
         };
 
         const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
@@ -39,7 +40,8 @@ router.post('/login', async (req, res, next) => {
           token,
           refreshToken,
           email: user.email,
-          _id: user._id
+          _id: user._id,
+          name: user.name
         };
 
         //Send back the token to the user
@@ -54,7 +56,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/token', (req, res) => {
   const { refreshToken } = req.body;
   if (refreshToken in tokenList) {
-    const body = { email: tokenList[refreshToken].email, _id: tokenList[refreshToken]._id };
+    const body = { email: tokenList[refreshToken].email, _id: tokenList[refreshToken]._id, name: tokenList[refreshToken].name };
     const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
     // update jwt
     res.cookie('jwt', token);
