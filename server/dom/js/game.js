@@ -38,7 +38,6 @@ function create() {
   const spawnPoint = this.map.findObject("Objects", obj => obj.name === "spawn_point");
 
   io.on('connection', function (socket) {
-    console.log(socket.handshake.session.passport);
     let playerId = socket.handshake.session.passport.user._id;
     let player_email = socket.handshake.session.passport.user.email;
     let name = socket.handshake.session.passport.user.name;
