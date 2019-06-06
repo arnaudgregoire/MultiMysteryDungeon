@@ -10,53 +10,11 @@ RoomCount: nombre de salles
 
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
-
-
 */
 
 const Delaunator = require('delaunator');
-
-class Room{
-	constructor(posX,posY,sizeX,sizeY){
-		this.posX=posX;
-		this.posY=posY;
-		this.sizeX=sizeX;
-		this.sizeY=sizeY;
-	}
-	
-	get centerX() {
-		return(this.posX+Math.floor(this.sizeX/2));
-	}
-	
-	get centerY() {
-		return(this.posY+Math.floor(this.sizeY/2));
-	}
-	
-	isOver(otherRoom) {
-		var MaxLeft = Math.max(this.posX,otherRoom.posX);
-		var MinRight =Math.min(this.posX+this.sizeX,otherRoom.posX+otherRoom.sizeX);
-		if((MaxLeft-1)<=(MinRight+1)){
-			var MaxHigh = Math.max(this.posY,otherRoom.posY);
-			var MinLow = Math.min(this.posY+this.sizeY,otherRoom.posY+otherRoom.sizeY);
-			if((MaxHigh-1)<=(MinLow+1)){
-				return true;
-			}
-		} 
-		return false;
-	}
-	
-	isOutOfMap(MapSizeX,MapSizeY){
-		if(this.posX+this.sizeX>=MapSizeX-1){
-			return true;
-		}
-		if(this.posY+this.sizeY>=MapSizeY-1){
-			return true;
-		}
-		
-		return false;
-	}
-}
-
+const Room = require('./room');
+var fs = require('fs');
 
 
 function generateMap(config){
@@ -212,8 +170,34 @@ function generateMap(config){
 	return(level);
 }
 
+/**
+ * export given map to the given path (csv intended)
+ */
+function exportMapToCsv(map, path) {
+	let mapString = mapToString(map);
+	var stream = fs.createWriteStream(path);
+	stream.once('open', function(fd) {
+	stream.write(mapString);
+	stream.end();
+	});
+}
 
-
+/**
+ * used to convert array to array like string
+ * ex : 
+ * 0 0 0 \n
+ * 0 1 0 \n
+ * 0 1 1 \n
+ * 1 1 0 \n
+ */
+function mapToString(map) {
+	let mapString = "";
+	for (let i = 0; i < map.length; i++) {
+		mapString += map[i];
+		mapString += "\n";
+	}
+	return mapString;
+}
 
 
 function getRandomInt(max) {
@@ -231,8 +215,6 @@ RoomCount: nombre de salles
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
 
-
-*/
 var config = {
 	sizeX:30,
 	sizeY:30,
@@ -240,8 +222,11 @@ var config = {
 	minimumSize:3,
 	maximumSize:9
 };
+*/
+module.exports = {
+	generateMap: generateMap,
+	exportMapToCsv: exportMapToCsv,
+	mapToString: mapToString
 
-module.exports = generateMap;
-
-
+}
 //generateMap(config);
