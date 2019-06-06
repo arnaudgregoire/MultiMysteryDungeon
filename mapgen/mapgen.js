@@ -1,3 +1,5 @@
+const Delaunator = require('delaunator');
+
 class room{
 	constructor(posX,posY,sizeX,sizeY){
 		this.posX=posX;
@@ -7,11 +9,11 @@ class room{
 	}
 	
 	get centerX() {
-		return(posX+floor(sizeX/2));
+		return(this.posX+Math.floor(this.sizeX/2));
 	}
 	
 	get centerY() {
-		return(posY+floor(sizeY/2));
+		return(this.posY+Math.floor(this.sizeY/2));
 	}
 	
 	isOver(otherRoom) {
@@ -39,51 +41,6 @@ class room{
 	}
 }
 
-class DelaunayTriangle{
-	constructor(x1,y1,x2,y2,x3,y3){
-		this.x1=x1;
-		this.y1=y1;
-		this.x2=y2;
-		this.y2=y2;
-		this.x3=x3;
-		this.y3=y3;
-	}
-	
-	get CircleCenter(){
-		//return surrounding circle center 
-	}
-	
-	isValid(ListPoints){
-		//no point inside the triangle ?
-	}
-	
-	isSurrounding(Point){
-		//is the point inside the triangle ?
-	}
-	
-	shift(otherTriangle){
-		//shift 2 invalid triangles to produce 2 valid ones
-	}
-	
-	
-	
-}
-
-function isTriangleValid(Triangle){
-	
-}
-
-function shift(Triangle1,Triangle2){
-	
-}
-
-function surroundingTriangle(TriangleList){
-	
-}
-
-function triangulate(PointList){
-	
-}
 
 
 function generateMap(config){
@@ -128,17 +85,106 @@ function generateMap(config){
 			
 	}
 	
+	var centers=[];
+	for (var i=0;i<Rooms.length;i++){
+		centers[i]=[Rooms[i].centerX,Rooms[i].centerY]
+	}
+	
+	console.log(centers);
+	
+	var triangles = Delaunator.from(centers);
+	
+	console.log(triangles);
+	
+	var corridors=[];
+	
+	for (var i=0;i< triangles.triangles.length;i+=3){
+		var temp = [triangles.triangles[i],triangles.triangles[i+1],triangles.triangles[i+2]];
+		temp.sort(function(a,b){return a-b});
+		var add1 = true;
+		var add2 = true;
+		var add3 = true;
+		for (var j=0;j<corridors.length;j++){
+			if((corridors[j][0]-temp[0]===0)&&(corridors[j][1]-temp[1]===0)){
+				add1= false;
+			}
+			if((corridors[j][0]-temp[1]===0)&&(corridors[j][1]-temp[2]===0)){
+				add2= false;
+			}
+			if((corridors[j][0]-temp[0]===0)&&(corridors[j][1]-temp[2]===0)){
+				add3= false;
+			}
+		}
+		
+		if(add1){
+			corridors.push([temp[0],temp[1]]);
+		}
+		if(add2){
+			corridors.push([temp[1],temp[2]]);
+		}
+		if(add3){
+			corridors.push([temp[0],temp[2]]);
+		}
+	}
+	
+	console.log(corridors);
+	
 	for (var i=0;i<Rooms.length;i++){
 		var a=Rooms[i].posX;
 		var b=Rooms[i].posY;
 		var c=Rooms[i].sizeX;
 		var d=Rooms[i].sizeY;
 		
+		
 		for (var s=a;s<a+c;s++){
 			for (var t=b;t<b+d;t++){
 				level[s][t]='#';
 			}
 		}
+	}
+	
+	for (var i=0;i<corridors.length;i++){
+		var lenX = centers[corridors[i][0]][0] - centers[corridors[i][1]][0];
+		var lenY = centers[corridors[i][0]][1] - centers[corridors[i][1]][1];
+		
+		
+		var AX = centers[corridors[i][0]][0];
+		var BX = centers[corridors[i][1]][0];
+		
+		var AY = centers[corridors[i][0]][1];
+		var BY = centers[corridors[i][1]][1];
+		
+		console.log(AX);
+		
+		var chemin = [];
+		
+		if (AX>=BX){
+			for (var t=BX;t<=AX;t++){
+				chemin.push([t,BY]);
+			}
+		} else {
+			for (var t=BX;t>=AX;t--){
+				chemin.push([t,BY]);
+			}
+		}
+		
+		if (AY>=BY){
+			for (var t=BY;t<=AY;t++){
+				chemin.push([AX,t]);
+			}
+		} else {
+			for (var t=BY;t>=AY;t--){
+				chemin.push([AX,t]);
+			}
+		}
+		
+		console.log(chemin);
+		
+		
+		for (var z=0; z<chemin.length;z++){
+			level[chemin[z][0]][chemin[z][1]]='#';
+		}
+		
 	}
 	
 	
@@ -164,5 +210,8 @@ var config = {
 	minimumSize:3,
 	maximumSize:9
 };
+
+
+
 
 generateMap(config);
