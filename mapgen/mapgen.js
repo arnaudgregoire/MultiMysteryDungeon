@@ -1,3 +1,19 @@
+// fichier contenant le code de la generation procedurale de map 
+
+/*
+Doc de la config de generateMap :
+
+sizeX: taille de la carte ( abcisse )
+sizeY: taille de la carte ( ordonnees )
+
+RoomCount: nombre de salles
+
+minimumSize: taille minimale d'une salle ( taille en X ou en Y )
+maximumSize: taille maximale d'une salle ( taille en X ou en Y )
+
+
+*/
+
 const Delaunator = require('delaunator');
 
 class room{
@@ -51,7 +67,7 @@ function generateMap(config){
 	for (var i=0; i<config.sizeY; i++){
 		level[i]=new Array(config.sizeX);
 		for (var j=0; j<config.sizeX; j++){
-			level[i][j]='0';
+			level[i][j]=0;
 		}
 	}
 	
@@ -90,11 +106,11 @@ function generateMap(config){
 		centers[i]=[Rooms[i].centerX,Rooms[i].centerY]
 	}
 	
-	console.log(centers);
+	//console.log(centers);
 	
 	var triangles = Delaunator.from(centers);
 	
-	console.log(triangles);
+	//console.log(triangles);
 	
 	var corridors=[];
 	
@@ -127,7 +143,7 @@ function generateMap(config){
 		}
 	}
 	
-	console.log(corridors);
+	//console.log(corridors);
 	
 	for (var i=0;i<Rooms.length;i++){
 		var a=Rooms[i].posX;
@@ -138,7 +154,7 @@ function generateMap(config){
 		
 		for (var s=a;s<a+c;s++){
 			for (var t=b;t<b+d;t++){
-				level[s][t]='#';
+				level[s][t]=1;
 			}
 		}
 	}
@@ -154,7 +170,7 @@ function generateMap(config){
 		var AY = centers[corridors[i][0]][1];
 		var BY = centers[corridors[i][1]][1];
 		
-		console.log(AX);
+		//console.log(AX);
 		
 		var chemin = [];
 		
@@ -178,20 +194,22 @@ function generateMap(config){
 			}
 		}
 		
-		console.log(chemin);
+		//console.log(chemin);
 		
 		
 		for (var z=0; z<chemin.length;z++){
-			level[chemin[z][0]][chemin[z][1]]='#';
+			level[chemin[z][0]][chemin[z][1]]=1;
 		}
 		
 	}
 	
 	
-	
+	/*
 	for (var i=0; i<config.sizeY; i++){
 		console.log(level[i].join(''));
 	}
+	*/
+	return(level);
 }
 
 
@@ -202,7 +220,19 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+/*
+Doc de la config de generateMap :
 
+sizeX: taille de la carte ( abcisse )
+sizeY: taille de la carte ( ordonnees )
+
+RoomCount: nombre de salles
+
+minimumSize: taille minimale d'une salle ( taille en X ou en Y )
+maximumSize: taille maximale d'une salle ( taille en X ou en Y )
+
+
+*/
 var config = {
 	sizeX:30,
 	sizeY:30,
@@ -211,7 +241,7 @@ var config = {
 	maximumSize:9
 };
 
+module.exports = generateMap;
 
 
-
-generateMap(config);
+//generateMap(config);
