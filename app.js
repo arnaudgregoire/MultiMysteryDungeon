@@ -11,6 +11,7 @@ const ios = require('socket.io-express-session');
 const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
 const DbManager = require('./server/dbManager');
+const asyncMiddleware = require('./middleware/asyncMiddleware');
 
 const jsdom = require('jsdom');
 const Datauri = require('datauri');
@@ -76,6 +77,17 @@ app.get('/index.html', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+app.post('/submit-chatline', passport.authenticate('jwt', { session : false }), asyncMiddleware(async (req, res, next) => {
+  const { message } = req.body;
+  const { email, name } = req.user;
+  // await ChatModel.create({ email, message });
+  io.emit('new-message', {
+    username: name,
+    message,
+  });
+  res.status(200).json({ status: 'ok' });
+}));
+
 // main routes
 app.use('/', routes);
 app.use('/', passport.authenticate('jwt', { session : true }), secureRoutes);
@@ -90,6 +102,8 @@ app.use((err, req, res, next) => {
   console.log(err.message);
   res.status(err.status || 500).json({ error: err.message });
 });
+
+
 
 
 function setupServer() {

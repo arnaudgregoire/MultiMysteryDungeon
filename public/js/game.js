@@ -1,9 +1,9 @@
 "use strict";
 const config = {
   type: Phaser.AUTO,
-  parent: 'phaser-example',
-  width: 1000,
-  height: 600,
+  parent: 'content',
+  width: 1600,
+  height: 1000,
   pixelArt: true,
   physics: {
     default: 'arcade',
@@ -17,7 +17,6 @@ const config = {
     create: create,
     update: update
   },
-  autoFocus: false,
   scale:{
     mode: Phaser.Scale.FIT
   }
@@ -104,6 +103,26 @@ function create() {
     });
   });
 
+  
+  this.socket.on('new-message', (data) => {
+    var usernameSpan = document.createElement('span');
+    var usernameText = document.createTextNode(data.username);
+    usernameSpan.className = 'username';
+    usernameSpan.appendChild(usernameText);
+  
+    var messageBodySpan = document.createElement('span');
+    var messageBodyText = document.createTextNode(data.message);
+    messageBodySpan.className = 'messageBody';
+    messageBodySpan.appendChild(messageBodyText);
+  
+    var messageLi = document.createElement('li');
+    messageLi.setAttribute('username', data.username);
+    messageLi.appendChild(usernameSpan);
+    messageLi.appendChild(messageBodySpan);
+  
+    addMessageElement(messageLi);
+  });
+
   /* 
   This will populate the cursors object with our four main Key objects (up, down, left, and right),
   which will bind to those arrows on the keyboard
@@ -180,7 +199,7 @@ function setCamera(self, hero){
   const camera = self.cameras.main;
   camera.startFollow(hero);
   camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-  camera.zoom = 2;
+  camera.zoom = 3;
 }
 
 /**

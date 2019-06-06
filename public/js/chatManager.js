@@ -13,7 +13,8 @@ window.addEventListener('keydown', event => {
 });
  
 function sendMessage() {
-  let message = inputMessage.value;
+  console.log("message send");
+  var message = inputMessage.value;
   if (message) {
     inputMessage.value = '';
     $.ajax({
@@ -32,6 +33,6 @@ function sendMessage() {
 }
  
 function addMessageElement(el) {
-  messages.append(el);
+  messages.appendChild(el);
   messages.lastChild.scrollIntoView();
 }
