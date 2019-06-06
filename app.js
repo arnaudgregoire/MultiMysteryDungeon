@@ -13,6 +13,8 @@ const secureRoutes = require('./routes/secure');
 const DbManager = require('./server/dbManager');
 const asyncMiddleware = require('./middleware/asyncMiddleware');
 
+const mapGeneration = require('./mapgen/mapgen');
+
 const jsdom = require('jsdom');
 const Datauri = require('datauri');
 
@@ -141,5 +143,15 @@ function setupServer() {
     console.log(error.message);
   });
 }
+
+var tab = mapGeneration({
+	sizeX:30,
+	sizeY:30,
+	RoomCount:6,
+	minimumSize:3,
+	maximumSize:9
+});
+
+console.log(tab);
  
 setupServer();
