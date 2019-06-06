@@ -16,7 +16,7 @@ maximumSize: taille maximale d'une salle ( taille en X ou en Y )
 
 const Delaunator = require('delaunator');
 
-class room{
+class Room{
 	constructor(posX,posY,sizeX,sizeY){
 		this.posX=posX;
 		this.posY=posY;
@@ -81,7 +81,7 @@ function generateMap(config){
 		var C = getRandomInt(config.maximumSize-config.minimumSize+1)+config.minimumSize;
 		var D = getRandomInt(config.maximumSize-config.minimumSize+1)+config.minimumSize;
 		
-		Rooms[RoomNumberCreated]= new room(A,B,C,D);
+		Rooms[RoomNumberCreated]= new Room(A,B,C,D);
 		
 		if(Rooms[RoomNumberCreated].isOutOfMap(config.sizeX,config.sizeY)){
 			continue;
