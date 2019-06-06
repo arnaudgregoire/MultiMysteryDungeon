@@ -88,6 +88,25 @@ function create() {
     socket.on('playerInput', function (inputData) {
       handlePlayerInput(self, playerId, inputData);
     });
+
+  socket.on('new message', (data) => {
+    const usernameSpan = document.createElement('span');
+    const usernameText = document.createTextNode(data.username);
+    usernameSpan.className = 'username';
+    usernameSpan.appendChild(usernameText);
+  
+    const messageBodySpan = document.createElement('span');
+    const messageBodyText = document.createTextNode(data.message);
+    messageBodySpan.className = 'messageBody';
+    messageBodySpan.appendChild(messageBodyText);
+  
+    const messageLi = document.createElement('li');
+    messageLi.setAttribute('username', data.username);
+    messageLi.append(usernameSpan);
+    messageLi.append(messageBodySpan);
+  
+    addMessageElement(messageLi);
+  });
   });
 }
  
