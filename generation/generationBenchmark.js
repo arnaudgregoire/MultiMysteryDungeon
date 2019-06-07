@@ -11,7 +11,11 @@ let config =
 	maximumSize:10
 }
 
-exportMapToCsv(generateMap(config), "generation/maps/testMap.csv");
+function defaultExport() {
+	return exportMapToCsv(generateMap(config), "generation/maps/testMap.csv");
+}
+
+module.exports = defaultExport;
 
 
 

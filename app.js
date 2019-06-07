@@ -12,6 +12,7 @@ const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
 const DbManager = require('./server/dbManager');
 const asyncMiddleware = require('./middleware/asyncMiddleware');
+const defaultExport = require('./generation/generationBenchmark');
 
 const jsdom = require('jsdom');
 const Datauri = require('datauri');
@@ -66,7 +67,10 @@ require('./auth/auth');
 app.use(express.static(__dirname));
 
 app.get('/generation', function (req, res) {
-  res.sendFile(__dirname + '/generation/render/index.html');
+  defaultExport().then(
+    () => {
+      res.sendFile(__dirname + '/generation/render/index.html');
+    });
 })
 
 app.get('/game.html', passport.authenticate('jwt', { session : true }), function (req, res) {

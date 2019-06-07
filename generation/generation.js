@@ -174,12 +174,16 @@ function generateMap(config){
  * export given map to the given path (csv intended)
  */
 function exportMapToCsv(map, path) {
-	let mapString = mapToString(map);
-	var stream = fs.createWriteStream(path);
-	stream.once('open', function(fd) {
-	stream.write(mapString);
-	stream.end();
-	});
+	return new Promise(
+		function(resolve, reject){
+			let mapString = mapToString(map);
+			var stream = fs.createWriteStream(path);
+			stream.once('open', function(fd) {
+			stream.write(mapString);
+			stream.end();
+			});
+			resolve();
+		})
 }
 
 /**
