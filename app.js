@@ -65,6 +65,10 @@ require('./auth/auth');
 
 app.use(express.static(__dirname));
 
+app.get('/generation', function (req, res) {
+  res.sendFile(__dirname + '/generation/render/index.html');
+})
+
 app.get('/game.html', passport.authenticate('jwt', { session : true }), function (req, res) {
   res.sendFile(__dirname + '/public/game.html');
 });

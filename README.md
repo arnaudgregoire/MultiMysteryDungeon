@@ -1,5 +1,15 @@
 # MysteryDungeonOnline
 
+# Generation
+
+At root, enter :
+
+```sh
+npm run benchmark
+```
+
+Then go on http://localhost:3000/generation to see the generated map
+
 # If you want to help, cause obviously no ones cares a half of a Spinarak
 
   - Open Firefox
