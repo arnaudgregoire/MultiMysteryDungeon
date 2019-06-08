@@ -13,7 +13,6 @@ window.addEventListener('keydown', event => {
 });
  
 function sendMessage() {
-  console.log("message send");
   var message = inputMessage.value;
   if (message) {
     inputMessage.value = '';
