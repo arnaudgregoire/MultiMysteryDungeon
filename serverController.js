@@ -11,7 +11,10 @@ const defaultExport = require('./generation/generationBenchmark');
 const routes = require('./routes/main');
 const secureRoutes = require('./routes/secure');
 const express = require('express');
+<<<<<<< HEAD
 const asyncMiddleware = require('./middleware/asyncMiddleware');
+=======
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
 
 
 class ServerController{
@@ -84,10 +87,17 @@ class ServerController{
     }
 
     intializeRoutes(){
+<<<<<<< HEAD
         let self = this;
         // require passport auth
         require('./auth/auth');
         this.app.use(express.static(__dirname));
+=======
+        // require passport auth
+        require('./auth/auth');
+        this.app.use(express.static(__dirname));
+        console.log(__dirname);
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
         this.app.get('/generation', function (req, res) {
             defaultExport().then(
               () => {
@@ -103,6 +113,7 @@ class ServerController{
         this.app.get('/index.html', function (req, res) {
             res.sendFile(__dirname + '/public/index.html');
         });
+<<<<<<< HEAD
 
         this.app.post('/submit-chatline', passport.authenticate('jwt', { session : true }), function (req, res){
             const { message } = req.body;
@@ -118,6 +129,8 @@ class ServerController{
             res.status(200).json({ status: 'ok' });
         });
 
+=======
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
         // main routes
         this.app.use('/', routes);
         this.app.use('/', passport.authenticate('jwt', { session : true }), secureRoutes);
@@ -133,18 +146,30 @@ class ServerController{
             res.status(err.status || 500).json({ error: err.message });
         });
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
     addGameController(){
         let self = this;
         return new Promise(
             function (resolve, reject) {
+<<<<<<< HEAD
                 let io = require('socket.io').listen(self.server);
+=======
+                const io = require('socket.io').listen(self.server);
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
                 io.use(ios(self.session));
                 // link between socket.io and express session
                 let gameController = new GameController(io);
                 gameController.initialize()
                 .then(()=>{
+<<<<<<< HEAD
                     self.gameControllers.push(gameController);
+=======
+                    self.gameControllers += [gameController];
+>>>>>>> e824b38b01ef8e0291708b4ec52d323439bd92ce
                     resolve();
                 })
                 .catch((error) => {reject(error)})
