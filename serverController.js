@@ -24,7 +24,7 @@ class ServerController{
         this.passport = passport;
         //default configuration for easier initialisation of game Controller.
         // used to build the Game
-        this.defaultConfiguration = {width:50, height:40};
+        this.defaultConfiguration = {width:50, height:40, tilesize: 24};
     }
 
     initialize(){

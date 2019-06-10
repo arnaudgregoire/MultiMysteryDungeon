@@ -1,17 +1,17 @@
 const Player = require('../types/player');
-const TILESIZE = 24;
 
 class Game{
     constructor(config){
         this.width = config.width;
         this.height = config.height;
+        this.tilesize = config.tilesize;
         this.players = [];
     }
     //down, downleft, left, upleft, up, upright, right, downright
     computePositions(){
         this.players.forEach(player => {
-            player.x = player.x + player.moveAlongX * TILESIZE;
-            player.y = player.y + player.moveAlongY * TILESIZE;
+            player.x = player.x + player.moveAlongX * this.tilesize;
+            player.y = player.y + player.moveAlongY * this.tilesize;
         })
     }
 
