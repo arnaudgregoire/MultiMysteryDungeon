@@ -67,37 +67,37 @@ function create() {
   The  getChildren() method will return an array of all the game objects that are in that group,
   and from there we use the  forEach() method to loop through that array.
   */
-  this.socket.on('disconnect', function (playerId) {
+  this.socket.on('disconnect', function (id) {
     self.players.getChildren().forEach(function (player) {
-      if (playerId === player.playerId) {
+      if (id === player.id) {
         player.destroy();
       }
     });
     self.texts.getChildren().forEach(function (player) {
-      if (playerId === player.playerId) {
+      if (id === player.id) {
         player.destroy();
       }
     });
   });
 
   this.socket.on('playerUpdates', function (players) {
-    Object.keys(players).forEach(function (id) {
+    Object.keys(players).forEach(function (index) {
       self.players.getChildren().forEach(function (player) {
-        if (players[id].playerId === player.playerId) {
-          player.setPosition(players[id].x, players[id].y);
+        if (players[index].id === player.id) {
+          player.setPosition(players[index].x, players[index].y);
           //if the actual animation sprite currently played client side is different from the server one,
           // the client start to play and save the new sprite
-          if(player.orientation != players[id].orientation
-            || player.action != players[id].action){
-            player.action = players[id].action;
-            player.orientation = players[id].orientation;
+          if(player.orientation != players[index].orientation
+            || player.action != players[index].action){
+            player.action = players[index].action;
+            player.orientation = players[index].orientation;
             displayPlayer(self, player);
           }
         }
       });
       self.texts.getChildren().forEach(function (player) {
-        if (players[id].playerId === player.playerId) {
-          player.setPosition(players[id].x, players[id].y);
+        if (players[index].id === player.id) {
+          player.setPosition(players[index].x, players[index].y);
         }
       })
     });
@@ -163,12 +163,13 @@ function update() {
 /*
 Created our player by using the x and y coordinates that we generated in our server code.
 We used  setOrigin() to set the origin of the game object to be in the middle of the object instead of the top left.
-We stored the playerId so we can find the game object by that id later.
+We stored the id so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
+  console.log(playerInfo);
   const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedexIdx + '_0_0_0').setOrigin(0.5, 0.5);
-  player.playerId = playerInfo.playerId;
+  player.id = playerInfo.id;
   player.orientation = playerInfo.orientation;
   player.action = playerInfo.action;
   player.pokedexIdx = playerInfo.pokedexIdx;
@@ -181,7 +182,7 @@ function displayPlayers(self, playerInfo) {
     align: 'center'
   }).setOrigin(0.5,1.6);
   text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 0);
-  text.playerId = playerInfo.playerId;
+  text.id = playerInfo.id;
   displayPlayer(self, player);
   if(player.socketId == self.socket.id){
     //we set the camera on the player hero
@@ -195,6 +196,7 @@ function displayPlayers(self, playerInfo) {
 Set the camera on the pokemon that player is controlling
 */
 function setCamera(self, hero){
+  console.log("setting camera");
   // Phaser supports multiple cameras, but you can access the default camera like this:
   const camera = self.cameras.main;
   camera.startFollow(hero);

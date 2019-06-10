@@ -22,6 +22,9 @@ class ServerController{
         //create server instance
         this.server = require('http').Server(this.app);
         this.passport = passport;
+        //default configuration for easier initialisation of game Controller.
+        // used to build the Game
+        this.defaultConfiguration = {width:50, height:40};
     }
 
     initialize(){
@@ -31,7 +34,7 @@ class ServerController{
                 self.initializeMongoConnection();
                 self.initializePassport();
                 self.intializeRoutes();
-                self.addGameController().then(
+                self.addGameController(self.defaultConfiguration).then(
                     function (successInfo) {
                         self.server.listen(process.env.PORT || 3000, function () {
                             console.log(`Listening on ${self.server.address().port}`);
@@ -107,7 +110,7 @@ class ServerController{
             const { message } = req.body;
             const { email, name } = req.user;
             // await ChatModel.create({ email, message });
-            console.log(self.gameControllers.length);
+            //console.log(self.gameControllers.length);
             self.gameControllers.forEach(controller => {
                 controller.io.emit('new-message', {
                     username: name,
@@ -133,20 +136,16 @@ class ServerController{
         });
     }
     
-    addGameController(){
+    addGameController(config){
         let self = this;
         return new Promise(
             function (resolve, reject) {
                 let io = require('socket.io').listen(self.server);
                 io.use(ios(self.session));
                 // link between socket.io and express session
-                let gameController = new GameController(io);
-                gameController.initialize()
-                .then(()=>{
-                    self.gameControllers.push(gameController);
-                    resolve();
-                })
-                .catch((error) => {reject(error)})
+                let gameController = new GameController(io, config);
+                self.gameControllers.push(gameController);
+                resolve();
             }
         )
     }
