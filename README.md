@@ -1,5 +1,10 @@
 # MysteryDungeonOnline
 
+# Game Engine
+
+![gameEngineUseCaseDiagram](assets/uml/gameEngineUseCaseDiagram.png)
+
+
 # Generation
 
 At root, enter :
