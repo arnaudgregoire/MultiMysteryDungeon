@@ -3,6 +3,7 @@ const localStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const Validator = require('validator');
 const UserModel = require('../models/userModel');
+require('dotenv').config();
 
 // handle user registration
 passport.use('signup', new localStrategy({
@@ -58,7 +59,7 @@ passport.use('login', new localStrategy({
 
 // verify token is valid
 passport.use(new JWTstrategy({
-  secretOrKey: 'top_secret',
+  secretOrKey: process.env.PUBLIC_KEY,
   jwtFromRequest: function (req) {
     let token = null;
     if (req && req.cookies) token = req.cookies['jwt'];
