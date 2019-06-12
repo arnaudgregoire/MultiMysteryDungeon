@@ -8,13 +8,13 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const ServerController = require("./controller/server-controller");
-const config = require("./config/config.json");
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
 var app = express();
 var server = http.Server(app);
-var session = sessionExpress({ secret: config.PUBLIC_KEY });
+var session = sessionExpress({ secret: process.env.PUBLIC_KEY });
 
 // Setup app
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,7 +37,7 @@ app.use(express.static(__dirname));
 
 
 // Setup MongoDB
-mongoose.connect(config.MONGO_URL, {
+mongoose.connect(process.env.MONGO_CONNECTION_URL, {
   useNewUrlParser : true,
   useCreateIndex: true
 });
