@@ -19,6 +19,9 @@ body {
 }
 
 .form-signin {
+  border:solid;
+  border-radius: 10px;
+  background: #f5f5f5;
   width: 100%;
   max-width: 330px;
   padding: 15px;
@@ -41,4 +44,11 @@ body {
   margin-bottom: 10px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+}
+#loginBody{
+  background-image: url("../img/squirtlePikachu.jpg");
+}
+
+#signupBody{
+  background-image: url("../img/evoliPikachu.jpg");
 }

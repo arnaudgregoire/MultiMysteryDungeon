@@ -1,6 +1,7 @@
 const passport = require('passport');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const tokenList = {};
 const router = express.Router();
@@ -28,8 +29,8 @@ router.post('/login', async (req, res, next) => {
           name: user.name
         };
 
-        const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
-        const refreshToken = jwt.sign({ user: body }, 'top_secret_refresh', { expiresIn: 86400 });
+        const token = jwt.sign({ user: body }, process.env.PUBLIC_KEY, { expiresIn: 300 });
+        const refreshToken = jwt.sign({ user: body }, process.env.PUBLIC_KEY, { expiresIn: 86400 });
 
         // store tokens in cookie
         res.cookie('jwt', token);
@@ -57,7 +58,7 @@ router.post('/token', (req, res) => {
   const { refreshToken } = req.body;
   if (refreshToken in tokenList) {
     const body = { email: tokenList[refreshToken].email, _id: tokenList[refreshToken]._id, name: tokenList[refreshToken].name };
-    const token = jwt.sign({ user: body }, 'top_secret', { expiresIn: 300 });
+    const token = jwt.sign({ user: body }, process.env.PUBLIC_KEY, { expiresIn: 300 });
     // update jwt
     res.cookie('jwt', token);
     tokenList[refreshToken].token = token;

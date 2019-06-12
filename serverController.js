@@ -16,7 +16,7 @@ const express = require('express');
 class ServerController{
     constructor(){
         this.gameControllers = [];
-        this.session = express_session({ secret: 'top_secret' });
+        this.session = express_session({ secret: process.env.PUBLIC_KEY });
         // create an instance of an express app
         this.app = express();
         //create server instance
