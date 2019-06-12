@@ -170,6 +170,41 @@ function generateMap(config){
 	return(level);
 }
 
+
+function addExtras(map, TileNumber){
+	
+	var cover = 0;
+	
+	var minsize=2;
+	
+	var lenY=map.length;
+	var lenX=map[0].length;
+	
+	while (cover<TileNumber){
+		
+		var maxsize=Math.ceil(Math.sqrt(TileNumber-cover)*Math.min(lenY,lenX)/10);
+	
+		var posX=getRandomInt(lenX-minsize);
+		var posY=getRandomInt(lenY-minsize);
+	
+		var sizeX=minsize+getRandomInt(Math.min(lenX-posX-minsize,maxsize));
+		var sizeY=minsize+getRandomInt(Math.min(lenY-posY-minsize,maxsize));
+	
+		for(var i=posY;i<posY+sizeY;i++){
+			for(var j=posX;j<posX+sizeX;j++){
+				if(map[i][j]!==1){
+					map[i][j]=2;
+				}
+				cover++;
+			}
+		}
+		
+		
+	}
+	
+	return(map);
+	
+}
 /**
  * export given map to the given path (csv intended)
  */
@@ -230,7 +265,8 @@ var config = {
 module.exports = {
 	generateMap: generateMap,
 	exportMapToCsv: exportMapToCsv,
-	mapToString: mapToString
+	mapToString: mapToString,
+	addExtras: addExtras
 
 }
 //generateMap(config);

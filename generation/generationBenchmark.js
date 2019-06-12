@@ -1,6 +1,7 @@
 const generateMap = require('./generation').generateMap;
 const exportMapToCsv = require('./generation').exportMapToCsv;
 const mapToString = require('./generation').mapToString;
+const addExtras = require('./generation').addExtras;
 
 let config =
 {
@@ -12,10 +13,12 @@ let config =
 }
 
 function defaultExport() {
-	return exportMapToCsv(generateMap(config), "generation/maps/testMap.csv");
+	var tempmap=generateMap(config);
+	return exportMapToCsv(addExtras(tempmap,1000), "generation/maps/testMap.csv");
 }
 
 module.exports = defaultExport;
+
 
 
 
