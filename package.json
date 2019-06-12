@@ -1,8 +1,19 @@
 {
   "name": "MysteryDungeonOnline",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "",
-  "main": "app.js",
+  "author": "arnaudgregoire",
+  "contributors": [
+    "ThomasSINNO (https://github.com/ThomasSINNO)",
+    "azarz (https://github.com/azarz)",
+    "ogus (https://github.com/ogus)"
+  ],
+  "license": "ISC",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js",
+    "benchmark": "node app/generation/generationBenchmark.js"
+  },
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
@@ -24,11 +35,18 @@
     "validator": "^11.0.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "start": "node app.js",
-    "benchmark": "node generation/generationBenchmark.js"
+  "keywords": [
+    "pokemon",
+    "mystery dungeon",
+    "online",
+    "game"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnaudgregoire/MysteryDungeonOnline"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "bugs": {
+    "url": "https://github.com/arnaudgregoire/MysteryDungeonOnline/issues"
+  },
+  "homepage": "https://github.com/arnaudgregoire/MysteryDungeonOnline#readme"
 }

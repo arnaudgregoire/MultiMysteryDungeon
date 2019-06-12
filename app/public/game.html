@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Mystery Dungeon Online</title>
+
+  <link href="public/css/game.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script src="public/js/chatManager.js" defer></script>
+  <script src="public/js/refreshToken.js" defer></script>
+  <script src="public/js/animationsManager.js" defer></script>
+  <script src="public/js/game.js" defer></script>
+</head>
+
+<body>
+  <div class="flex-container">
+    <div id="content"></div>
+    <div id="chatContainer">
+      <div class="chatArea">
+        <ul id="messages" class="messages"></ul>
+      </div>
+      <input id="inputMessage" class="inputMessage" placeholder="Type here..." type="text">
+    </div>
+  </div>
+</body>
+
+</html>
