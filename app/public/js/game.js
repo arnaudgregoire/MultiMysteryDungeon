@@ -28,6 +28,7 @@ function preload() {
   this.load.image('tiles','../../assets/test_tileset.png');
   this.load.tilemapTiledJSON('map','../../assets/test_map.json');
   this.load.multiatlas('sprites','../../assets/test_sprites.json');
+  this.load.multiatlas('portraits','../../assets/pokemonPortraits.json');
 }
  
 function create() {
@@ -167,7 +168,7 @@ We stored the id so we can find the game object by that id later.
 Lastly, we added the player’s game object to the Phaser group we created.
  */
 function displayPlayers(self, playerInfo) {
-  console.log(playerInfo);
+  //console.log(playerInfo);
   const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedexIdx + '_0_0_0').setOrigin(0.5, 0.5);
   player.id = playerInfo.id;
   player.orientation = playerInfo.orientation;
@@ -196,7 +197,7 @@ function displayPlayers(self, playerInfo) {
 Set the camera on the pokemon that player is controlling
 */
 function setCamera(self, hero){
-  console.log("setting camera");
+  //console.log("setting camera");
   // Phaser supports multiple cameras, but you can access the default camera like this:
   const camera = self.cameras.main;
   camera.startFollow(hero);
