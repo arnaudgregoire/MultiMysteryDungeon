@@ -6,6 +6,8 @@
 
 ![gameEngineUseCaseDiagram](uml/gameEngineUseCaseDiagram.png)
 
+![mapEngineUseCaseDiagram](uml/mapEngineUseCaseDiagram.png)
+
 ## Test map generation
 
 At root, enter :
