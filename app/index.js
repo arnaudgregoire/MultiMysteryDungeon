@@ -59,7 +59,7 @@ const secureRouting = require("./route/secure");
 const defaultExport = require("./generation/generationBenchmark");
 app.get("/generation", function (req, res) {
   defaultExport().then(() => {
-    res.sendFile(__dirname + "/generation/render/index.html");
+    res.sendFile(__dirname + "/public/generationViewer/generationViewer.html");
   });
 });
 app.get("/game.html", passport.authenticate("jwt", { session : true }), function (req, res) {
