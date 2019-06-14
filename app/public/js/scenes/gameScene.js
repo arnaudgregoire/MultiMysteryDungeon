@@ -9,7 +9,6 @@ class GameScene extends Phaser.Scene{
         this.load.image('tiles','../../assets/test_tileset.png');
         this.load.tilemapTiledJSON('map','../../assets/test_map.json');
         this.load.multiatlas('sprites','../../assets/test_sprites.json');
-        this.load.multiatlas('portraits','../../assets/pokemonPortraits.json');
     }
 
     create() {
@@ -31,8 +30,6 @@ class GameScene extends Phaser.Scene{
         this.rightKeyPressed = false;
         this.upKeyPressed = false;
         this.downKeyPressed = false;
-
-        window.dispatchEvent(new CustomEvent('gameSceneCreated'));
       }
 
     update() {

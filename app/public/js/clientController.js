@@ -18,11 +18,13 @@ class ClientController{
             //When this function is called,
             //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
             Object.keys(players).forEach(function (id) {
+                self.gameView.game.scene.getScene('uiScene').displayPortrait(players[id]);
                 self.gameView.game.scene.getScene('gameScene').displayPlayers(players[id]);
             });
         });
         
         this.socket.on('newPlayer', function (playerInfo) {
+            self.gameView.game.scene.getScene('uiScene').displayPortrait(playerInfo);
             self.gameView.game.scene.getScene('gameScene').displayPlayers(playerInfo);
         });
     
@@ -39,6 +41,7 @@ class ClientController{
         */
         this.socket.on('disconnect', function (id) {
             self.gameView.game.scene.getScene('gameScene').removePlayer(id);
+            self.gameView.game.scene.getScene('uiScene').removePortrait(id);
         });
     
         this.socket.on('playerUpdates', function (players) {

@@ -19,7 +19,7 @@ class GameView{
             gravity: { y: 0 }
           }
         },
-        scene: [GameScene],
+        scene: [GameScene, UIScene],
         scale:{
           mode: Phaser.Scale.FIT
         }
