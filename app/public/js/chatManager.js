@@ -1,6 +1,3 @@
-const inputMessage = document.getElementById('inputMessage');
-const messages = document.getElementById('messages');
- 
 window.addEventListener('keydown', event => {
   if (event.which === 13) {
     sendMessage();
@@ -13,6 +10,7 @@ window.addEventListener('keydown', event => {
 });
  
 function sendMessage() {
+  let inputMessage = document.getElementById('inputMessage');
   var message = inputMessage.value;
   if (message) {
     inputMessage.value = '';
@@ -32,6 +30,7 @@ function sendMessage() {
 }
  
 function addMessageElement(el) {
+  let messages = document.getElementById('messages');
   messages.appendChild(el);
   messages.lastChild.scrollIntoView();
 }

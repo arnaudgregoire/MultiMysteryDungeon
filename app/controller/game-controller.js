@@ -28,6 +28,7 @@ class GameController {
     let self = this;
     // on new connections
     self.websocket.on("connection",function(socket){
+      socket.emit("sendId", socket.id);
       let playerId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
       let randomPokedexNumber = self.pokedex[self.randomIntFromInterval(0,self.pokedex.length - 1)];
