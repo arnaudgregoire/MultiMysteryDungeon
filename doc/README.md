@@ -28,6 +28,11 @@ The generation is highly configurable with all following parameters:
 
 2) the "picture" array, which will be displayed to the client. Directly related to the type tiles array, this array interpret the different ids of the given tileset. And then, compute a representation of the type tiles array. It differs from the type tile cause it makes transitions between all kind of terrains.
 
+A tileset.json needs to be specified for each tileset, containing the following data:
+    
+    - description of each group of 3 columns : ground, ground_alternative_1, ground_alternative_xxx, wall,water,...
+    - ...
+
 3) the Tile Object array, that generate all objects on the map. This array contains objects with different rarity. It although contains the spawn position of players, and the stair leading to the next stage. The output format is the same as the Tiled one, maybe.
 
 ## Useful ressources
