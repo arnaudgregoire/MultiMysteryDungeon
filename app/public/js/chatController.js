@@ -1,8 +1,6 @@
 class ChatController{
   constructor(){
       this.initializeEventListener();
-      this.inputMessage = null;
-      this.messages = null;
   }
 
   initializeEventListener(){
@@ -17,8 +15,43 @@ class ChatController{
       }
     });
     window.onload = () =>{
-      this.inputMessage = document.getElementById('inputMessage');
-      this.messages = document.getElementById('messages');
+      let self = this;
+      self.inputMessage = document.getElementById('inputMessage');
+      // chats container
+      self.chatAll = document.getElementById('all');
+      self.allMessages = document.getElementById('allMessages');
+      
+      self.chatBattleLogs = document.getElementById('battleLogs');
+      self.battleLogsMessages = document.getElementById('battleLogsMessages');
+      self.chatBattleLogs.style.display = 'none';
+      
+      self.chatParty = document.getElementById('party');
+      self.partyMessages = document.getElementById('partyMessages');
+      self.chatParty.style.display = 'none';
+      self.messages = document.getElementById('messages');
+      document.querySelectorAll('.chatButton').forEach(button => {
+        button.addEventListener('click', function(){
+          document.querySelectorAll('.chat').forEach((chat)=>{
+            chat.style.display ='none';
+          });
+          switch (button.id) {
+            case 'chatAllButton':
+              self.chatAll.style.display = 'block';
+              break;
+          
+            case 'chatBattleLogsButton':
+              self.chatBattleLogs.style.display = 'block';
+              break;
+            
+            case 'chatPartyButton':
+              self.chatParty.style.display='block';
+              break;
+              
+            default:
+              break;
+          }
+        });
+      });
     }
   }
 
@@ -38,9 +71,19 @@ class ChatController{
     }
   }
    
-  addMessageElement(el) {
-    this.messages.appendChild(el);
-    this.messages.lastChild.scrollIntoView();
+  addChatPartyElement(el) {
+    this.partyMessages.appendChild(el);
+    this.partyMessages.lastChild.scrollIntoView();
+  }
+
+  addChatAllElement(el){
+    this.allMessages.appendChild(el);
+    this.allMessages.lastChild.scrollIntoView();
+  }
+
+  addChatBattleLogsElement(el){
+    this.battleLogsMessages.appendChild(el);
+    this.battleLogsMessages.lastChild.scrollIntoView();
   }
 
   createMessageElement(data){

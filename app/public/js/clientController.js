@@ -51,13 +51,13 @@ class ClientController{
 
         this.socket.on('turnUpdate', function (data){
             console.log(data);
-            let messageElement = self.chatController.createMessageElement(data);
-            self.chatController.addMessageElement(messageElement);
+            self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
+            self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })
         
         this.socket.on('new-message', (data) => {
-            let messageElement = this.chatController.createMessageElement(data);
-            self.chatController.addMessageElement(messageElement);
+            self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
+            self.chatController.addChatPartyElement(self.chatController.createMessageElement(data));
         });
 
         window.addEventListener('playerInput',function(e){

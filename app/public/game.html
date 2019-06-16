@@ -26,7 +26,23 @@
     <div id="content"></div>
     <div id="chatContainer">
       <div class="chatArea">
-        <ul id="messages" class="messages"></ul>
+        <div class="chat" id="all">
+            <h4>All :</h4>
+            <ul id="allMessages" class="messages"></ul>
+        </div>
+        <div class="chat" id="battleLogs">
+            <h4>Battle Logs :</h4>
+            <ul id="battleLogsMessages" class="messages"></ul>
+        </div>
+        <div class="chat" id="party">
+            <h4>Party :</h4>
+            <ul id="partyMessages" class="messages"></ul>   
+        </div>
+      </div>
+      <div id="chatTab">
+          <button class="chatButton" id='chatAllButton'>All</button>
+          <button class="chatButton" id='chatBattleLogsButton'>Battle Logs</button>
+          <button class="chatButton" id='chatPartyButton'>Party</button>
       </div>
       <input id="inputMessage" class="inputMessage" placeholder="Type here..." type="text">
     </div>
