@@ -15,6 +15,7 @@ class Player{
     this.action = "0";
     this.moveAlongX = 0;
     this.moveAlongY = 0;
+    this.turnPlayed = false;
   }
 }
 

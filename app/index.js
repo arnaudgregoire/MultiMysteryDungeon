@@ -72,20 +72,6 @@ app.get("/index.html", function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.post("/submit-chatline", passport.authenticate("jwt", { session : true }), function (req, res){
-  const { message } = req.body;
-  const { email, name } = req.user;
-  // await ChatModel.create({ email, message });
-  //console.log(self.gameControllers.length);
-  serverController.gameControllers.forEach(controller => {
-    controller.websocket.emit("new-message", {
-      username: name,
-      message,
-    });
-  });
-  res.status(200).json({ status: "ok" });
-});
-
 app.use("/", mainRouting);
 app.use("/", passport.authenticate("jwt", { session : true }), secureRouting);
 

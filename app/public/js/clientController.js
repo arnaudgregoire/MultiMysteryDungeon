@@ -2,6 +2,7 @@ class ClientController{
     
     constructor(){
         this.gameView = new GameView();
+        this.chatController = new ChatController();
         window.addEventListener('gameSceneCreated',this.initialize.bind(this));
     }
 
@@ -47,29 +48,24 @@ class ClientController{
         this.socket.on('playerUpdates', function (players) {
             self.gameView.game.scene.getScene('gameScene').updatePlayers(players);
         });
-    
+
+        this.socket.on('turnUpdate', function (data){
+            console.log(data);
+            let messageElement = self.chatController.createMessageElement(data);
+            self.chatController.addMessageElement(messageElement);
+        })
         
         this.socket.on('new-message', (data) => {
-            var usernameSpan = document.createElement('span');
-            var usernameText = document.createTextNode(data.username);
-            usernameSpan.className = 'username';
-            usernameSpan.appendChild(usernameText);
-            
-            var messageBodySpan = document.createElement('span');
-            var messageBodyText = document.createTextNode(data.message);
-            messageBodySpan.className = 'messageBody';
-            messageBodySpan.appendChild(messageBodyText);
-            
-            var messageLi = document.createElement('li');
-            messageLi.setAttribute('username', data.username);
-            messageLi.appendChild(usernameSpan);
-            messageLi.appendChild(messageBodySpan);
-            
-            addMessageElement(messageLi);
+            let messageElement = this.chatController.createMessageElement(data);
+            self.chatController.addMessageElement(messageElement);
         });
 
         window.addEventListener('playerInput',function(e){
             self.socket.emit('playerInput',e.detail);
         });
+
+        window.addEventListener('submit-chatline',function(e){
+            self.socket.emit('submit-chatline', e.detail);
+        })
     }
 }

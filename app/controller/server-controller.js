@@ -16,6 +16,7 @@ class ServerController {
     let controller = new GameController(this.websocket, this.defaultConfiguration);
     this.gameControllers.push(controller);
   }
+
 }
 
 module.exports = ServerController;

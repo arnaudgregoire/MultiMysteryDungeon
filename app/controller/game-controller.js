@@ -3,6 +3,8 @@ const DbManager = require("./db-manager");
 const PlayerController = require("./player-controller");
 const Game = require("../engine/game");
 const Player = require("../model/type/player");
+const EventEmitter = require('events');
+
 
 class GameController {
 
@@ -11,15 +13,26 @@ class GameController {
     this.playerControllers = [];
     this.pokedex = [1,2,5,7,12,25];
     this.game = new Game(config);
+    this.eventEmitter = new EventEmitter();
     this.initialize();
   }
 
   initialize() {
-    this.initializeConnection();
+    let self = this;
+    self.initializeConnection();
     setInterval(this.update.bind(this), 50);
+    self.eventEmitter.on('submit-chatline',function (data){
+      self.websocket.emit("new-message", data);
+    })
   }
 
   update() {
+    if(this.game.checkEndTurn()){
+      this.websocket.emit("turnUpdate", {
+        message:"Turn " + this.game.setupNewTurn(),
+        username:"Server"
+      });
+    }
     this.game.computePositions();
     this.websocket.emit("playerUpdates", this.game.players);
   }
@@ -45,7 +58,7 @@ class GameController {
           }
           player.socketId = socket.id;
           self.game.addPlayer(player);
-          let controller = new PlayerController(socket, self);
+          let controller = new PlayerController(socket, self, self.eventEmitter);
           controller.initialize();
           self.playerControllers.push(controller);
         })

@@ -1,5 +1,7 @@
+const EventEmitter = require('events');
+
 class PlayerController{
-  constructor(socket, gameParent){
+  constructor(socket, gameParent, eventEmitter){
     this.gameParent = gameParent;
     this.playerId = socket.handshake.session.passport.user._id;
     this.name = socket.handshake.session.passport.user.name;
@@ -11,6 +13,7 @@ class PlayerController{
       up: false,
       down: false
     }
+    this.eventEmitter = eventEmitter;
     console.log(this.email + " connected");
   }
 
@@ -29,6 +32,12 @@ class PlayerController{
       self.input = input;
       self.gameParent.onPlayerInput(self);
     });
+    this.socket.on('submit-chatline', function(chatline){
+      // await ChatModel.create({ email, message });
+      self.eventEmitter.emit('submit-chatline', {
+        username:self.name,
+        message:chatline});
+    })
   }
 }
 
