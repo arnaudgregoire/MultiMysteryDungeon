@@ -6,6 +6,7 @@
   <title>Mystery Dungeon Online</title>
 
   <link href="public/css/game.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
@@ -25,26 +26,24 @@
   <div class="flex-container">
     <div id="content"></div>
     <div id="chatContainer">
+        <h4 class="h4" id="tabName">Channel all</h4>
       <div class="chatArea">
         <div class="chat" id="all">
-            <h4>All :</h4>
             <ul id="allMessages" class="messages"></ul>
         </div>
         <div class="chat" id="battleLogs">
-            <h4>Battle Logs :</h4>
             <ul id="battleLogsMessages" class="messages"></ul>
         </div>
         <div class="chat" id="party">
-            <h4>Party :</h4>
             <ul id="partyMessages" class="messages"></ul>   
         </div>
       </div>
-      <div id="chatTab">
-          <button class="chatButton" id='chatAllButton'>All</button>
-          <button class="chatButton" id='chatBattleLogsButton'>Battle Logs</button>
-          <button class="chatButton" id='chatPartyButton'>Party</button>
+      <div id="chatTab" class='btn-group' role="group" aria-label="tab chat buttons">
+          <button class="chatButton btn btn-secondary" id='chatAllButton'>All</button>
+          <button class="chatButton btn btn-secondary" id='chatBattleLogsButton'>Battle Logs</button>
+          <button class="chatButton btn btn-secondary" id='chatPartyButton'>Party</button>
       </div>
-      <input id="inputMessage" class="inputMessage" placeholder="Type here..." type="text">
+      <input id="inputMessage" class="inputMessage form-control" placeholder="Type here..." type="text">
     </div>
   </div>
 </body>

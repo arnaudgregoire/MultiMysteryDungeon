@@ -17,7 +17,8 @@ class ChatController{
     window.onload = () =>{
       let self = this;
       self.inputMessage = document.getElementById('inputMessage');
-      // chats container
+      self.tabName = document.getElementById('tabName');
+
       self.chatAll = document.getElementById('all');
       self.allMessages = document.getElementById('allMessages');
       
@@ -28,7 +29,7 @@ class ChatController{
       self.chatParty = document.getElementById('party');
       self.partyMessages = document.getElementById('partyMessages');
       self.chatParty.style.display = 'none';
-      self.messages = document.getElementById('messages');
+
       document.querySelectorAll('.chatButton').forEach(button => {
         button.addEventListener('click', function(){
           document.querySelectorAll('.chat').forEach((chat)=>{
@@ -37,14 +38,17 @@ class ChatController{
           switch (button.id) {
             case 'chatAllButton':
               self.chatAll.style.display = 'block';
+              self.tabName = 'Channel all';
               break;
           
             case 'chatBattleLogsButton':
               self.chatBattleLogs.style.display = 'block';
+              self.tabName = 'Channel Battle Logs';
               break;
             
             case 'chatPartyButton':
               self.chatParty.style.display='block';
+              self.tabName = 'Channel Party (local)';
               break;
               
             default:

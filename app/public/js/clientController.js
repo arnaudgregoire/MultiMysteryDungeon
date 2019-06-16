@@ -50,7 +50,6 @@ class ClientController{
         });
 
         this.socket.on('turnUpdate', function (data){
-            console.log(data);
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })
