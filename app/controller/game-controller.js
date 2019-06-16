@@ -23,6 +23,18 @@ class GameController {
     setInterval(this.update.bind(this), 50);
     self.eventEmitter.on('submit-chatline',function (data){
       self.websocket.emit("new-message", data);
+    });
+    self.eventEmitter.on('playerInput', (controller)=>{
+      self.onPlayerInput(controller);
+    });
+    self.eventEmitter.on('disconnect', (controller)=>{
+      self.onPlayerDisconnect(controller);
+    });
+    self.eventEmitter.on('currentPlayers', (controller)=>{
+      controller.socket.emit("currentPlayers", self.game.players);
+    });
+    self.eventEmitter.on('newPlayer', (controller)=>{
+      controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.playerId));
     })
   }
 
@@ -58,7 +70,7 @@ class GameController {
           }
           player.socketId = socket.id;
           self.game.addPlayer(player);
-          let controller = new PlayerController(socket, self, self.eventEmitter);
+          let controller = new PlayerController(socket, self.eventEmitter);
           controller.initialize();
           self.playerControllers.push(controller);
         })

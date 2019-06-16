@@ -1,8 +1,7 @@
 const EventEmitter = require('events');
 
 class PlayerController{
-  constructor(socket, gameParent, eventEmitter){
-    this.gameParent = gameParent;
+  constructor(socket, eventEmitter){
     this.playerId = socket.handshake.session.passport.user._id;
     this.name = socket.handshake.session.passport.user.name;
     this.email = socket.handshake.session.passport.user.email;
@@ -20,19 +19,19 @@ class PlayerController{
   initialize(){
     let self = this;
     // send the players object to the new player
-    this.socket.emit("currentPlayers", self.gameParent.game.players);
+    self.eventEmitter.emit('currentPlayers', self);
     // update all other players of the new player
-    this.socket.broadcast.emit("newPlayer", self.gameParent.game.getPlayerById(self.playerId));
-
-    this.socket.on("disconnect", function(){
-      self.gameParent.onPlayerDisconnect(self)
+    self.eventEmitter.emit('newPlayer', self);
+    // in case of disconnection
+    self.socket.on("disconnect", function(){
+      self.eventEmitter.emit('disconnect', self);
     });
     // when a player moves, update the player data
-    this.socket.on("playerInput", function (input) {
+    self.socket.on("playerInput", function (input) {
       self.input = input;
-      self.gameParent.onPlayerInput(self);
+      self.eventEmitter.emit('playerInput', self);
     });
-    this.socket.on('submit-chatline', function(chatline){
+    self.socket.on('submit-chatline', function(chatline){
       // await ChatModel.create({ email, message });
       self.eventEmitter.emit('submit-chatline', {
         username:self.name,
