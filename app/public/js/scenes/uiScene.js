@@ -42,7 +42,7 @@ class UIScene extends Phaser.Scene{
         let self = this;
         self.portraits.remove(self.portraits.getFirst('id',id));
         self.portraits.iterate(function(portrait){
-            portrait.setPosition(0, 160 * self.portraits.getFirst(portrait));
+            portrait.setPosition(0, 160 * self.portraits.getIndex(portrait));
         },self);
     }
 }
