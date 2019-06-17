@@ -63,7 +63,7 @@ html, body {
 .chatArea{
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 97%;
+  height: 90%;
 }
 
 .messages {

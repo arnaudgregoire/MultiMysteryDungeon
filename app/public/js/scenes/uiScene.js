@@ -9,33 +9,40 @@ class UIScene extends Phaser.Scene{
     }
 
     create(){
-        this.portraits = this.add.group();
+        this.portraits = this.add.container(65,65);
         window.dispatchEvent(new CustomEvent('gameSceneCreated'));
     }
 
     displayPortrait(playerInfo){
-        let portrait = this.add.sprite(
-            65,
-            130 * this.portraits.getLength() + 65,
+        let self = this;
+        let portrait = self.add.container(0, 160 * self.portraits.length);
+        portrait.id = playerInfo.id;
+
+        let sprite = self.add.sprite(
+            0,
+            0,
             'portraits',
             'portrait' + playerInfo.pokedexIdx);
-        portrait.setScale(3,3);
-        portrait.id = playerInfo.id;
-        this.portraits.add(portrait);
+        sprite.setScale(3,3);
+
+        let text = self.add.text(-60,60,playerInfo.name,{
+            fontSize: '30px',
+            fontFamily: 'Verdana',
+            color: 'black',
+            align: 'center',
+            backgroundColor:'white'
+        });
+        portrait.add(sprite);
+        portrait.add(text);
+        self.portraits.add(portrait);
     }
 
 
     removePortrait(id){
         let self = this;
-        self.portraits.getChildren().forEach(function (portrait) {
-            if (id === portrait.id) {
-             portrait.destroy();
-            }
-        });
-        let index = 0;
-        self.portraits.getChildren().forEach(function (portrait){
-            portrait.setPosition(65, 130 * index + 65);
-            index += 1;
-        })
+        self.portraits.remove(self.portraits.getFirst('id',id));
+        self.portraits.iterate(function(portrait){
+            portrait.setPosition(0, 160 * self.portraits.getFirst(portrait));
+        },self);
     }
 }
