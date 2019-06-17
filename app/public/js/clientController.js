@@ -47,6 +47,7 @@ class ClientController{
     
         this.socket.on('playerUpdates', function (players) {
             self.gameView.game.scene.getScene('gameScene').updatePlayers(players);
+            self.gameView.game.scene.getScene('uiScene').updatePlayers(players);
         });
 
         this.socket.on('turnUpdate', function (data){
