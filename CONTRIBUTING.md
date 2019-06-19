@@ -31,7 +31,7 @@ For the tuto, we will use the example of farfetchd.
 
 You can download by clicking "Download this Sheet" in [spriters-resource.com](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/).
 
-![farfetchd sprites](/screenshot/downloadThisSheet.png)
+![farfetchd sprites](/screenshot/downloadThisSheet.PNG)
 
 Please follow this guideline:
 
