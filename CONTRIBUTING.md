@@ -47,7 +47,7 @@ Please follow this guideline:
 
 Now you should have a transparent background and all the sprite selected, something like that.
 
-![transparentBackground sprites](/screenshot/transparentBackground.png)
+![transparentBackground sprites](/screenshot/transparentBackground.PNG)
 
 Now 
   - remove the text
@@ -56,13 +56,13 @@ Now
   - delete attack, special attack columns 2,3 etc..
   - shift + C, select only the one pokemon sprites (in case of multiples pokemons on the same spritesheet) and then enter
 
-![allStepDown sprites](/screenshot/allStepDown.png)
+![allStepDown sprites](/screenshot/allStepDown.PNG)
 
   - export as png with as name the pokedex number of the pokemon
   - Create at app/assets/sprites a folder with the pokedex number of the pokemon.
   - move your created picture in the created folder
 
-![saveAs sprites](/screenshot/saveAs.png)
+![saveAs sprites](/screenshot/saveAs.PNG)
   - commit and push. if you don't have right to push, do a pull request.
 
 Click.
