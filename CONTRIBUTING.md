@@ -1,4 +1,4 @@
-# Contributing
+<h1 align="center">Contributing</h1>
 
 We need you for sprite naming !
 
@@ -20,21 +20,25 @@ Ressources sprites have already been ripped from [spriters-resource.com](https:/
  
 A ripped sprite sheet looks like that:
 
-![farfetchd sprites](/screenshot/farfetchd.png)
+<p align="center">
+  <img src="/screenshot/farfetchd.png" alt="farfetchd sprites">
+</p>
 
 Unfortunately, ripped sprite sheets available on spriter-resource can not be used directly, so we need to do some preprocessing stuff before being able to use it.
 
-# Contributing by doing Tileset standardisation
+## Contributing by doing Tileset standardisation
 
 Choose a pokemon that has not already its sprite sheet inside a folder located in the app/assets/sprites directory.
 
 In the following tutorial, we will use the example of farfetchd.
 
-## Step 1: PNG
+### Step 1: PNG
 
 You can download the sprite sheet by clicking "Download this Sheet" on [spriters-resource.com](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/).
 
-![farfetchd sprites](/screenshot/downloadThisSheet.PNG)
+<p align="center">
+  <img src="/screenshot/downloadThisSheet.PNG" alt="farfetchd sprites">
+</p>
 
 Please follow the following guideline:
 
@@ -50,7 +54,9 @@ Please follow the following guideline:
 
 Now, you should have a transparent background and all the sprite selected ; something like that:
 
-![transparentBackground sprites](/screenshot/transparentBackground.PNG)
+<p align="center">
+  <img src="/screenshot/transparentBackground.PNG" alt="transparentBackground sprites">
+</p>
 
 Now :
 
@@ -60,21 +66,25 @@ Now :
   - delete `attack`, `special attack` columns 2, 3 etc..
   - shift + C, select only the chosen pokemon sprites (in case of multiple pokemons on the same sprite sheet) and then press enter
 
-![allStepDown sprites](/screenshot/allStepDown.PNG)
+<p align="center">
+  <img src="/screenshot/allStepDown.PNG" alt="allStepDown sprites">
+</p>
 
   - export as PNG (naming it after the pokedex number of the pokemon, e.g. 1 for Bulbasaur)
   - create a folder at app/assets/sprites with the pokedex number of the pokemon.
   - move your created picture in the created folder
 
-![saveAs sprites](/screenshot/saveAs.PNG)
+<p align="center">
+  <img src="/screenshot/saveAs.PNG" alt="saveAs sprites">
+</p>
 
-## Step 2: JSON
+### Step 2: JSON
 
-### Generating it using Tile
+#### Generating it using Tile
 
-**\\ TODO**
+**\\\\ TODO**
 
-### Format it
+#### Format it
 
 Go to [SpriteSheet Tool](https://www.leshylabs.com/apps/sstool/).
 
