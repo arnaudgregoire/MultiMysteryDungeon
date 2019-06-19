@@ -2,6 +2,10 @@
 
 ## UML
 
+### Class Diagram
+
+![classDiagramPokemon.png](uml/classDiagramPokemon.png)
+
 ### Use case diagram
 
 ![gameEngineUseCaseDiagram](uml/gameEngineUseCaseDiagram.png)
