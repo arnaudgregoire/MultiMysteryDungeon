@@ -19,7 +19,7 @@ For example, you will in the folder app/assets/sprites/1:
  
 A ripe sprite sheet looks like that:
 
-![magmar sprites](app/assets/magmar.png)
+![farfetchd sprites](/screenshot/farfetchd.png)
 
 Unfortunately, the ripe sprite sheet available on spriter-resource can not be used directly. So we need to do some preprocessing befpre using it.
 
@@ -27,7 +27,43 @@ Unfortunately, the ripe sprite sheet available on spriter-resource can not be us
 
 Choose a pokemon that has not already his spritesheet inside a folder in aapp/assets/sprites.
 
-For example, Magmar.
+For the tuto, we will use the example of farfetchd.
+
+You can download by clicking "Download this Sheet" in [spriters-resource.com](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/).
+
+![farfetchd sprites](/screenshot/downloadThisSheet.png)
+
+Please follow this guideline:
+
+  - open GIMP, if you don't have GIMP, install it.
+  - If you don't have GIMP and you don't know how to install, press Alt+F4 to quick install it and open an issue indicating your ip adress for future blacklist.
+  - drag and drop the picture in gimp
+  - Selection by color
+  - left click on the background
+  - open calque menu
+  - transparency tab
+  - add an alpha canal function
+  - press delete 
+
+Now you should have a transparent background and all the sprite selected, something like that.
+
+![transparentBackground sprites](/screenshot/transparentBackground.png)
+
+Now 
+  - remove the text
+  - remove the creddit
+  - remove next pokemon and other shenanigans
+  - delete attack, special attack columns 2,3 etc..
+  - shift + C, select only the one pokemon sprites (in case of multiples pokemons on the same spritesheet) and then enter
+
+![allStepDown sprites](/screenshot/allStepDown.png)
+
+  - export as png with as name the pokedex number of the pokemon
+  - Create at app/assets/sprites a folder with the pokedex number of the pokemon.
+  - move your created picture in the created folder
+
+![saveAs sprites](/screenshot/saveAs.png)
+  - commit and push. if you don't have right to push, do a pull request.
 
 Click.
  Then, rename the pokemon sprite that have a "spriteXXX" name following this pattern:
