@@ -1,10 +1,35 @@
-# If you want to help, cause obviously no ones cares a half of a Spinarak
+# Contributing
 
-  - Open Firefox
-  - Go to https://www.leshylabs.com/apps/sstool/
-  - drag and drop assets/sprites.png
-  - drag and drop assets/sprites.json
+We need you for sprite naming !
 
+The folder app/assets/sprites contains sprites informations about each pokemon.
+
+To display a pokemon, we must have: 
+
+ - Sprites about him. In general, ressources files that we found contains sprites for moving, sleeping, hurt, special attack  and attack.
+ - a JSON format to indicate the engine where to find the sprite.
+ 
+ We choose to have one tileset per pokemon. The tileset is an JSON object with the format "JSON TP Array"
+ 
+For example, you will in the folder app/assets/sprites/1:
+
+ - a .png picture that contain all sprites of Bulbasaur (cause his pokedex number is 1).
+ - a JSON object that contain informations that will transmit to the game engine, to tell him where are the different sprites.                                                                                                                                       
+ Ressources sprites have already been riped on [spriters-resource.com](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/).
+ 
+A ripe sprite sheet looks like that:
+
+![magmar sprites](app/assets/magmar.png)
+
+Unfortunately, the ripe sprite sheet available on spriter-resource can not be used directly. So we need to do some preprocessing befpre using it.
+
+# Contributing by doing Tileset standardisation
+
+Choose a pokemon that has not already his spritesheet inside a folder in aapp/assets/sprites.
+
+For example, Magmar.
+
+Click.
  Then, rename the pokemon sprite that have a "spriteXXX" name following this pattern:
 
  a_b_c_d
@@ -26,7 +51,7 @@
 
 Cause im nice, i help you to your journey with magmar's sprites:
 
-![magmar sprites](app/assets/magmar.png)
+
 
 Save all your changes in JSON-TP-Array, on file sprites.json
 
