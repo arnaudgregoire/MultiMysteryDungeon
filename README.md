@@ -2,6 +2,10 @@
 
 > The best (and only) Pokemon Mystery Dungeon game that you can play with your friends !
 
+## Contributing
+
+You can help by doing several things detailed on the [contributing](CONTRIBUTING.md)  markdown.
+
 ## How to play
 
 __Online__
