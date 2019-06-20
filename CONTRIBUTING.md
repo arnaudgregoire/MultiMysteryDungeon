@@ -127,7 +127,7 @@ Each sprite will be named a_b_c_d. And a,b,c,d will be replaced by following tho
   Unfortunately for this tutorial, fartechd is one the few pokemons that don't have a vertical symmetry. So, for now, we will delete right sprites from the sprite sheet by clicking on the sprite and then clicking on delete. After sprite suppression, you should have something like that.
 
 <p align="center">
-  <img src="/screenshot/rightSupression.PNG" alt="rightSupression sprites">
+  <img src="/screenshot/rightSuppression.PNG" alt="rightSupression sprites">
 </p>
 
 Now, we can start to rename every remaining sprites. Usually, they are displayed like that :
