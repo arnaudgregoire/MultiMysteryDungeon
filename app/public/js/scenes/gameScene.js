@@ -6,6 +6,9 @@ class GameScene extends Phaser.Scene{
     }
 
     preload() {
+        [1,4,83,142,144].forEach((number)=>{
+            this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
+        })
         this.load.image('tiles','../../assets/test_tileset.png');
         this.load.tilemapTiledJSON('map','../../assets/test_map.json');
         this.load.multiatlas('sprites','../../assets/test_sprites.json');
@@ -16,10 +19,10 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.physics.add.group();
         this.texts = this.physics.add.group();
-        createAnimations(self);
         this.map = this.make.tilemap({key:'map'});
         const tileset = this.map.addTilesetImage('test_tileset', 'tiles');
-        const worldLayer = this.map.createStaticLayer('world', tileset, 0, 0);   
+        const worldLayer = this.map.createStaticLayer('world', tileset, 0, 0);
+        this.animationManager = new AnimationManager(self);
       
         /* 
         This will populate the cursors object with our four main Key objects (up, down, left, and right),
@@ -129,7 +132,7 @@ class GameScene extends Phaser.Scene{
         var spriteKey = self.getSpriteKey(player);
         // if sprite not already loaded, we create it
         if(!self.anims.exists(spriteKey)){
-            createAnimations(self, player.pokedexIdx);
+            self.animationManager.createAnimations(player.pokedexIdx);
         }
         // We play the new correct animation
         self.playAnimation(player, spriteKey);

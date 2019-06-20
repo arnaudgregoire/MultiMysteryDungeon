@@ -11,7 +11,7 @@ class GameController {
   constructor(websocket, config) {
     this.websocket = websocket;
     this.playerControllers = [];
-    this.pokedex = [1,2,5,7,12,25];
+    this.pokedex = [1,4,83,142,144];
     this.game = new Game(config);
     this.eventEmitter = new EventEmitter();
     this.initialize();
