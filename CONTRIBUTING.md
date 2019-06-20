@@ -66,6 +66,8 @@ Now :
   - delete `attack`, `special attack` columns 2, 3 etc..
   - shift + C, select only the chosen pokemon sprites (in case of multiple pokemons on the same sprite sheet) and then press enter
 
+**Warning, please verify that there is no pixel lines on picture borders. Otherwise, it will crash the segmentation algorithm used in step 2** 
+
 <p align="center">
   <img src="/screenshot/allStepDown.PNG" alt="allStepDown sprites">
 </p>
