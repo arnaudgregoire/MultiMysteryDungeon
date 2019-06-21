@@ -228,5 +228,11 @@ Select JSON TP Array format and save the json file as pokedex_number.json, here 
 
 Move the downloaded picture and json to the app/assets/sprites/pokedex_number folder and add the json and replace the old spritesheet by the new optimized one.
 
+Lastly, to be used as input for our client game Engine phaser, we have to do some minor modifications on the json you created. There is a script in app/script/normalizeJSON.js to help you to do so. To generate the new JSON, just type in app/script:
+
+```sh
+node ./normalizeJSON.js 'your_pokemon_number'
+```
+
 Commit & Push. If you don't have right for push, do a pull request.
 
