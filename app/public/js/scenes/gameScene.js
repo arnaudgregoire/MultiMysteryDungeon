@@ -9,7 +9,7 @@ class GameScene extends Phaser.Scene{
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240, 270, 320, 50);
+        progressBox.fillRect(240, 270, 1000, 50);
 
         let width = this.cameras.main.width;
         let height = this.cameras.main.height;
@@ -52,7 +52,7 @@ class GameScene extends Phaser.Scene{
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250, 280, 300 * value, 30);
+            progressBar.fillRect(250, 280, 1000 * value, 30);
         });
                     
         this.load.on('fileprogress', function (file) {
