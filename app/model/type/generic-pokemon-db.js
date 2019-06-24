@@ -1,0 +1,5 @@
+class GenericPokemonDB{
+    constructor(doc){
+        
+    }
+}

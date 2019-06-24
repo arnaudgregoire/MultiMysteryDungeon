@@ -120,7 +120,7 @@ const TypeSchema = new Schema({
 });
 
 
-const PokemonSchema = new Schema({
+const GenericPokemonSchema = new Schema({
     abilities:
     [{
         ability: AbilitySchema,
@@ -165,6 +165,6 @@ const PokemonSchema = new Schema({
     types:[TypeSchema]
 });
 
-const PokemonModel = mongoose.model("Pokemon", PokemonSchema);
+const GenericPokemonModel = mongoose.model("GenericPokemon", GenericPokemonSchema);
 
-module.exports = PokemonModel;
+module.exports = GenericPokemonModel;

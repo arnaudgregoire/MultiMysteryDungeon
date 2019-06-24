@@ -1,7 +1,23 @@
 const PlayerModel = require("../model/player-model");
 const Player = require("../model/type/player");
+const GenericPokemonModel = require("../model/generic-pokemon-model");
 
 class DbManager {
+  static loadGenericPokemon(){
+    return new Promise(
+      function (resolve, reject){
+        GenericPokemonModel.find({}).then((docs,err) => {
+          if(docs.length != 151){
+            reject(new Error("wrong pokemons number loaded (expected 151)"));
+          }
+          else{
+            resolve(docs);
+          }
+        })
+      }
+    )
+  }
+
   static loadPlayer(playerId) {
     // We try to find a user that has the fiven player id
     return new Promise(
