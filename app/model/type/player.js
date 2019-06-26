@@ -1,15 +1,15 @@
 /*
 x : pokemon position on map
 y : same
-pokedexIdx : the pokedex number of the pokemon Ex Charmander 4
+gameIndex : the pokedex number of the pokemon Ex Charmander 4
 id : the id of the player
 */
 class Player{
-  constructor(id, x, y, pokedexIdx, name){
+  constructor(id, x, y, pokemonIndex, name){
     this.id = id;
     this.x = x;
     this.y = y;
-    this.pokedexIdx = pokedexIdx;
+    this.pokemonIndex = pokemonIndex;
     this.name = name;
     this.orientation = "left";
     this.action = "0";
