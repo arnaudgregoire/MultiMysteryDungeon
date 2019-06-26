@@ -18,13 +18,14 @@ class GenericPokemonDB{
         self.moves = [];
         doc.moves.forEach((move) =>{
             self.moves.push(new Move(
-                mmove.name,
+                move.name,
                 move.url,
                 move.levelLearnedAt,
                 move.move_learn_method                
             ))
         });
         self.name = doc.name;
+        self.gameIndex = doc.game_index;
         self.stats = [];
         doc.stats.forEach((stat) =>{
             self.stats.push({

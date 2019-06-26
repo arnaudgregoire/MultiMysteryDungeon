@@ -1,9 +1,9 @@
-const Timers = require("timers");
 const DbManager = require("./db-manager");
 const PlayerController = require("./player-controller");
 const Game = require("../engine/game");
 const Player = require("../model/type/player");
-const EventEmitter = require('events');
+const EventEmitter = require('events'); 
+const genericPokemonDB = require('../model/type/generic-pokemon-db');
 
 
 class GameController {
@@ -13,8 +13,16 @@ class GameController {
     this.playerControllers = [];
     this.pokedex = [1,4,83,142,144];
     this.game = new Game(config);
-    this.eventEmitter = new EventEmitter();
-    this.initialize();
+    DbManager.loadGenericPokemon().then((docs)=>{
+      docs.forEach((doc)=>{
+        //console.log("loading " + doc.name + "...");
+        this.game.genericPokemonDBs.push(new genericPokemonDB(doc));
+      })
+    }).then(()=>{
+      console.log("Generic Pokemons loaded from DB");
+      this.eventEmitter = new EventEmitter();
+      this.initialize();
+    })
   }
 
   initialize() {

@@ -121,6 +121,10 @@ const TypeSchema = new Schema({
 
 
 const GenericPokemonSchema = new Schema({
+    game_index:{
+        type:Number,
+        required:true
+    },
     abilities:
     [{
         ability: AbilitySchema,

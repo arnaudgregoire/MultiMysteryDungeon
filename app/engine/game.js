@@ -7,7 +7,9 @@ class Game {
     this.tilesize = config.tilesize;
     this.players = [];
     this.turn = 0;
+    this.genericPokemonDBs = [];
   }
+
 
   setupNewTurn(){
     this.players.forEach(player =>{
