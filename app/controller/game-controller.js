@@ -12,7 +12,7 @@ class GameController {
   constructor(websocket, config) {
     this.websocket = websocket;
     this.playerControllers = [];
-    this.pokedex = [1,4,83,142,144];
+    this.pokedex = [1,2,3,4,6,7,83,142,144];
     this.game = new Game(config);
     DbManager.loadGenericPokemon().then((docs)=>{
       docs.forEach((doc)=>{
