@@ -23,7 +23,7 @@ class Game {
       let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
       let ivs = [];
       ENUM_STAT.forEach((stat)=>{
-        ivs.push({name:stat, value: getRandomInt(31)});
+        ivs.push({name:stat, value: this.getRandomInt(31)});
       });
       let evs = [];
       ENUM_STAT.forEach((stat)=>{
@@ -115,7 +115,7 @@ class Game {
     let found = false;
     let foundPlayer;
     this.players.forEach(player => {
-      if (player.id == id) {
+      if (player.userId == id) {
         found = true;
         foundPlayer = player;
       }

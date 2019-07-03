@@ -43,7 +43,7 @@ class GameController {
       controller.socket.emit("currentPlayers", self.game.players);
     });
     self.eventEmitter.on('newPlayer', (controller)=>{
-      controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.playerId));
+      controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
     })
   }
 
@@ -63,25 +63,25 @@ class GameController {
     // on new connections
     self.websocket.on("connection",function(socket){
       socket.emit("sendId", socket.id);
-      let playerId = socket.handshake.session.passport.user._id;
+      let userId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
       let randomPokedexNumber = self.pokedex[self.randomIntFromInterval(0,self.pokedex.length - 1)];
       // if no player id corresponding in game players,then try to load it from db
-      if(!self.game.isPlayer(playerId)){
+      if(!self.game.isPlayer(userId)){
         //console.log("player doesnt exist in world");
-        self.loadPlayer(playerId)
+        self.loadPlayer(userId)
         .then((dbPlayer)=>{
           // if no player corresponding to the id in db, then create a new player
           let player = dbPlayer;
           if(player == 0){
             //console.log("new player created");
-            let playerId = uniqid();
             let pokemonId = uniqid();
-            player = new Player(playerId, 240, 240, name, pokemonId);
+            player = new Player(userId, 240, 240, name, pokemonId);
             let pokemon = self.game.createPokemon(pokemonId,randomPokedexNumber);
             self.game.pokemons.push(pokemon);
           }
           player.socketId = socket.id;
+          //console.log(player);
           self.game.addPlayer(player);
           let controller = new PlayerController(socket, self.eventEmitter);
           controller.initialize();
@@ -109,12 +109,13 @@ class GameController {
     // remove this player from our players object
     // save player properties in db
     let self = this;
-    let player = self.game.getPlayerById(controller.playerId);
+    //console.log(controller);
+    let player = self.game.getPlayerById(controller.userId);
     this.savePlayer(player).then((res)=>{
       // remove player from server
       self.removeObjectFromArray(player, self.game.players);
       player = null;
-      self.websocket.emit("disconnect", controller.playerId);
+      self.websocket.emit("disconnect", controller.userId);
       console.log(controller.email +" disconnected");
       // delete player controller
       self.removeObjectFromArray(controller, self.playerControllers);
@@ -129,7 +130,7 @@ class GameController {
   onPlayerInput(controller) {
     let input = controller.input;
     let self = this;
-    let player = self.game.getPlayerById(controller.playerId);
+    let player = self.game.getPlayerById(controller.userId);
     self.setOrientation(player, input);
     self.setMoveAlongAxes(player, input);
     self.setAction(player, input);
@@ -199,27 +200,27 @@ class GameController {
     return DbManager.savePlayer(player);
   }
 
-  loadPlayer(playerId) {
-    return DbManager.loadPlayer(playerId);
+  loadPlayer(userId) {
+    return DbManager.loadPlayer(userId);
   }
 
   /**
   * Check if the player id is one of the player Controller id
-  * @param {string} playerId
+  * @param {string} userId
   */
-  isPlayerController(playerId) {
+  isPlayerController(userId) {
     let is = false;
     this.playerControllers.forEach(controller => {
-      if(controller.playerId == playerId){is=true};
+      if(controller.userId == userId){is=true};
     });
     return is;
   }
 
-  getPlayerControllerById(playerId) {
-    this.playerControllers.forEach(player => {
-      if(player.playerId == playerId){return player}
+  getPlayerControllerById(userId) {
+    this.playerControllers.forEach(controller => {
+      if(controller.userId == userId){return controller}
     })
-    return new Error("no player controller found for given id ( " +playerId+ " )");
+    return new Error("no player controller found for given id ( " +userId+ " )");
   }
 
   // min and max included

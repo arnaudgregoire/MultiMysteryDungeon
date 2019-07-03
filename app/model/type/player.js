@@ -5,8 +5,8 @@ gameIndex : the pokedex number of the pokemon Ex Charmander 4
 id : the id of the player
 */
 class Player{
-  constructor(uniqid, x, y, name, pokemonId){
-    this.uniqid = uniqid;
+  constructor(userId, x, y, name, pokemonId){
+    this.userId = userId;
     this.x = x;
     this.y = y;
     this.pokemonId = pokemonId;
@@ -16,6 +16,7 @@ class Player{
     this.moveAlongX = 0;
     this.moveAlongY = 0;
     this.turnPlayed = false;
+    this.socketId = null;
   }
 }
 
