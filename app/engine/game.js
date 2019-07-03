@@ -1,4 +1,8 @@
 const Player = require("../model/type/player");
+const Pokemon = require("../model/type/pokemon");
+const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
+const ENUM_GENDER = require("../model/type/enums").ENUM_GENDER;
+const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
 
 class Game {
   constructor(config) {
@@ -6,7 +10,51 @@ class Game {
     this.height = config.height;
     this.tilesize = config.tilesize;
     this.players = [];
+    this.pokemons = [];
     this.turn = 0;
+    this.genericPokemonDBs = [];
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  createPokemon(uniqid, gameIndex){
+      let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
+      let ivs = [];
+      ENUM_STAT.forEach((stat)=>{
+        ivs.push({name:stat, value: this.getRandomInt(31)});
+      });
+      let evs = [];
+      ENUM_STAT.forEach((stat)=>{
+        evs.push({name:stat, value: 0});
+      });
+      return new Pokemon(
+        5,
+        ivs,
+        evs,
+        genericPokemon.stats,
+        ENUM_GENDER[this.getRandomInt(ENUM_GENDER).length],
+        false,
+        0,
+        ENUM_NATURE[this.getRandomInt(ENUM_NATURE).length],
+        "",
+        genericPokemon.name,
+        genericPokemon.types,
+        genericPokemon.abilities[this.getRandomInt(genericPokemon.abilities.length)],
+        genericPokemon.stats[5].baseStat,
+        uniqid) 
+  }
+
+
+  getGenericPokemonDbByGameIndex(gameIndex){
+    let pokemonFound =  null;
+    this.genericPokemonDBs.forEach((genericPokemon) =>{
+      if(gameIndex ==  genericPokemon.gameIndex){
+        pokemonFound = genericPokemon;
+      }
+    })
+    return pokemonFound;
   }
 
   setupNewTurn(){
@@ -67,7 +115,7 @@ class Game {
     let found = false;
     let foundPlayer;
     this.players.forEach(player => {
-      if (player.id == id) {
+      if (player.userId == id) {
         found = true;
         foundPlayer = player;
       }

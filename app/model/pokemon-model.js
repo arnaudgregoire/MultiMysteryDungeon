@@ -1,48 +1,46 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ENUM_TYPE = Object.freeze([
-    "normal",
-    "fighting",
-    "flying",
-    "poison",
-    "ground",
-    "rock",
-    "bug",
-    "ghost",
-    "steel",
-    "fire",
-    "water",
-    "grass",
-    "electric",
-    "psychic",
-    "ice",
-    "dragon",
-    "dark",
-    "fairy",
-    "unknown",
-    "shadow"    
-]);
-const ENUM_STAT = Object.freeze([
-    "speed",
-    "special-defense",
-    "special-attack",
-    "defense",
-    "attack",
-    "hp"
-]);
+const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
+const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
+const ENUM_TYPE = require("../model/type/enums").ENUM_TYPE;
 
-const ENUM_MOVE_LEARN_METHOD = Object.freeze([
-    "level-up",
-    "tutor",
-    "machine",
-    "stadium-surfing-pikachu",
-    "light-ball-egg",
-    "colosseum-purification",
-    "xd-shadow",
-    "xd-purification",
-    "form-change",
-    "egg"
-])
+
+const PokemonSchema = new Schema({
+    level:{
+        type: Number,
+        required:true
+    },
+    iv:[IvSchema],
+    ev:[EvSchema],
+    stats:[StatSchema],
+    gender:{
+        type:String,
+        required:true
+    },
+    shiny:{
+        type:Boolean,
+        required:true
+    },
+    happiness:{
+        type:Number,
+        required:true
+    },
+    nature:{
+        type:String,
+        required:true,
+        enum:ENUM_NATURE
+    },
+    name:{
+        type:String,
+        required:true
+    },
+    nickname:{
+        type:String,
+        required:true
+    },
+    types:[TypeSchema],
+    ability:AbilitySchema
+});
 
 
 const AbilitySchema = new Schema({
@@ -55,50 +53,39 @@ const AbilitySchema = new Schema({
     }
 });
 
-const FormsSchema = new Schema({
-    name:{
-        type:String,
-        required:true
-    },
-    url:{
-        type:String
-    }
-});
-
-const Move_learn_methodSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
-        enum: ENUM_MOVE_LEARN_METHOD
-    },
-    url:{
-        type:String
-    }
-});
-
-const MoveSchema = new Schema({
-    name:{
-        type:String,
-        required:true
-    },
-    url:{
-        type:String
-    },
-    level_learned_at:{
-        type:Number,
-        required:true
-    },
-    move_learn_method:Move_learn_methodSchema
-});
-
 const StatSchema = new Schema({
     name:{
         type:String,
         required:true,
         enum: ENUM_STAT
     },
-    url:{
-        type:String
+    value:{
+        type:Number,
+        required:true
+    }
+});
+
+const IvSchema = new Schema({
+    name:{
+        type:String,
+        required:true,
+        enum: ENUM_STAT
+    },
+    value:{
+        type:Number,
+        required:true
+    }
+});
+
+const EvSchema = new Schema({
+    name:{
+        type:String,
+        required:true,
+        enum: ENUM_STAT
+    },
+    value:{
+        type:Number,
+        required:true
     }
 });
 
@@ -119,52 +106,6 @@ const TypeSchema = new Schema({
     }
 });
 
+const pokemonModel = mongoose.model("player", PokemonSchema);
 
-const PokemonSchema = new Schema({
-    abilities:
-    [{
-        ability: AbilitySchema,
-        is_hidden:{
-            type:Boolean,
-            required:true
-        },
-        slot:{
-            type:Number,
-            required:true
-        }
-    }],
-    base_experience:{
-        type:Number,
-        required:true
-    },
-    forms:[FormsSchema],
-    height:{
-        type:Number,
-        required:true
-    },
-    is_default:{
-        type:Boolean,
-        required:true
-    },
-    moves:[MoveSchema],
-    name:{
-        type:String,
-        required:true
-    },
-    stats:[{
-        base_stat:{
-            type:Number,
-            required:true
-        },
-        effort:{
-            type: Number,
-            required:true
-        },
-        stat:StatSchema
-    }],
-    types:[TypeSchema]
-});
-
-const PokemonModel = mongoose.model("Pokemon", PokemonSchema);
-
-module.exports = PokemonModel;
+module.exports = pokemonModel;

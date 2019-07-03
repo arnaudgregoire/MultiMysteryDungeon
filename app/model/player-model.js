@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PlayerSchema = new Schema({
-  id:{
+  user_id:{
     type: String,
     required: true
   },
@@ -18,8 +18,8 @@ const PlayerSchema = new Schema({
     type: Number,
     required: false
   },
-  pokedex_idx: {
-    type: Number,
+  pokemon_id: {
+    type: String,
     required: true
   },
   orientation:{

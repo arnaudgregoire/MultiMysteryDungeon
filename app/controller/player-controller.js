@@ -2,7 +2,7 @@ const EventEmitter = require('events');
 
 class PlayerController{
   constructor(socket, eventEmitter){
-    this.playerId = socket.handshake.session.passport.user._id;
+    this.userId = socket.handshake.session.passport.user._id;
     this.name = socket.handshake.session.passport.user.name;
     this.email = socket.handshake.session.passport.user.email;
     this.socket = socket;
