@@ -4,6 +4,7 @@ const Game = require("../engine/game");
 const Player = require("../model/type/player");
 const EventEmitter = require('events'); 
 const genericPokemonDB = require('../model/type/generic-pokemon-db');
+const uniqid = require('uniqid');
 
 
 class GameController {
@@ -74,7 +75,11 @@ class GameController {
           let player = dbPlayer;
           if(player == 0){
             //console.log("new player created");
-            player = new Player(playerId, 240, 240, randomPokedexNumber, name);
+            let playerId = uniqid();
+            let pokemonId = uniqid();
+            player = new Player(playerId, 240, 240, name, pokemonId);
+            let pokemon = self.game.createPokemon(pokemonId,randomPokedexNumber);
+            self.game.pokemons.push(pokemon);
           }
           player.socketId = socket.id;
           self.game.addPlayer(player);

@@ -18,17 +18,17 @@ class DbManager {
     )
   }
 
-  static loadPlayer(playerId) {
+  static loadPlayer(uniqid) {
     // We try to find a user that has the fiven player id
     return new Promise(
       function (resolve, reject) {
-        PlayerModel.find({id: playerId}).then((docs,err) => {
+        PlayerModel.find({id: uniqid}).then((docs,err) => {
           if (docs.length == 1) {
             let doc = docs[0];
-            let player = new Player(doc.id, doc.x, doc.y, doc.pokedex_idx, doc.name);
+            let player = new Player(doc.uniqid, doc.x, doc.y, doc.name, doc.pokemon_id);
             player.orientation = doc.orientation;
             player.action = doc.action;
-            console.log("player " + playerId + " loaded");
+            console.log("player " + uniqid + " loaded");
             resolve(player);
           }
           //  If no player found, we return a resolve promise with a code error of "0", meaning 0 document found
@@ -36,7 +36,7 @@ class DbManager {
             resolve(0);
           }
           else {
-            reject(new Error("multiples players with same user id : "+ playerId +" detected!"));
+            reject(new Error("multiples players with same user id : "+ uniqid +" detected!"));
           }
         }
       )}
@@ -47,46 +47,46 @@ class DbManager {
     return new Promise(
       function (resolve, reject) {
         // We try to find a user that has the given player id
-        PlayerModel.find({id:player.id}).then((docs,err)=>{
+        PlayerModel.find({id:player.uniqid}).then((docs,err)=>{
           // 1 document : we update the document we found
           if (docs.length == 1){
             PlayerModel.updateOne(
               {
-                id:player.id
+                uniqid:player.uniqid
               },
               {
                 x:player.x,
                 y:player.y,
-                pokedex_idx:player.pokedexIdx,
+                pokemon_id:player.pokemonId,
                 orientation:player.orientation,
                 action:player.action,
                 name: player.name
               }
             ).then((res) =>{
-              console.log("player " + player.id + " updated");
-              resolve(player.id);
+              console.log("player " + player.uniqid + " updated");
+              resolve(player.uniqid);
             });
           }
           // 0 document: we create a new document with the given player id
           else if (docs.length == 0) {
             PlayerModel.create(
               {
-                id:player.id,
+                uniqid:player.uniqid,
                 x:player.x,
                 y:player.y,
-                pokedex_idx:player.pokedexIdx,
+                pokemon_id:player.pokemonId,
                 orientation:player.orientation,
                 action:player.action,
                 name: player.name
               }
             ).then((res) =>{
-              console.log("player " + player.id + " created");
-              resolve(player.id);
+              console.log("player " + player.uniqid + " created");
+              resolve(player.uniqid);
             });
           }
           // Case other than 0 and 1, there is an inconsistency in the data
           else{
-            reject(new Error("multiples players with same user id : "+ player.id +" detected!"));
+            reject(new Error("multiples players with same user id : "+ player.uniqid +" detected!"));
           }
         });
       }

@@ -1,65 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
+const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
+const ENUM_TYPE = require("../model/type/enums").ENUM_TYPE;
 
-const ENUM_STAT = Object.freeze([
-    "speed",
-    "special-defense",
-    "special-attack",
-    "defense",
-    "attack",
-    "hp"
-]);
 
-const ENUM_NATURE = Object.freeze([
-    "Adamant",
-    "Bashful",
-    "Bold",
-    "Brave",	
-    "Calm",
-    "Careful",
-    "Docile",
-    "Gentle",
-    "Hardy",
-    "Hasty",
-    "Impish",
-    "Jolly",
-    "Lax",
-    "Lonely",
-    "Mild",
-    "Modest",
-    "Naive",
-    "Naughty",
-    "Quiet",
-    "Quirky",
-    "Rash",
-    "Relaxed",
-    "Sassy",
-    "Serious",
-    "Timid"
-]);
-
-const ENUM_TYPE = Object.freeze([
-    "normal",
-    "fighting",
-    "flying",
-    "poison",
-    "ground",
-    "rock",
-    "bug",
-    "ghost",
-    "steel",
-    "fire",
-    "water",
-    "grass",
-    "electric",
-    "psychic",
-    "ice",
-    "dragon",
-    "dark",
-    "fairy",
-    "unknown",
-    "shadow"    
-]);
 const PokemonSchema = new Schema({
     level:{
         type: Number,

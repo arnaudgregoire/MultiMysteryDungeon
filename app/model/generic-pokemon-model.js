@@ -1,48 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ENUM_TYPE = Object.freeze([
-    "normal",
-    "fighting",
-    "flying",
-    "poison",
-    "ground",
-    "rock",
-    "bug",
-    "ghost",
-    "steel",
-    "fire",
-    "water",
-    "grass",
-    "electric",
-    "psychic",
-    "ice",
-    "dragon",
-    "dark",
-    "fairy",
-    "unknown",
-    "shadow"    
-]);
-const ENUM_STAT = Object.freeze([
-    "speed",
-    "special-defense",
-    "special-attack",
-    "defense",
-    "attack",
-    "hp"
-]);
-
-const ENUM_MOVE_LEARN_METHOD = Object.freeze([
-    "level-up",
-    "tutor",
-    "machine",
-    "stadium-surfing-pikachu",
-    "light-ball-egg",
-    "colosseum-purification",
-    "xd-shadow",
-    "xd-purification",
-    "form-change",
-    "egg"
-])
+const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
+const ENUM_TYPE = require("../model/type/enums").ENUM_TYPE;
+const ENUM_MOVE_LEARN_METHOD = require("../model/type/enums").ENUM_MOVE_LEARN_METHOD;
 
 
 const AbilitySchema = new Schema({

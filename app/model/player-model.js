@@ -18,8 +18,8 @@ const PlayerSchema = new Schema({
     type: Number,
     required: false
   },
-  pokedex_idx: {
-    type: Number,
+  pokemon_id: {
+    type: String,
     required: true
   },
   orientation:{
