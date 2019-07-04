@@ -3,6 +3,7 @@ const Pokemon = require("../model/type/pokemon");
 const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
 const ENUM_GENDER = require("../model/type/enums").ENUM_GENDER;
 const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
+const pokemonMath = require("./pokemonMath");
 
 class Game {
   constructor(config) {
@@ -19,8 +20,17 @@ class Game {
   }
 
   createPokemon(uniqid, gameIndex){
+      let level = 5;
+      let happiness = 0;
+      let nickname = "";
+      let nature = ENUM_NATURE[this.getRandomInt(ENUM_NATURE.length)];
+      let gender = ENUM_GENDER[this.getRandomInt(ENUM_GENDER.length)];
       let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
+      let ability = genericPokemon.abilities[this.getRandomInt(genericPokemon.abilities.length)].ability;
+      //console.log(genericPokemon.abilities);
+      //console.log(ability);
       let ivs = [];
+      let shiny = false;
       ENUM_STAT.forEach((stat)=>{
         ivs.push({name:stat, value: this.getRandomInt(31)});
       });
@@ -28,19 +38,42 @@ class Game {
       ENUM_STAT.forEach((stat)=>{
         evs.push({name:stat, value: 0});
       });
+      let stats = [];
+      for (let i = 0; i < ENUM_STAT.length - 1; i++) {
+        stats.push({
+          name:ENUM_STAT[i],
+          value: pokemonMath.computeStat(
+            ENUM_STAT[i],
+            genericPokemon.stats[i].baseStat,
+            ivs[i].value,
+            evs[i].value,
+            level,
+            nature)
+        })
+      }
+
+      stats.push({
+        name:ENUM_STAT[5],
+        value:pokemonMath.computeHP(
+          genericPokemon.stats[5].baseStat,
+          ivs[5].value,
+          evs[5].value,
+          level)
+      });
+
       return new Pokemon(
-        5,
+        level,
         ivs,
         evs,
-        genericPokemon.stats,
-        ENUM_GENDER[this.getRandomInt(ENUM_GENDER).length],
-        false,
-        0,
-        ENUM_NATURE[this.getRandomInt(ENUM_NATURE).length],
-        "",
+        stats,
+        gender,
+        shiny,
+        happiness,
+        nature,
+        nickname,
         genericPokemon.name,
         genericPokemon.types,
-        genericPokemon.abilities[this.getRandomInt(genericPokemon.abilities.length)],
+        ability,
         genericPokemon.stats[5].baseStat,
         uniqid) 
   }

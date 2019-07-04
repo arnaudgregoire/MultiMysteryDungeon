@@ -24,10 +24,10 @@ class DbManager {
     // We try to find a user that has the fiven player id
     return new Promise(
       function (resolve, reject) {
-        PlayerModel.find({id: userId}).then((docs,err) => {
+        PlayerModel.find({user_id: userId}).then((docs,err) => {
           if (docs.length == 1) {
             let doc = docs[0];
-            let player = new Player(doc.id, doc.x, doc.y, doc.name, doc.pokemon_id);
+            let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id);
             player.orientation = doc.orientation;
             player.action = doc.action;
             console.log("player " + userId + " loaded");
@@ -67,8 +67,6 @@ class DbManager {
               doc.ability,
               doc.health,
               doc.uniqid);
-            player.orientation = doc.orientation;
-            player.action = doc.action;
             console.log("pokemon " + pokemonId + " loaded");
             resolve(pokemon);
           }
@@ -85,6 +83,7 @@ class DbManager {
   };
 
   static savePokemon(pokemon){
+    //console.log(pokemon);
     return new Promise(
       function (resolve, reject) {
         // We try to find a user that has the given player id
@@ -135,7 +134,7 @@ class DbManager {
                 health: pokemon.health
               }
             ).then((res) =>{
-              console.log("pokemon " + pokemon.uniqid + " created");
+              console.log("pokemon " + pokemon.uniqid + " saved");
               resolve(pokemon.uniqid);
             });
           }
@@ -186,7 +185,7 @@ class DbManager {
                 name: player.name
               }
             ).then((res) =>{
-              console.log("player " + player.userId + " created");
+              console.log("player " + player.userId + " saved");
               resolve(player.userId);
             });
           }

@@ -66,6 +66,7 @@ class GameController {
       let userId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
       let randomPokedexNumber = self.pokedex[self.randomIntFromInterval(0,self.pokedex.length - 1)];
+      
       // if no player id corresponding in game players,then try to load it from db
       if(!self.game.isPlayer(userId)){
         //console.log("player doesnt exist in world");
@@ -73,7 +74,7 @@ class GameController {
         .then((playerDB)=>{
           // if no player corresponding to the id in db, then create a new player and his pokemon
           let player = playerDB;
-          DbManager.loadPlayer(player.pokemonId)
+          DbManager.loadPokemon(player.pokemonId)
           .then((pokemonDB)=>{
             let pokemon = pokemonDB;
             //if pokemon found, attach it to the player
@@ -81,16 +82,20 @@ class GameController {
               player.pokemon = pokemon;
             }
             // if no player found, create a pokemon and a player
-            if(player == 0){
+            else if(player == 0 && pokemon == 0){
+              console.log("creating player with user id : " + userId);
               let pokemonId = uniqid();
               player = new Player(userId, 240, 240, name, pokemonId);  
+              console.log("creating pokemon with uniqid : " + pokemonId);
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }
-            if(pokemon != 0 && player == 0){
-              return new Error("pokemon found (id : "+ pokemon.uniqid +") but no player found");
+            // no pokemon found but player found
+            else if(pokemon == 0 && player != 0){
+              player.pokemon =self.game.createPokemon(player.pokemonId,randomPokedexNumber);
             }
-            if(pokemon == 0 && player != 0){
-              return new Error("pokemon not found but player foud (id :"+ player.userId +")");
+            // no player but pokemon => error
+            else if(pokemon != 0 && player == 0){
+              return new Error("pokemon found (id : "+ pokemon.uniqid +") but no player found");
             }
             player.socketId = socket.id;
             self.game.addPlayer(player);

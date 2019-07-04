@@ -7,11 +7,11 @@ class GenericPokemonDB{
     constructor(doc){
         let self = this;
         self.abilities = [];
-        doc.abilities.forEach(ability => {
+        doc.abilities.forEach(talent => {
             self.abilities.push({
-                ability: new Ability(ability.ability),
-                is_hidden: ability.is_hidden,
-                slot: ability.slot
+                ability: new Ability(talent.ability.name, talent.ability.url),
+                is_hidden: talent.is_hidden,
+                slot: talent.slot
             })
         });
         self.baseExperience = doc.base_experience;
