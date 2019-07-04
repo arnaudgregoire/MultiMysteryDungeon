@@ -10,6 +10,7 @@ class Player{
     this.x = x;
     this.y = y;
     this.pokemonId = pokemonId;
+    this.pokemon = null;
     this.name = name;
     this.orientation = "left";
     this.action = "0";

@@ -4,7 +4,6 @@ const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
 const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
 const ENUM_TYPE = require("../model/type/enums").ENUM_TYPE;
 
-
 const PokemonSchema = new Schema({
     level:{
         type: Number,
@@ -39,7 +38,15 @@ const PokemonSchema = new Schema({
         required:true
     },
     types:[TypeSchema],
-    ability:AbilitySchema
+    ability:AbilitySchema,
+    health:{
+        type:String,
+        required:true
+    },
+    uniqid:{
+        type:String,
+        required:true
+    }
 });
 
 

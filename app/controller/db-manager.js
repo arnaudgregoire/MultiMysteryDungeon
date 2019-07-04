@@ -1,6 +1,8 @@
 const PlayerModel = require("../model/player-model");
 const Player = require("../model/type/player");
+const Pokemon = require("../model/type/pokemon");
 const GenericPokemonModel = require("../model/generic-pokemon-model");
+const PokemonModel = require("../model/pokemon-model");
 
 class DbManager {
   static loadGenericPokemon(){
@@ -42,6 +44,110 @@ class DbManager {
       )}
     )
   };
+
+  static loadPokemon(pokemonId){
+    // We try to find a user that has the fiven pokemon id
+    return new Promise(
+      function (resolve, reject) {
+        PokemonModel.find({uniqid: pokemonId}).then((docs,err) => {
+          if (docs.length == 1) {
+            let doc = docs[0];
+            let pokemon = new Pokemon(
+              doc.level,
+              doc.ivs,
+              doc.evs,
+              doc.stats,
+              doc.gender,
+              doc.shiny,
+              doc.happiness,
+              doc.nature,
+              doc.nickname,
+              doc.name,
+              doc.types,
+              doc.ability,
+              doc.health,
+              doc.uniqid);
+            player.orientation = doc.orientation;
+            player.action = doc.action;
+            console.log("pokemon " + pokemonId + " loaded");
+            resolve(pokemon);
+          }
+          //  If no player found, we return a resolve promise with a code error of "0", meaning 0 document found
+          else if (docs.length == 0) {
+            resolve(0);
+          }
+          else {
+            reject(new Error("multiples pokemons with same pokemon id : "+ pokemonId +" detected!"));
+          }
+        }
+      )}
+    )
+  };
+
+  static savePokemon(pokemon){
+    return new Promise(
+      function (resolve, reject) {
+        // We try to find a user that has the given player id
+        PokemonModel.find({uniqid:pokemon.uniqid}).then((docs,err)=>{
+          // 1 document : we update the document we found
+          if (docs.length == 1){
+            PokemonModel.updateOne(
+              {
+                uniqid:pokemon.uniqid
+              },
+              {
+                level: pokemon.level,
+                ivs: pokemon.ivs,
+                evs: pokemon.evs,
+                stats: pokemon.stats,
+                gender: pokemon.gender,
+                shiny: pokemon.shiny,
+                happiness: pokemon.happiness,
+                nature: pokemon.nature,
+                nickname: pokemon.nickname,
+                name: pokemon.name,
+                types: pokemon.types,
+                ability: pokemon.ability,
+                health: pokemon.health
+              }
+            ).then((res) =>{
+              console.log("pokemon " + pokemon.uniqid + " updated");
+              resolve(pokemon.uniqid);
+            });
+          }
+          // 0 document: we create a new document with the given player id
+          else if (docs.length == 0) {
+            PokemonModel.create(
+              {
+                uniqid: pokemon.uniqid,
+                level: pokemon.level,
+                ivs: pokemon.ivs,
+                evs: pokemon.evs,
+                stats: pokemon.stats,
+                gender: pokemon.gender,
+                shiny: pokemon.shiny,
+                happiness: pokemon.happiness,
+                nature: pokemon.nature,
+                nickname: pokemon.nickname,
+                name: pokemon.name,
+                types: pokemon.types,
+                ability: pokemon.ability,
+                health: pokemon.health
+              }
+            ).then((res) =>{
+              console.log("pokemon " + pokemon.uniqid + " created");
+              resolve(pokemon.uniqid);
+            });
+          }
+          // Case other than 0 and 1, there is an inconsistency in the data
+          else{
+            reject(new Error("multiples pokemons with same pokemon id : "+ pokemon.uniqid +" detected!"));
+          }
+        });
+      }
+    )
+  }
+
   static savePlayer(player) {
     //console.log(player);
     return new Promise(

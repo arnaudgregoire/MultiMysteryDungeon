@@ -10,7 +10,6 @@ class Game {
     this.height = config.height;
     this.tilesize = config.tilesize;
     this.players = [];
-    this.pokemons = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
   }

@@ -44,7 +44,7 @@ class GameController {
     });
     self.eventEmitter.on('newPlayer', (controller)=>{
       controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
-    })
+    });
   }
 
   update() {
@@ -69,23 +69,35 @@ class GameController {
       // if no player id corresponding in game players,then try to load it from db
       if(!self.game.isPlayer(userId)){
         //console.log("player doesnt exist in world");
-        self.loadPlayer(userId)
-        .then((dbPlayer)=>{
-          // if no player corresponding to the id in db, then create a new player
-          let player = dbPlayer;
-          if(player == 0){
-            //console.log("new player created");
-            let pokemonId = uniqid();
-            player = new Player(userId, 240, 240, name, pokemonId);
-            let pokemon = self.game.createPokemon(pokemonId,randomPokedexNumber);
-            self.game.pokemons.push(pokemon);
-          }
-          player.socketId = socket.id;
-          //console.log(player);
-          self.game.addPlayer(player);
-          let controller = new PlayerController(socket, self.eventEmitter);
-          controller.initialize();
-          self.playerControllers.push(controller);
+        DbManager.loadPlayer(userId)
+        .then((playerDB)=>{
+          // if no player corresponding to the id in db, then create a new player and his pokemon
+          let player = playerDB;
+          DbManager.loadPlayer(player.pokemonId)
+          .then((pokemonDB)=>{
+            let pokemon = pokemonDB;
+            //if pokemon found, attach it to the player
+            if(pokemon != 0 && player != 0){
+              player.pokemon = pokemon;
+            }
+            // if no player found, create a pokemon and a player
+            if(player == 0){
+              let pokemonId = uniqid();
+              player = new Player(userId, 240, 240, name, pokemonId);  
+              player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
+            }
+            if(pokemon != 0 && player == 0){
+              return new Error("pokemon found (id : "+ pokemon.uniqid +") but no player found");
+            }
+            if(pokemon == 0 && player != 0){
+              return new Error("pokemon not found but player foud (id :"+ player.userId +")");
+            }
+            player.socketId = socket.id;
+            self.game.addPlayer(player);
+            let controller = new PlayerController(socket, self.eventEmitter);
+            controller.initialize();
+            self.playerControllers.push(controller);
+          })
         })
       }
       else{
@@ -111,16 +123,18 @@ class GameController {
     let self = this;
     //console.log(controller);
     let player = self.game.getPlayerById(controller.userId);
-    this.savePlayer(player).then((res)=>{
-      // remove player from server
-      self.removeObjectFromArray(player, self.game.players);
-      player = null;
-      self.websocket.emit("disconnect", controller.userId);
-      console.log(controller.email +" disconnected");
-      // delete player controller
-      self.removeObjectFromArray(controller, self.playerControllers);
-      controller = null;
-    });
+    DbManager.savePlayer(player).then((res)=>{
+      DbManager.savePokemon(player.pokemon).then((res)=>{
+        // remove player from server
+        self.removeObjectFromArray(player, self.game.players);
+        player = null;
+        self.websocket.emit("disconnect", controller.userId);
+        console.log(controller.email +" disconnected");
+        // delete player controller
+        self.removeObjectFromArray(controller, self.playerControllers);
+        controller = null;
+      })
+    })
   }
 
   /*
@@ -194,14 +208,6 @@ class GameController {
     else if(input.down){
       player.orientation = "down"
     }
-  }
-
-  savePlayer(player) {
-    return DbManager.savePlayer(player);
-  }
-
-  loadPlayer(userId) {
-    return DbManager.loadPlayer(userId);
   }
 
   /**
