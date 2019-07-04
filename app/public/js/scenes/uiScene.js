@@ -17,7 +17,7 @@ class UIScene extends Phaser.Scene{
     displayPortrait(playerInfo){
         let self = this;
         let portrait = self.add.container(0, 180 * self.portraits.length);
-        portrait.id = playerInfo.id;
+        portrait.userId = playerInfo.userId;
 
         let sprite = self.add.sprite(
             0,
@@ -51,9 +51,9 @@ class UIScene extends Phaser.Scene{
     }
 
 
-    removePortrait(id){
+    removePortrait(userId){
         let self = this;
-        self.portraits.remove(self.portraits.getFirst('id',id));
+        self.portraits.remove(self.portraits.getFirst('userId',userId));
         self.portraits.iterate(function(portrait){
             portrait.setPosition(0, 180  * self.portraits.getIndex(portrait));
         },self);
@@ -64,7 +64,7 @@ class UIScene extends Phaser.Scene{
         let rectStyle = {'false': 0xDC143C, 'true': 0x00C100};
         Object.keys(players).forEach(function (index) {
             self.portraits.iterate((portrait)=>{
-                if(portrait.id == players[index].id){
+                if(portrait.userId == players[index].userId){
                     let graphic = portrait.getFirst();
                     graphic.fillStyle(rectStyle[players[index].turnPlayed],1);
                     graphic.fillRectShape(self.rectangleGeometry);
