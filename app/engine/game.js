@@ -51,14 +51,15 @@ class Game {
             nature)
         })
       }
+      let hp = pokemonMath.computeHP(
+        genericPokemon.stats[5].baseStat,
+        ivs[5].value,
+        evs[5].value,
+        level);
 
       stats.push({
         name:ENUM_STAT[5],
-        value:pokemonMath.computeHP(
-          genericPokemon.stats[5].baseStat,
-          ivs[5].value,
-          evs[5].value,
-          level)
+        value: hp
       });
 
       return new Pokemon(
@@ -74,7 +75,7 @@ class Game {
         genericPokemon.name,
         genericPokemon.types,
         ability,
-        genericPokemon.stats[5].baseStat,
+        hp,
         uniqid) 
   }
 
