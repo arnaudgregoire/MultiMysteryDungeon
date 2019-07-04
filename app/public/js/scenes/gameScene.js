@@ -67,7 +67,7 @@ class GameScene extends Phaser.Scene{
             assetText.destroy();
         });
 
-        [1,4,83,142,144].forEach((number)=>{
+        [1,2,3,4,6,7,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
         this.load.image('tiles','../../assets/test_tileset.png');
@@ -140,13 +140,13 @@ class GameScene extends Phaser.Scene{
     */
     displayPlayers(playerInfo) {
         let self = this;
-        const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokedexIdx + '_0_0_0').setOrigin(0.5, 0.5);
-        player.id = playerInfo.id;
+        const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokemon.gameIndex + '_0_0_0').setOrigin(0.5, 0.5);
+        player.userId = playerInfo.userId;
         player.orientation = playerInfo.orientation;
         player.action = playerInfo.action;
-        player.pokedexIdx = playerInfo.pokedexIdx;
         player.socketId = playerInfo.socketId;
         player.name = playerInfo.name;
+        player.pokemon = playerInfo.pokemon;
         var text = self.add.text(
             playerInfo.x,
             playerInfo.y,
@@ -158,7 +158,7 @@ class GameScene extends Phaser.Scene{
             }
         ).setOrigin(0.5,1.6);
         text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 0);
-        text.id = playerInfo.id;
+        text.userId = playerInfo.userId;
         self.displayPlayer(player);
         if(player.socketId == self.socketId){
             //we set the camera on the player hero
@@ -168,15 +168,15 @@ class GameScene extends Phaser.Scene{
         self.texts.add(text);
     }
 
-    removePlayer(id){
+    removePlayer(userId){
         let self = this;
         self.players.getChildren().forEach(function (player) {
-            if (id === player.id) {
+            if (userId === player.userId) {
             player.destroy();
             }
         });
         self.texts.getChildren().forEach(function (player) {
-            if (id === player.id) {
+            if (userId === player.userId) {
             player.destroy();
             }
         });
@@ -192,7 +192,7 @@ class GameScene extends Phaser.Scene{
         var spriteKey = self.getSpriteKey(player);
         // if sprite not already loaded, we create it
         if(!self.anims.exists(spriteKey)){
-            self.animationManager.createAnimations(player.pokedexIdx);
+            self.animationManager.createAnimations(player.pokemon.gameIndex);
         }
         // We play the new correct animation
         self.playAnimation(player, spriteKey);
@@ -227,7 +227,7 @@ class GameScene extends Phaser.Scene{
         "downright":1
         };
         var key = "";
-        key += player.pokedexIdx;
+        key += player.pokemon.gameIndex;
         key += "_";
         key += player.action;
         key += "_";
@@ -249,7 +249,7 @@ class GameScene extends Phaser.Scene{
         let self = this;
         Object.keys(players).forEach(function (index) {
             self.players.getChildren().forEach(function (player) {
-            if (players[index].id === player.id) {
+            if (players[index].userId === player.userId) {
                 player.setPosition(players[index].x, players[index].y);
                 //if the actual animation sprite currently played client side is different from the server one,
                 // the client start to play and save the new sprite
@@ -262,7 +262,7 @@ class GameScene extends Phaser.Scene{
             }
             });
             self.texts.getChildren().forEach(function (player) {
-                if (players[index].id === player.id) {
+                if (players[index].userId === player.userId) {
                     player.setPosition(players[index].x, players[index].y);
                 }
             })

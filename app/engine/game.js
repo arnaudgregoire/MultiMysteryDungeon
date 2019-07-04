@@ -76,7 +76,8 @@ class Game {
         genericPokemon.types,
         ability,
         hp,
-        uniqid) 
+        uniqid,
+        gameIndex) 
   }
 
 

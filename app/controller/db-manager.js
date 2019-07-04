@@ -66,7 +66,8 @@ class DbManager {
               doc.types,
               doc.ability,
               doc.health,
-              doc.uniqid);
+              doc.uniqid,
+              doc.gameIndex);
             console.log("pokemon " + pokemonId + " loaded");
             resolve(pokemon);
           }
@@ -107,7 +108,8 @@ class DbManager {
                 name: pokemon.name,
                 types: pokemon.types,
                 ability: pokemon.ability,
-                health: pokemon.health
+                health: pokemon.health,
+                gameIndex: pokemon.gameIndex
               }
             ).then((res) =>{
               console.log("pokemon " + pokemon.uniqid + " updated");
@@ -131,7 +133,8 @@ class DbManager {
                 name: pokemon.name,
                 types: pokemon.types,
                 ability: pokemon.ability,
-                health: pokemon.health
+                health: pokemon.health,
+                gameIndex: pokemon.gameIndex
               }
             ).then((res) =>{
               console.log("pokemon " + pokemon.uniqid + " saved");

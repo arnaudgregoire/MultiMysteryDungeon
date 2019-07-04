@@ -2,7 +2,7 @@ const Stat = require('./stat');
 const Type = require('./type');
 
 class Pokemon{
-    constructor(level, ivs, evs, stats, gender, shiny, happiness, nature, nickname, name, types, ability, health, uniqid){
+    constructor(level, ivs, evs, stats, gender, shiny, happiness, nature, nickname, name, types, ability, health, uniqid, gameIndex){
         this.level = level;
         this.ivs = ivs;
         this.evs = evs;
@@ -17,6 +17,7 @@ class Pokemon{
         this.health = health;
         this.uniqid = uniqid;
         this.name = name;
+        this.gameIndex = gameIndex;
     }
 }
 

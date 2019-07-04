@@ -23,7 +23,7 @@ class UIScene extends Phaser.Scene{
             0,
             0,
             'portraits',
-            'portrait' + playerInfo.pokedexIdx);
+            'portrait' + playerInfo.pokemon.gameIndex);
         sprite.setScale(3,3);
 
         let text = self.add.text(-70,70,playerInfo.name,{

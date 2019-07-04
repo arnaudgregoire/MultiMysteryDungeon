@@ -110,6 +110,10 @@ const PokemonSchema = new Schema({
     uniqid:{
         type:String,
         required:true
+    },
+    gameIndex:{
+        type:Number,
+        required:true
     }
 });
 const pokemonModel = mongoose.model("pokemon", PokemonSchema);

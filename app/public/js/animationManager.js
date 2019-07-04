@@ -7,7 +7,7 @@ class AnimationManager{
         this.game = game;
     }
 
-    createAnimations(pokedexIdx){
+    createAnimations(gameIndex){
         let self = this;
         //for each orientation
         /*
@@ -20,43 +20,43 @@ class AnimationManager{
         ['0','1','2','3','4'].forEach(orientation => {
             //moving sprites
             self.game.anims.create({
-                key: pokedexIdx + '_0_' + orientation,
-               frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0,1,2], prefix: pokedexIdx + '_0_' + orientation + '_'}),
+                key: gameIndex + '_0_' + orientation,
+               frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1,2], prefix: gameIndex + '_0_' + orientation + '_'}),
                frameRate: 20,
                repeat: -1 
             });
             // physical attack
             self.game.anims.create({
-                key: pokedexIdx + '_1_' + orientation,
-               frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0], prefix: pokedexIdx + '_1_' + orientation + '_'}),
+                key: gameIndex + '_1_' + orientation,
+               frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0], prefix: gameIndex + '_1_' + orientation + '_'}),
                frameRate: 4,
                repeat: 0 
             });
             // special attack
             self.game.anims.create({
-                key: pokedexIdx + '_2_' + orientation,
-                frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0], prefix: pokedexIdx + '_2_' + orientation + '_'}),
+                key: gameIndex + '_2_' + orientation,
+                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0], prefix: gameIndex + '_2_' + orientation + '_'}),
                 frameRate: 2,
                 repeat: 0 
             });
             // hurt sprite
             self.game.anims.create({
-                key: pokedexIdx + '_3_' + orientation,
-                frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0], prefix: pokedexIdx + '_3_' + orientation + '_'}),
+                key: gameIndex + '_3_' + orientation,
+                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0], prefix: gameIndex + '_3_' + orientation + '_'}),
                 frameRate: 2,
                 repeat: 0 
             });
             // sleep sprite
             self.game.anims.create({
-                key: pokedexIdx + '_4_' + orientation,
-                frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0,1], prefix: pokedexIdx + '_4_' + orientation + '_'}),
+                key: gameIndex + '_4_' + orientation,
+                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1], prefix: gameIndex + '_4_' + orientation + '_'}),
                 frameRate: 2,
                 repeat: -1 
             });
             // idle sprite
             self.game.anims.create({
-                key: pokedexIdx + '_5_' + orientation,
-                frames:  self.game.anims.generateFrameNames(pokedexIdx, {frames: [0,1], prefix: pokedexIdx + '_0_' + orientation + '_'}),
+                key: gameIndex + '_5_' + orientation,
+                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1], prefix: gameIndex + '_0_' + orientation + '_'}),
                 frameRate: 2,
                 repeat: -1 
             });
