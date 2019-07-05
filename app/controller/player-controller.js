@@ -18,6 +18,14 @@ class PlayerController{
 
   initialize(){
     let self = this;
+    self.socket.on('onClientLoad', function(){
+      self.socket.emit("sendId", self.socket.id);
+      self.onClientLoad();
+    })
+  }
+
+  onClientLoad(){
+    let self = this;
     // send the players object to the new player
     self.eventEmitter.emit('currentPlayers', self);
     // update all other players of the new player

@@ -4,6 +4,7 @@ const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
 const ENUM_GENDER = require("../model/type/enums").ENUM_GENDER;
 const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
 const pokemonMath = require("./pokemonMath");
+const fs = require("fs");
 
 class Game {
   constructor(config) {
@@ -13,6 +14,8 @@ class Game {
     this.players = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
+    let mapCSV = String(fs.readFileSync(__dirname + "/../generation/maps/testMap.csv"));
+    this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
   }
 
   getRandomInt(max) {
@@ -27,8 +30,6 @@ class Game {
       let gender = ENUM_GENDER[this.getRandomInt(ENUM_GENDER.length)];
       let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
       let ability = genericPokemon.abilities[this.getRandomInt(genericPokemon.abilities.length)].ability;
-      //console.log(genericPokemon.abilities);
-      //console.log(ability);
       let ivs = [];
       let shiny = false;
       ENUM_STAT.forEach((stat)=>{

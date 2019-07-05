@@ -1,14 +1,23 @@
 class ClientController{
     
     constructor(){
-        this.gameView = new GameView();
-        this.chatController = new ChatController();
-        window.addEventListener('gameSceneCreated',this.initialize.bind(this));
+        this.socket = io();
+        this.initialize();
     }
 
     initialize(){
         let self = this;
-        self.socket = io();
+        this.socket.on('getMap',function(map){
+            let config = GameView.getDefaultConfig();
+            config.map = map;
+            self.gameView = new GameView(config);
+            self.chatController = new ChatController();
+            window.addEventListener('gameSceneCreated',self.initializeConnection.bind(self));
+        })
+    }
+
+    initializeConnection(){
+        let self = this;
         // id of the socket that server gave to the connection
         this.socket.on('sendId', function (socketId) {
             self.gameView.game.scene.getScene('gameScene').setSocketId(socketId);
@@ -51,6 +60,7 @@ class ClientController{
         });
 
         this.socket.on('turnUpdate', function (data){
+            console.log(data);
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })
@@ -67,5 +77,7 @@ class ClientController{
         window.addEventListener('submit-chatline',function(e){
             self.socket.emit('submit-chatline', e.detail);
         })
+        self.socket.emit('onClientLoad');
+        window.dispatchEvent(new CustomEvent('onClientLoad'));
     }
 }

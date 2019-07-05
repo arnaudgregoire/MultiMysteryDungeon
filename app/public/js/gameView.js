@@ -1,11 +1,11 @@
 class GameView{
 
-  constructor(){
-    this.config = this.getDefaultConfig();
+  constructor(config){
+    this.config = config;
     this.game = new Phaser.Game(this.config);
   }
 
-  getDefaultConfig(){
+  static getDefaultConfig(){
     return {
         type: Phaser.AUTO,
         parent: 'content',

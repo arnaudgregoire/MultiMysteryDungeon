@@ -14,7 +14,7 @@ class ChatController{
         }
       }
     });
-    window.onload = () =>{
+    window.addEventListener('onClientLoad', () =>{
       let self = this;
       self.inputMessage = document.getElementById('inputMessage');
       self.tabName = document.getElementById('tabName');
@@ -56,7 +56,7 @@ class ChatController{
           }
         });
       });
-    }
+    })
   }
 
   //send a custom event with the message. The client controller is listening for this event

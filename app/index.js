@@ -53,7 +53,6 @@ mongoose.connection.on("connected", function () {
 // TODO: move routing to route/index.js
 require("./script/auth");
 const mainRouting   = require("./route/main");
-const secureRouting = require("./route/secure");
 
 // TODO: WTF is this shit ?
 const defaultExport = require("./generation/generationBenchmark");
@@ -73,7 +72,6 @@ app.get("/index.html", function (req, res) {
 });
 
 app.use("/", mainRouting);
-app.use("/", passport.authenticate("jwt", { session : true }), secureRouting);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "404 - Not Found" });
