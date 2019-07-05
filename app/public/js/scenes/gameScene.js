@@ -70,8 +70,7 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
-        this.load.image('tiles','../../assets/test_tileset.png');
-        this.load.tilemapTiledJSON('map','../../assets/test_map.json');
+        this.load.image('tiles','../../assets/tileset.png');
     }
 
     create() {
@@ -79,9 +78,9 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.physics.add.group();
         this.texts = this.physics.add.group();
-        this.map = this.make.tilemap({key:'map'});
-        const tileset = this.map.addTilesetImage('test_tileset', 'tiles');
-        const worldLayer = this.map.createStaticLayer('world', tileset, 0, 0);
+        this.map = this.make.tilemap({ data: window.map, tileWidth: 24, tileHeight:24});
+        const tileset = this.map.addTilesetImage('tiles','tiles',24,24,0,1,0);
+        const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
         this.animationManager = new AnimationManager(self);
       
         /* 
@@ -208,7 +207,7 @@ class GameScene extends Phaser.Scene{
         const camera = self.cameras.main;
         camera.startFollow(hero);
         camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-        camera.zoom = 3;
+        camera.zoom = 2;
     }
 
     /**

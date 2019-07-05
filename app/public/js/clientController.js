@@ -8,8 +8,8 @@ class ClientController{
     initialize(){
         let self = this;
         this.socket.on('getMap',function(map){
+            window.map = map;
             let config = GameView.getDefaultConfig();
-            config.map = map;
             self.gameView = new GameView(config);
             self.chatController = new ChatController();
             window.addEventListener('gameSceneCreated',self.initializeConnection.bind(self));
