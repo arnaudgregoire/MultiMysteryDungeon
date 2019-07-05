@@ -7,6 +7,7 @@ class UIScene extends Phaser.Scene{
 
     preload(){
         this.load.multiatlas('portraits','../../assets/pokemonPortraits.json');
+        this.load.multiatlas('typeIcons', '../../assets/typeIcons.json');
     }
 
     create(){
@@ -42,11 +43,26 @@ class UIScene extends Phaser.Scene{
                  alpha: 1
             },
             add:true
-        })
+        });
+
+        let types = [];
+
+        for (let i = 0; i < playerInfo.pokemon.types.length; i++) {
+            types.push(self.add.sprite(
+                105,
+                55 * i,
+                'typeIcons',
+                playerInfo.pokemon.types[i].type.name
+            ))
+        }
+
         rectangle.fillRectShape(self.rectangleGeometry);
         portrait.add(rectangle);
         portrait.add(sprite);
         portrait.add(text);
+        types.forEach(type=>{
+            portrait.add(type);
+        });
         self.portraits.add(portrait);
     }
 
