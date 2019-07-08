@@ -10,6 +10,7 @@ class ClientController{
         this.socket.on('getMap',function(map){
             window.map = map;
             let config = GameView.getDefaultConfig();
+            window.tilesize = config.tilesize;
             self.gameView = new GameView(config);
             self.chatController = new ChatController();
             window.addEventListener('gameSceneCreated',self.initializeConnection.bind(self));
@@ -60,7 +61,6 @@ class ClientController{
         });
 
         this.socket.on('turnUpdate', function (data){
-            console.log(data);
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })

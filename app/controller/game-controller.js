@@ -14,6 +14,7 @@ class GameController {
     this.playerControllers = [];
     this.pokedex = [1,2,3,4,6,7,83,142,144];
     this.game = new Game(config);
+    this.config = config;
     DbManager.loadGenericPokemon().then((docs)=>{
       docs.forEach((doc)=>{
         //console.log("loading " + doc.name + "...");
@@ -85,7 +86,8 @@ class GameController {
             else if(player == 0 && pokemon == 0){
               console.log("creating player with user id : " + userId);
               let pokemonId = uniqid();
-              player = new Player(userId, 240, 240, name, pokemonId);  
+              // spawn coordinate
+              player = new Player(userId, 25, 25, name, pokemonId);  
               console.log("creating pokemon with uniqid : " + pokemonId);
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }
@@ -171,6 +173,12 @@ class GameController {
     }
   }
 
+  /**
+   * Set user input direction from left, right, down up 
+   * to move Along axis X and Y -1 , 0 , 1
+   * @param {Player} player 
+   * @param {left,right,down,up} input 
+   */
   setMoveAlongAxes(player, input) {
     player.moveAlongX = 0;
     player.moveAlongY = 0;

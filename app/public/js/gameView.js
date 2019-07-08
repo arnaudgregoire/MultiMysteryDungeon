@@ -22,7 +22,8 @@ class GameView{
         scene: [GameScene, UIScene],
         scale:{
           mode: Phaser.Scale.FIT
-        }
+        },
+        tilesize: 24
     }
   }
 }

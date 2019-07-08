@@ -78,8 +78,8 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.physics.add.group();
         this.texts = this.physics.add.group();
-        this.map = this.make.tilemap({ data: window.map, tileWidth: 24, tileHeight:24});
-        const tileset = this.map.addTilesetImage('tiles','tiles',24,24,0,1,0);
+        this.map = this.make.tilemap({ data: window.map, tileWidth: window.tilesize, tileHeight:window.tilesize});
+        const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,0,1,0);
         const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
         this.animationManager = new AnimationManager(self);
       
@@ -139,7 +139,7 @@ class GameScene extends Phaser.Scene{
     */
     displayPlayers(playerInfo) {
         let self = this;
-        const player = self.add.sprite(playerInfo.x, playerInfo.y, 'sprites', playerInfo.pokemon.gameIndex + '_0_0_0').setOrigin(0.5, 0.5);
+        const player = self.add.sprite(playerInfo.x * window.tilesize, playerInfo.y * window.tilesize, 'sprites', playerInfo.pokemon.gameIndex + '_0_0_0').setOrigin(0,0.3);
         player.userId = playerInfo.userId;
         player.orientation = playerInfo.orientation;
         player.action = playerInfo.action;
@@ -155,7 +155,7 @@ class GameScene extends Phaser.Scene{
                 color: '#ffffff',
                 align: 'center'
             }
-        ).setOrigin(0.5,1.6);
+        ).setOrigin(0.2,1.7);
         text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 0);
         text.userId = playerInfo.userId;
         self.displayPlayer(player);
@@ -207,7 +207,7 @@ class GameScene extends Phaser.Scene{
         const camera = self.cameras.main;
         camera.startFollow(hero);
         camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-        camera.zoom = 2;
+        camera.zoom = 3;
     }
 
     /**
@@ -249,7 +249,7 @@ class GameScene extends Phaser.Scene{
         Object.keys(players).forEach(function (index) {
             self.players.getChildren().forEach(function (player) {
             if (players[index].userId === player.userId) {
-                player.setPosition(players[index].x, players[index].y);
+                player.setPosition(players[index].x * window.tilesize, players[index].y * window.tilesize);
                 //if the actual animation sprite currently played client side is different from the server one,
                 // the client start to play and save the new sprite
                 if(player.orientation != players[index].orientation
@@ -262,7 +262,7 @@ class GameScene extends Phaser.Scene{
             });
             self.texts.getChildren().forEach(function (player) {
                 if (players[index].userId === player.userId) {
-                    player.setPosition(players[index].x, players[index].y);
+                    player.setPosition(players[index].x * window.tilesize, players[index].y * window.tilesize);
                 }
             })
         });

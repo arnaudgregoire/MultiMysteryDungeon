@@ -10,7 +10,6 @@ class Game {
   constructor(config) {
     this.width = config.width;
     this.height = config.height;
-    this.tilesize = config.tilesize;
     this.players = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
@@ -134,17 +133,92 @@ class Game {
  */
   move(player){
     let playerMoved = false;
-    if(player.moveAlongX != 0){
-      player.x = player.x + player.moveAlongX * this.tilesize;
-      playerMoved = true;
-    }
-    if(player.moveAlongY != 0){
-      player.y = player.y + player.moveAlongY * this.tilesize;
-      playerMoved = true;
+    // check if move
+    if(player.moveAlongX != 0 || player.moveAlongY != 0){
+      //right
+      if(player.moveAlongX == 1 && player.moveAlongY == 0){
+        console.log("right");
+        if(!this.collide(player, player.x + 1, player.y)){
+          playerMoved = true;
+        }
+      }
+      //left
+      else if(player.moveAlongX == -1 && player.moveAlongY == 0){
+        console.log("left");
+        if(!this.collide(player, player.x -1, player.y)){
+          playerMoved = true;
+        }
+      }
+      //up
+      else if(player.moveAlongX == 0 && player.moveAlongY == 1){
+        console.log("up");
+        if(!this.collide(player, player.x, player.y + 1)){
+          playerMoved = true;
+        }
+      }
+      //down
+      else if(player.moveAlongX == 0 && player.moveAlongY == -1){
+        console.log("down");
+        if(!this.collide(player, player.x, player.y - 1)){
+          playerMoved = true;
+        }
+      }
+      //down right
+      else if(player.moveAlongX == 1 && player.moveAlongY == -1){
+        console.log("down right");
+        if(!this.collide(player, player.x + 1, player.y - 1)){
+          playerMoved = true;
+        }
+      }
+      //down left
+      else if(player.moveAlongX == - 1 && player.moveAlongY == -1){
+        console.log("down left");
+        if(!this.collide(player, player.x - 1, player.y - 1)){
+          playerMoved = true;
+        }
+      }
+      //up right
+      else if(player.moveAlongX == 1 && player.moveAlongY == 1){
+        console.log("up right");
+        if(!this.collide(player, player.x + 1, player.y + 1)){
+          playerMoved = true;
+        }
+      }
+      //up left
+      else if(player.moveAlongX == - 1 && player.moveAlongY == 1){
+        console.log("up left");
+        if(!this.collide(player, player.x - 1, player.y + 1)){
+          playerMoved = true;
+        }
+      }
+      if(playerMoved){
+        player.x = player.x + player.moveAlongX;
+        player.y = player.y + player.moveAlongY;
+      }
     }
     return playerMoved;
   }
 
+  /**
+   * Check if the player (pokemon) collide with the map at position x,y
+   * @param {Player} player 
+   * @param {integer} x 
+   * @param {interger} y 
+   */
+  collide(player, x, y){
+    console.log(x,y);
+    console.log(this.map[y][x]);
+    let collision = false;
+    // check for map borders
+    if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
+      collision = true;
+    }
+    // check for walls
+    if(this.map[y][x] == 0){
+      collision = true;
+    }
+    return collision;
+  }
 
   getPlayerById(id) {
     let found = false;
