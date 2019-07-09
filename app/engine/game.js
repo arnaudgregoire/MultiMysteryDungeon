@@ -137,56 +137,48 @@ class Game {
     if(player.moveAlongX != 0 || player.moveAlongY != 0){
       //right
       if(player.moveAlongX == 1 && player.moveAlongY == 0){
-        console.log("right");
         if(!this.collide(player, player.x + 1, player.y)){
           playerMoved = true;
         }
       }
       //left
       else if(player.moveAlongX == -1 && player.moveAlongY == 0){
-        console.log("left");
         if(!this.collide(player, player.x -1, player.y)){
           playerMoved = true;
         }
       }
       //up
       else if(player.moveAlongX == 0 && player.moveAlongY == 1){
-        console.log("up");
         if(!this.collide(player, player.x, player.y + 1)){
           playerMoved = true;
         }
       }
       //down
       else if(player.moveAlongX == 0 && player.moveAlongY == -1){
-        console.log("down");
         if(!this.collide(player, player.x, player.y - 1)){
           playerMoved = true;
         }
       }
       //down right
       else if(player.moveAlongX == 1 && player.moveAlongY == -1){
-        console.log("down right");
         if(!this.collide(player, player.x + 1, player.y - 1)){
           playerMoved = true;
         }
       }
       //down left
       else if(player.moveAlongX == - 1 && player.moveAlongY == -1){
-        console.log("down left");
         if(!this.collide(player, player.x - 1, player.y - 1)){
           playerMoved = true;
         }
       }
       //up right
       else if(player.moveAlongX == 1 && player.moveAlongY == 1){
-        console.log("up right");
         if(!this.collide(player, player.x + 1, player.y + 1)){
           playerMoved = true;
         }
       }
       //up left
       else if(player.moveAlongX == - 1 && player.moveAlongY == 1){
-        console.log("up left");
         if(!this.collide(player, player.x - 1, player.y + 1)){
           playerMoved = true;
         }
@@ -206,8 +198,6 @@ class Game {
    * @param {interger} y 
    */
   collide(player, x, y){
-    console.log(x,y);
-    console.log(this.map[y][x]);
     let collision = false;
     // check for map borders
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
@@ -217,6 +207,12 @@ class Game {
     if(this.map[y][x] == 0){
       collision = true;
     }
+    // check for other players
+    this.players.forEach(p =>{
+      if(p != player && p.x == x & p.y == y){
+        collision = true;
+      }
+    })
     return collision;
   }
 
