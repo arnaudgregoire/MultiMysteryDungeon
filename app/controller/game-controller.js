@@ -30,7 +30,7 @@ class GameController {
   initialize() {
     let self = this;
     self.initializeConnection();
-    setInterval(this.update.bind(this), 50);
+    setInterval(this.update.bind(this), 100);
     self.eventEmitter.on('submit-chatline',function (data){
       self.websocket.emit("new-message", data);
     });
