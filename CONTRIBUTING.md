@@ -1,3 +1,10 @@
+## Our greatest contributors
+If you do something for the project, i'll put you in this glorious list.
+
+ - @acoque for tileset naming of Ivysaur, Charmeleon.
+ - @ThomasSINNO for tileset standardisation from 1-20 & map generation module.
+ - @ogus for refactoring project
+
 <h1 align="center">Contributing</h1>
 
 I need you for sprite naming !
