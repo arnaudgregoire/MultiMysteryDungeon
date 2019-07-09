@@ -17,13 +17,19 @@ __Localhost__
 You can set up the application by running
 
 ```sh
-npm run start
+npm install
+npm start
 ```
 
 ## Roadmap
 
  + [x] Basic Node architecture
  + [x] WebSocket communication
- + [ ] The actual game
+ + [x] Basic map generation
 
 You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeononline)
+
+## Credits
+
+Spritesheet available on [Spriters ressource](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/) ripped by:
+ - @redblueyellow
