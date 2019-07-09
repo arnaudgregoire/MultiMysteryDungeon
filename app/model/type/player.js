@@ -13,7 +13,7 @@ class Player{
     this.pokemon = null;
     this.name = name;
     this.orientation = "left";
-    this.action = "0";
+    this.action = "5";
     this.moveAlongX = 0;
     this.moveAlongY = 0;
     this.turnPlayed = false;
