@@ -198,22 +198,21 @@ class Game {
    * @param {interger} y 
    */
   collide(player, x, y){
-    let collision = false;
     // check for map borders
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
-      collision = true;
+      return true;
     }
     // check for walls
     if(this.map[y][x] == 0){
-      collision = true;
+      return true;
     }
     // check for other players
     this.players.forEach(p =>{
       if(p != player && p.x == x & p.y == y){
-        collision = true;
+        return true;
       }
     })
-    return collision;
+    return false;
   }
 
   getPlayerById(id) {
