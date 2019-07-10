@@ -97,6 +97,9 @@ class Game {
       player.turnPlayed = false;
     })
     this.turn += 1;
+  }
+
+  getTurn(){
     return this.turn;
   }
 
@@ -127,6 +130,21 @@ class Game {
       })
     }
     return endTurn;
+  }
+
+  computeIaTurn(){
+    let directions = [-1,0,1];
+    let dx = 0;
+    let dy = 0;
+      this.ias.forEach(ia =>{
+        dx = directions[this.getRandomInt(directions.length)];
+        dy = directions[this.getRandomInt(directions.length)];
+        if(!this.collide(ia, ia.x + dx,ia.y + dy)){
+            ia.x = ia.x + dx;
+            ia.y = ia.y + dy;
+        }
+        ia.turnPlayed = true;
+      })
   }
 /**
  * Attempt to move the player in direction he want
@@ -245,11 +263,6 @@ class Game {
   * @param {string} id The identifiant of the player
   */
   isPlayer(id) {
-    // let is = false;
-    // this.players.forEach(player => {
-    //   if (player.id == id) { is=true };
-    // });
-    // return is;
     return this.players.filter(p => p.id === id).length > 0;
   }
 

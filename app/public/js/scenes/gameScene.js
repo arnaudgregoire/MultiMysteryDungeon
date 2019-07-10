@@ -266,7 +266,7 @@ class GameScene extends Phaser.Scene{
                 Object.keys(entities).forEach(function (index) {
                     self.ias.getChildren().forEach(function (ia) {
                     if (entities[index].uniqid === ia.uniqid) {
-                        eniatity.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
+                        ia.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
                         //if the actual animation sprite currently played client side is different from the server one,
                         // the client start to play and save the new sprite
                         if(ia.orientation != entities[index].orientation

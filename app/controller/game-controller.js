@@ -70,8 +70,10 @@ class GameController {
 
   update() {
     if(this.game.checkEndTurn()){
+      this.game.computeIaTurn();
+      this.game.setupNewTurn();
       this.websocket.emit("turnUpdate", {
-        message:"Turn " + this.game.setupNewTurn(),
+        message:"Turn " + this.game.getTurn(),
         username:"Server"
       });
     }

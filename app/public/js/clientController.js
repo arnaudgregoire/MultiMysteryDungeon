@@ -60,6 +60,7 @@ class ClientController{
     
         this.socket.on('updateEntities', function (entities) {
             self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.players);
+            self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.ias);
             self.gameView.game.scene.getScene('uiScene').updatePlayers(entities.players);
         });
 
