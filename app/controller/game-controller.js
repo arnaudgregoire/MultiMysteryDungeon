@@ -2,6 +2,7 @@ const DbManager = require("./db-manager");
 const PlayerController = require("./player-controller");
 const Game = require("../engine/game");
 const Player = require("../model/type/player");
+const Ia = require("../model/type/ia");
 const EventEmitter = require('events'); 
 const genericPokemonDB = require('../model/type/generic-pokemon-db');
 const uniqid = require('uniqid');
@@ -30,6 +31,7 @@ class GameController {
   initialize() {
     let self = this;
     self.initializeConnection();
+    self.initializeIas();
     setInterval(this.update.bind(this), 100);
     self.eventEmitter.on('submit-chatline',function (data){
       self.websocket.emit("new-message", data);
@@ -40,12 +42,29 @@ class GameController {
     self.eventEmitter.on('disconnect', (controller)=>{
       self.onPlayerDisconnect(controller);
     });
-    self.eventEmitter.on('currentPlayers', (controller)=>{
-      controller.socket.emit("currentPlayers", self.game.players);
+    self.eventEmitter.on('currentEntities', (controller)=>{
+      controller.socket.emit("currentEntities", {"players":this.game.players, "ias":this.game.ias});
     });
     self.eventEmitter.on('newPlayer', (controller)=>{
       controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
     });
+  }
+
+  initializeIas(){
+    for (let i = 0; i < 10; i++) {
+      this.game.ias.push(this.createIa());
+    }
+  }
+
+  createIa(){
+    let pokemon = this.game.createPokemon(uniqid(),this.pokedex[this.randomIntFromInterval(0,this.pokedex.length - 1)]);
+    let x = 0;
+    let y = 0;
+    while (this.game.map[y][x] != 1){
+      x = this.randomIntFromInterval(0,50);
+      y = this.randomIntFromInterval(0,50);
+    }
+    return new Ia(x,y,pokemon.name,pokemon);
   }
 
   update() {
@@ -56,7 +75,7 @@ class GameController {
       });
     }
     this.game.computePositions();
-    this.websocket.emit("playerUpdates", this.game.players);
+    this.websocket.emit("updateEntities", {"players":this.game.players, "ias":this.game.ias});
   }
 
   initializeConnection() {

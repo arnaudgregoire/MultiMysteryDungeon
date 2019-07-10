@@ -11,6 +11,7 @@ class Game {
     this.width = config.width;
     this.height = config.height;
     this.players = [];
+    this.ias = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
     let mapCSV = String(fs.readFileSync(__dirname + "/../generation/maps/testMap.csv"));

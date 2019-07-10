@@ -23,14 +23,17 @@ class ClientController{
         this.socket.on('sendId', function (socketId) {
             self.gameView.game.scene.getScene('gameScene').setSocketId(socketId);
         })
-        // We used  socket.on to listen for the  currentPlayers event, and when this event is triggered,
+        // We used  socket.on to listen for the  currentEntities event, and when this event is triggered,
         // the function we provided will be called with the  players object that we passed from our server.
-        this.socket.on('currentPlayers', function (players) {
+        this.socket.on('currentEntities', function (entities) {
             //When this function is called,
             //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
-            Object.keys(players).forEach(function (id) {
-                self.gameView.game.scene.getScene('uiScene').displayPortrait(players[id]);
-                self.gameView.game.scene.getScene('gameScene').displayPlayers(players[id]);
+            Object.keys(entities.players).forEach(function (id) {
+                self.gameView.game.scene.getScene('uiScene').displayPortrait(entities.players[id]);
+                self.gameView.game.scene.getScene('gameScene').displayPlayers(entities.players[id]);
+            });
+            Object.keys(entities.ias).forEach(function (id) {
+                self.gameView.game.scene.getScene('gameScene').displayPlayers(entities.ias[id]);
             });
         });
         
@@ -55,9 +58,9 @@ class ClientController{
             self.gameView.game.scene.getScene('uiScene').removePortrait(id);
         });
     
-        this.socket.on('playerUpdates', function (players) {
-            self.gameView.game.scene.getScene('gameScene').updatePlayers(players);
-            self.gameView.game.scene.getScene('uiScene').updatePlayers(players);
+        this.socket.on('updateEntities', function (entities) {
+            self.gameView.game.scene.getScene('gameScene').updatePlayers(entities.players);
+            self.gameView.game.scene.getScene('uiScene').updatePlayers(entities.players);
         });
 
         this.socket.on('turnUpdate', function (data){
