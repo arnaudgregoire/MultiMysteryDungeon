@@ -199,7 +199,6 @@ class Game {
    * @param {interger} y 
    */
   collide(entity, x, y){
-    console.log(x,y);
     // check for map borders
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
       return true;
