@@ -57,14 +57,15 @@ class GameController {
   }
 
   createIa(){
-    let pokemon = this.game.createPokemon(uniqid(),this.pokedex[this.randomIntFromInterval(0,this.pokedex.length - 1)]);
+    let id = uniqid();
+    let pokemon = this.game.createPokemon(id,this.pokedex[this.randomIntFromInterval(0,this.pokedex.length - 1)]);
     let x = 0;
     let y = 0;
     while (this.game.map[y][x] != 1){
-      x = this.randomIntFromInterval(0,50);
-      y = this.randomIntFromInterval(0,50);
+      x = this.randomIntFromInterval(0,49);
+      y = this.randomIntFromInterval(0,49);
     }
-    return new Ia(x,y,pokemon.name,pokemon);
+    return new Ia(id,x,y,pokemon.name,pokemon);
   }
 
   update() {

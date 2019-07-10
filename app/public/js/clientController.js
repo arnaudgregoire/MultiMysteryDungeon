@@ -30,16 +30,16 @@ class ClientController{
             //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
             Object.keys(entities.players).forEach(function (id) {
                 self.gameView.game.scene.getScene('uiScene').displayPortrait(entities.players[id]);
-                self.gameView.game.scene.getScene('gameScene').displayPlayers(entities.players[id]);
+                self.gameView.game.scene.getScene('gameScene').displayEntities(entities.players[id]);
             });
             Object.keys(entities.ias).forEach(function (id) {
-                self.gameView.game.scene.getScene('gameScene').displayPlayers(entities.ias[id]);
+                self.gameView.game.scene.getScene('gameScene').displayEntities(entities.ias[id]);
             });
         });
         
         this.socket.on('newPlayer', function (playerInfo) {
             self.gameView.game.scene.getScene('uiScene').displayPortrait(playerInfo);
-            self.gameView.game.scene.getScene('gameScene').displayPlayers(playerInfo);
+            self.gameView.game.scene.getScene('gameScene').displayEntities(playerInfo);
         });
     
         this.socket.on('alreadyLog', function (player_email) {
@@ -59,7 +59,7 @@ class ClientController{
         });
     
         this.socket.on('updateEntities', function (entities) {
-            self.gameView.game.scene.getScene('gameScene').updatePlayers(entities.players);
+            self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.players);
             self.gameView.game.scene.getScene('uiScene').updatePlayers(entities.players);
         });
 
