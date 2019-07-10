@@ -76,8 +76,8 @@ class GameScene extends Phaser.Scene{
     create() {
         let self = this;
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
-        this.players = this.physics.add.group();
-        this.texts = this.physics.add.group();
+        this.players = this.add.group();
+        this.ias = this.add.group();
         this.map = this.make.tilemap({ data: window.map, tileWidth: window.tilesize, tileHeight:window.tilesize});
         const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,0,1,0);
         const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
@@ -132,73 +132,71 @@ class GameScene extends Phaser.Scene{
         }
     }
     /*
-    Created our player by using the x and y coordinates that we generated in our server code.
+    Created our entity by using the x and y coordinates that we generated in our server code.
     We used  setOrigin() to set the origin of the game object to be in the middle of the object instead of the top left.
     We stored the id so we can find the game object by that id later.
-    Lastly, we added the player’s game object to the Phaser group we created.
+    Lastly, we added the entity game object to the Phaser group we created.
     */
-    displayPlayers(playerInfo) {
+    displayEntities(entityInfo) {
         let self = this;
-        const player = self.add.sprite(playerInfo.x * window.tilesize, playerInfo.y * window.tilesize, 'sprites', playerInfo.pokemon.gameIndex + '_0_0_0').setOrigin(0,0.3);
-        player.userId = playerInfo.userId;
-        player.orientation = playerInfo.orientation;
-        player.action = playerInfo.action;
-        player.socketId = playerInfo.socketId;
-        player.name = playerInfo.name;
-        player.pokemon = playerInfo.pokemon;
-        var text = self.add.text(
-            playerInfo.x,
-            playerInfo.y,
-            playerInfo.name, {
-                fontSize: '15px',
-                fontFamily: 'Verdana',
-                color: '#ffffff',
-                align: 'center'
-            }
-        ).setOrigin(0.2,1.7);
-        text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 0);
-        text.userId = playerInfo.userId;
-        self.displayPlayer(player);
-        if(player.socketId == self.socketId){
-            //we set the camera on the player hero
-            self.setCamera(player);
+        let entity = self.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
+        entity.entityType = entityInfo.entityType;
+        entity.orientation = entityInfo.orientation;
+        entity.action = entityInfo.action;
+        entity.name = entityInfo.name;
+        entity.pokemon = entityInfo.pokemon;
+        
+        if(entityInfo.entityType == 'player'){
+            entity.userId = entityInfo.userId;
+            entity.socketId = entityInfo.socketId;
         }
-        self.players.add(player);
-        self.texts.add(text);
+        else if(entityInfo.entityType == 'ia'){
+            entity.uniqid = entityInfo.uniqid;
+        }
+
+        //we set the camera on the entity hero
+        if(entity.entityType == 'player'){
+
+            if(entity.socketId == self.socketId){
+                self.setCamera(entity);
+            }
+            self.players.add(entity);
+        }
+
+        else if(entity.entityType == 'ia'){
+            self.ias.add(entity);
+        }
+
+        self.displayEntity(entity);
     }
 
-    removePlayer(userId){
+    removePlayer(id){
         let self = this;
-        self.players.getChildren().forEach(function (player) {
-            if (userId === player.userId) {
-            player.destroy();
-            }
-        });
-        self.texts.getChildren().forEach(function (player) {
-            if (userId === player.userId) {
-            player.destroy();
+        self.players.getChildren().forEach(function (entity) {
+            if (id === entity.userId) {
+                entity.destroy();
             }
         });
     }
 
     /*
-    Display one player animation, by playing his new animation. Only called if something (orientation or action) changed server side
+    Display one entity animation, by playing his new animation. Only called if something (orientation or action) changed server side
     If the animation has not been used before, the animation is created
     */
-    displayPlayer(player){
+    displayEntity(entity){
         let self = this;
         // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
-        var spriteKey = self.getSpriteKey(player);
+        var spriteKey = self.getSpriteKey(entity);
         // if sprite not already loaded, we create it
         if(!self.anims.exists(spriteKey)){
-            self.animationManager.createAnimations(player.pokemon.gameIndex);
+            self.animationManager.createAnimations(entity.pokemon.gameIndex);
         }
         // We play the new correct animation
-        self.playAnimation(player, spriteKey);
+        self.playAnimation(entity, spriteKey);
     }
 
     /*
-    Set the camera on the pokemon that player is controlling
+    Set the camera on the pokemon that entity is controlling
     */
     setCamera(hero){
         let self = this;
@@ -207,14 +205,14 @@ class GameScene extends Phaser.Scene{
         const camera = self.cameras.main;
         camera.startFollow(hero);
         camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-        camera.zoom = 3;
+        camera.zoom = 2;
     }
 
     /**
-     * Get the sprite key corresponding to player orientation and action
+     * Get the sprite key corresponding to entity orientation and action
      * for example a squirtle moving down will be 7_0_0
      */
-    getSpriteKey(player) {
+    getSpriteKey(entity) {
         const orientationTable = {
         "down": 0,
         "downleft": 1,
@@ -226,11 +224,11 @@ class GameScene extends Phaser.Scene{
         "downright":1
         };
         var key = "";
-        key += player.pokemon.gameIndex;
+        key += entity.pokemon.gameIndex;
         key += "_";
-        key += player.action;
+        key += entity.action;
         key += "_";
-        key += orientationTable[player.orientation];
+        key += orientationTable[entity.orientation];
         return key;
     }
 
@@ -238,34 +236,51 @@ class GameScene extends Phaser.Scene{
     Change the animation on phaser
     change the flipX value to, cause we only load down, left, upleft and downleft sprites and then flip them for right etc ...
     */
-    playAnimation(player, spriteKey){
+    playAnimation(entity, spriteKey){
         var flipxTable = {"down":false, "downleft":false, "left":false, "upleft":false, "up":false, "upright":true, "right":true, "downright":true};
-        player.flipX = flipxTable[player.orientation];
-        player.anims.play(spriteKey);
+        entity.flipX = flipxTable[entity.orientation];
+        entity.anims.play(spriteKey);
     }
 
-    updatePlayers(players){
+    upadteEntities(entities){
         let self = this;
-        Object.keys(players).forEach(function (index) {
-            self.players.getChildren().forEach(function (player) {
-            if (players[index].userId === player.userId) {
-                player.setPosition(players[index].x * window.tilesize, players[index].y * window.tilesize);
-                //if the actual animation sprite currently played client side is different from the server one,
-                // the client start to play and save the new sprite
-                if(player.orientation != players[index].orientation
-                || player.action != players[index].action){
-                    player.action = players[index].action;
-                    player.orientation = players[index].orientation;
-                    self.displayPlayer(player);
-                }
+        if(entities != []){
+            if(entities[0].entityType == 'player'){
+                Object.keys(entities).forEach(function (index) {
+                    self.players.getChildren().forEach(function (player) {
+                    if (entities[index].userId === player.userId) {
+                        player.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
+                        //if the actual animation sprite currently played client side is different from the server one,
+                        // the client start to play and save the new sprite
+                        if(player.orientation != entities[index].orientation
+                        || player.action != entities[index].action){
+                            player.action = entities[index].action;
+                            player.orientation = entities[index].orientation;
+                            self.displayEntity(player);
+                        }
+                    }
+                    });
+                });
             }
-            });
-            self.texts.getChildren().forEach(function (player) {
-                if (players[index].userId === player.userId) {
-                    player.setPosition(players[index].x * window.tilesize, players[index].y * window.tilesize);
-                }
-            })
-        });
+            else if (entities[0].entityType == 'ia'){
+                Object.keys(entities).forEach(function (index) {
+                    self.ias.getChildren().forEach(function (ia) {
+                    if (entities[index].uniqid === ia.uniqid) {
+                        eniatity.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
+                        //if the actual animation sprite currently played client side is different from the server one,
+                        // the client start to play and save the new sprite
+                        if(ia.orientation != entities[index].orientation
+                        || ia.action != entities[index].action){
+                            ia.action = entities[index].action;
+                            ia.orientation = entities[index].orientation;
+                            self.displayEntity(ia);
+                        }
+                    }
+                    });
+                });
+            }
+        }
+
     }
     
     setSocketId(id){

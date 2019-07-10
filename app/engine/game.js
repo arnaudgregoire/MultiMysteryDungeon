@@ -193,12 +193,12 @@ class Game {
   }
 
   /**
-   * Check if the player (pokemon) collide with the map at position x,y
-   * @param {Player} player 
+   * Check if the entity (pokemon) collide with the map at position x,y
+   * @param {Entity} entity 
    * @param {integer} x 
    * @param {interger} y 
    */
-  collide(player, x, y){
+  collide(entity, x, y){
     // check for map borders
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
       return true;
@@ -208,11 +208,18 @@ class Game {
       return true;
     }
     // check for other players
-    this.players.forEach(p =>{
-      if(p != player && p.x == x & p.y == y){
+    for (let i = 0; i < this.players.length; i++) {
+      if(this.players[i] != entity && this.players[i].x == x && this.players[i].y == y){
         return true;
       }
-    })
+    }
+
+    //check with ias
+    for (let i = 0; i < this.ias.length; i++) {
+      if(this.ias[i] != entity && this.ias[i].x == x && this.ias[i].y == y){
+        return true;
+      }
+    }
     return false;
   }
 
