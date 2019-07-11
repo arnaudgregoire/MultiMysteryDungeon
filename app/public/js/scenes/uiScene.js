@@ -8,12 +8,28 @@ class UIScene extends Phaser.Scene{
     preload(){
         this.load.multiatlas('portraits','../../assets/pokemonPortraits.json');
         this.load.multiatlas('typeIcons', '../../assets/typeIcons.json');
+        this.load.image('dashboard','../../assets/ui/dashboard.png' );
     }
 
     create(){
+        this.textStyle = 
+        {
+            fontSize: '30px',
+            fontFamily: 'Verdana',
+            color: 'white',
+            align: 'center'
+        };
         this.portraits = this.add.container(70,70);
+        this.add.image(800,900,'dashboard');
         window.dispatchEvent(new CustomEvent('gameSceneCreated'));
     }
+
+    setDashboard(player){
+        this.dashboardPortrait = this.add.sprite(100,900,'portraits','portrait' + player.pokemon.gameIndex).setScale(3,3);
+        this.dashboardName = this.add.text(200,830,player.name,this.textStyle);
+        this.dashboardPokemonName = this.add.text(200,870,player.pokemon.name, this.textStyle);
+        this.dashboardLevel = this.add.text(200,910, 'Lvl ' + player.pokemon.level, this.textStyle);
+    }   
 
     displayPortrait(playerInfo){
         let self = this;
@@ -27,13 +43,7 @@ class UIScene extends Phaser.Scene{
             'portrait' + playerInfo.pokemon.gameIndex);
         sprite.setScale(3,3);
 
-        let text = self.add.text(-70,70,playerInfo.name,{
-            fontSize: '30px',
-            fontFamily: 'Verdana',
-            color: 'black',
-            align: 'center',
-            backgroundColor:'white'
-        });
+        let text = self.add.text(-70,70,playerInfo.name,self.textStyle);
         let rectangle = self.add.graphics(
             {
             x:-69,

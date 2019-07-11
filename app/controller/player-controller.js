@@ -16,10 +16,10 @@ class PlayerController{
     console.log(this.email + " connected");
   }
 
-  initialize(){
+  initialize(player){
     let self = this;
     self.socket.on('onClientLoad', function(){
-      self.socket.emit("sendId", self.socket.id);
+      self.socket.emit("sendPlayer", player);
       self.onClientLoad();
     })
   }

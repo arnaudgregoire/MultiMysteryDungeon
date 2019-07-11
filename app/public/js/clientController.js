@@ -20,8 +20,9 @@ class ClientController{
     initializeConnection(){
         let self = this;
         // id of the socket that server gave to the connection
-        this.socket.on('sendId', function (socketId) {
-            self.gameView.game.scene.getScene('gameScene').setSocketId(socketId);
+        this.socket.on('sendPlayer', function (player) {
+            self.gameView.game.scene.getScene('uiScene').setDashboard(player);
+            self.gameView.game.scene.getScene('gameScene').setSocketId(player.socketId);
         })
         // We used  socket.on to listen for the  currentEntities event, and when this event is triggered,
         // the function we provided will be called with the  players object that we passed from our server.

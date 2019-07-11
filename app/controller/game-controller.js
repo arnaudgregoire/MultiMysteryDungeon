@@ -124,7 +124,7 @@ class GameController {
             player.socketId = socket.id;
             self.game.addPlayer(player);
             let controller = new PlayerController(socket, self.eventEmitter);
-            controller.initialize();
+            controller.initialize(player);
             self.playerControllers.push(controller);
           })
         })
