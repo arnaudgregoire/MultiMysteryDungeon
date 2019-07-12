@@ -95,7 +95,10 @@ class Game {
   setupNewTurn(){
     this.players.forEach(player =>{
       player.turnPlayed = false;
-    })
+    });
+    this.ias.forEach(ia =>{
+      ia.turnPlayed = false;
+    });
     this.turn += 1;
   }
 
@@ -139,13 +142,44 @@ class Game {
       this.ias.forEach(ia =>{
         dx = directions[this.getRandomInt(directions.length)];
         dy = directions[this.getRandomInt(directions.length)];
-        if(!this.collide(ia, ia.x + dx,ia.y + dy)){
+        if(!(dx == 0 && dy == 0)){
+          if(!this.collide(ia, ia.x + dx,ia.y + dy)){
+            ia.orientation = this.getOrientation(dx, dy);
             ia.x = ia.x + dx;
             ia.y = ia.y + dy;
+          }
         }
         ia.turnPlayed = true;
       })
   }
+
+  getOrientation(dx,dy){
+    if(dx == 0 && dy == 1){
+      return 'down';
+    }
+    else if(dx == 0 && dy == -1){
+      return 'up';
+    }
+    else if(dx == 1 && dy == 0){
+      return 'right';
+    }
+    else if(dx == -1 && dy == 0){
+      return 'left';
+    }
+    else if(dx == 1 && dy == 1){
+      return 'downright';
+    }
+    else if(dx == 1 && dy == -1){
+      return 'upright';
+    }
+    else if(dx == -1 && dy == 1){
+      return 'downleft';
+    }
+    else if(dx == -1 && dy == -1){
+      return 'upleft';
+    }
+  }
+
 /**
  * Attempt to move the player in direction he want
  * @param {Player} player 
