@@ -14,7 +14,7 @@ let config =
 
 function defaultExport() {
 	var tempmap=generateMap(config);
-	return exportMapToCsv(addExtras(tempmap,1000), "generation/maps/testMap.csv");
+	return exportMapToCsv(addExtras(tempmap, 100), "app/generation/maps/testMap.csv");
 }
 
 module.exports = defaultExport;

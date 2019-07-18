@@ -8,8 +8,20 @@ class ClientController{
     initialize(){
         let self = this;
         this.socket.on('getMap',function(map){
-            window.map = map;
             let config = GameView.getDefaultConfig();
+            // conversion to fit auto tiling format, 0 for path, 1 for walls
+            let conversion = JSON.parse(JSON.stringify(map));
+            for (let i = 0; i < conversion.length; i++) {
+                for (let j = 0; j < conversion[0].length; j++) {
+                    if(map[i][j] == 0){
+                        conversion[i][j] = 1;
+                    }
+                    else if(map[i][j] == 1){
+                        conversion[i][j] =0;
+                    }
+                }
+            }
+            window.map = AutoTiling.tileMatrix(8, conversion, config.autoTilingConversion);
             window.tilesize = config.tilesize;
             self.gameView = new GameView(config);
             self.chatController = new ChatController();

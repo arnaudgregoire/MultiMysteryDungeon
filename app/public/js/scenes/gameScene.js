@@ -70,7 +70,7 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
-        this.load.image('tiles','../../assets/tileset.png');
+        this.load.image('tiles','../../assets/tilesets/buried_relic.png');
     }
 
     create() {
@@ -79,7 +79,7 @@ class GameScene extends Phaser.Scene{
         this.players = this.add.group();
         this.ias = this.add.group();
         this.map = this.make.tilemap({ data: window.map, tileWidth: window.tilesize, tileHeight:window.tilesize});
-        const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,0,1,0);
+        const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,1,1,0);
         const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
         this.animationManager = new AnimationManager(self);
       
