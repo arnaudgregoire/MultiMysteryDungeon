@@ -33,3 +33,4 @@ You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeono
 
 Spritesheet available on [Spriters ressource](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/) ripped by:
  - @redblueyellow
+ - @SilverDeoxys563
