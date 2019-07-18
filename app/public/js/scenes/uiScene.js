@@ -3,6 +3,9 @@ class UIScene extends Phaser.Scene{
     constructor(){
         super({ key: 'uiScene', active: true });
         this.rectangleGeometry = new Phaser.Geom.Rectangle(0,0,140,140);
+        this.healthBarLength = 150;
+        this.maxHealthBarGeometry = new Phaser.Geom.Rectangle(0,0,this.healthBarLength,20);
+        this.healthBarGeometry = new Phaser.Geom.Rectangle(0,0,this.healthBarLength,20);
     }
 
     preload(){
@@ -25,11 +28,52 @@ class UIScene extends Phaser.Scene{
     }
 
     setDashboard(player){
+        console.log(player);
+        
         this.dashboardPortrait = this.add.sprite(100,900,'portraits','portrait' + player.pokemon.gameIndex).setScale(3,3);
         this.dashboardName = this.add.text(200,830,player.name,this.textStyle);
         this.dashboardPokemonName = this.add.text(200,870,player.pokemon.name, this.textStyle);
         this.dashboardLevel = this.add.text(200,910, 'Lvl ' + player.pokemon.level, this.textStyle);
-    }   
+        this.types = [];
+        for (let i = 0; i < player.pokemon.types.length; i++) {
+            this.types.push(this.add.sprite(
+                420,
+                850 + 50 * i,
+                'typeIcons',
+                player.pokemon.types[i].type.name
+            ))
+        }
+        this.healthBarBackground = this.add.graphics(
+            {
+                x:480,
+                y:835,
+                fillStyle:{
+                    color: 0xff0000
+                },
+                add:true
+            }
+        )
+        this.healthBar = this.add.graphics(
+            {
+                x:480,
+                y:835,
+                fillStyle:{
+                    color: 0x32CD32
+                },
+                add:true
+            }
+        )
+
+        this.health = this.add.text(480,860,player.pokemon.health + " / "+ player.pokemon.stats[5].value + " HP", this.textStyle);
+        this.setHealth(player);
+        
+    }
+    
+    setHealth(player){
+        this.healthBarBackground.fillRectShape(this.maxHealthBarGeometry);
+        this.healthBarGeometry.setSize(Math.round(this.healthBarLength * player.pokemon.health/player.pokemon.stats[5].value),20);
+        this.healthBar.fillRectShape(this.healthBarGeometry);
+    }
 
     displayPortrait(playerInfo){
         let self = this;
@@ -56,15 +100,6 @@ class UIScene extends Phaser.Scene{
         });
 
         let types = [];
-
-        for (let i = 0; i < playerInfo.pokemon.types.length; i++) {
-            types.push(self.add.sprite(
-                105,
-                55 * i,
-                'typeIcons',
-                playerInfo.pokemon.types[i].type.name
-            ))
-        }
 
         rectangle.fillRectShape(self.rectangleGeometry);
         portrait.add(rectangle);
