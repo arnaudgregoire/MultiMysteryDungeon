@@ -80,7 +80,7 @@ class UIScene extends Phaser.Scene{
 
         this.health = this.add.text(480, 860, player.pokemon.health + " / "+ player.pokemon.stats[5].value + " HP", this.textStyle);
         this.setHealth(player);
-        this.ability = this.add.text(385, 920, 'Talent : ' + player.pokemon.ability.name, this.textStyle);
+        this.ability = this.add.text(385, 920, 'Talent  : ' + player.pokemon.ability.name, this.textStyle);
         this.nature = this.add.text(385,960, 'Nature : ' + player.pokemon.nature, this.textStyle);
 
         this.hp = this.add.text(700, 830, 'Hp  : ' + player.pokemon.stats[5].value, this.textStyle);
