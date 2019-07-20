@@ -22,18 +22,32 @@ class UIScene extends Phaser.Scene{
             color: 'white',
             align: 'center'
         };
+
+        this.redTextStyle = 
+        {
+            fontSize: '30px',
+            fontFamily: 'Verdana',
+            color: 'red',
+            align: 'center'
+        };
+        this.greenTextStyle = 
+        {
+            fontSize: '30px',
+            fontFamily: 'Verdana',
+            color: 'lightgreen',
+            align: 'center'
+        }
         this.portraits = this.add.container(70,70);
         this.add.image(800,900,'dashboard');
         window.dispatchEvent(new CustomEvent('gameSceneCreated'));
     }
 
     setDashboard(player){
-        console.log(player);
-        
         this.dashboardPortrait = this.add.sprite(100,900,'portraits','portrait' + player.pokemon.gameIndex).setScale(3,3);
         this.dashboardName = this.add.text(200,830,player.name,this.textStyle);
         this.dashboardPokemonName = this.add.text(200,870,player.pokemon.name, this.textStyle);
         this.dashboardLevel = this.add.text(200,910, 'Lvl ' + player.pokemon.level, this.textStyle);
+        this.gender = this.add.text(200, 950, player.pokemon.gender, this.textStyle);
         this.types = [];
         for (let i = 0; i < player.pokemon.types.length; i++) {
             this.types.push(this.add.sprite(
@@ -64,9 +78,28 @@ class UIScene extends Phaser.Scene{
             }
         )
 
-        this.health = this.add.text(480,860,player.pokemon.health + " / "+ player.pokemon.stats[5].value + " HP", this.textStyle);
+        this.health = this.add.text(480, 860, player.pokemon.health + " / "+ player.pokemon.stats[5].value + " HP", this.textStyle);
         this.setHealth(player);
-        
+        this.ability = this.add.text(385, 920, 'Talent : ' + player.pokemon.ability.name, this.textStyle);
+        this.nature = this.add.text(385,960, 'Nature : ' + player.pokemon.nature, this.textStyle);
+
+        this.hp = this.add.text(700, 830, 'Hp  : ' + player.pokemon.stats[5].value, this.textStyle);
+        this.atk = this.add.text(700, 860, 'Atk : ' + player.pokemon.stats[4].value, this.textStyle);
+        this.def = this.add.text(700, 890, 'Def : ' + player.pokemon.stats[3].value, this.textStyle);
+        this.spa = this.add.text(700, 920, 'Spa : ' + player.pokemon.stats[2].value, this.textStyle);
+        this.spd = this.add.text(700, 950, 'Spd : ' + player.pokemon.stats[1].value, this.textStyle);
+
+        this.ivHp = this.add.text(830, 830, '(' + player.pokemon.ivs[5].value + ')', this.redTextStyle);
+        this.ivAtk = this.add.text(830, 860, '(' + player.pokemon.ivs[4].value + ')', this.redTextStyle);
+        this.ivDef = this.add.text(830, 890, '(' + player.pokemon.ivs[3].value + ')', this.redTextStyle);
+        this.ivSpa = this.add.text(830, 920, '(' + player.pokemon.ivs[2].value + ')', this.redTextStyle);
+        this.ivSpd = this.add.text(830, 950, '(' + player.pokemon.ivs[1].value + ')', this.redTextStyle);
+
+        this.evHp = this.add.text(900, 830, '(' + player.pokemon.evs[5].value + ')', this.greenTextStyle);
+        this.evAtk = this.add.text(900, 860, '(' + player.pokemon.evs[4].value + ')', this.greenTextStyle);
+        this.evDef = this.add.text(900, 890, '(' + player.pokemon.evs[3].value + ')', this.greenTextStyle);
+        this.evSpa = this.add.text(900, 920, '(' + player.pokemon.evs[2].value + ')', this.greenTextStyle);
+        this.evSpd = this.add.text(900, 950, '(' + player.pokemon.evs[1].value + ')', this.greenTextStyle);
     }
     
     setHealth(player){
