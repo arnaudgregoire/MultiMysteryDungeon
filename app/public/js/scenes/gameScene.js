@@ -88,6 +88,26 @@ class GameScene extends Phaser.Scene{
         which will bind to those arrows on the keyboard
         */
         this.cursors = this.input.keyboard.createCursorKeys();
+        
+        this.keyAttack = this.input.keyboard.addKey('Q'); 
+        this.keyAttack.on('down',             
+            function(event){window.dispatchEvent(
+                new CustomEvent(
+                    'playerInput',
+                    {
+                        detail: 
+                        { 
+                            left: self.leftKeyPressed,
+                            right: self.rightKeyPressed,
+                            up: self.upKeyPressed,
+                            down: self.downKeyPressed,
+                            attack: true
+                        }
+                    }
+                )
+            )}
+        );
+
         this.leftKeyPressed = false;
         this.rightKeyPressed = false;
         this.upKeyPressed = false;
@@ -124,7 +144,8 @@ class GameScene extends Phaser.Scene{
                             left: this.leftKeyPressed,
                             right: this.rightKeyPressed,
                             up: this.upKeyPressed,
-                            down: this.downKeyPressed
+                            down: this.downKeyPressed,
+                            attack: false
                         }
                     }
                 )
