@@ -36,7 +36,6 @@ class PlayerController{
     });
     // when a player moves, update the player data
     self.socket.on("playerInput", function (input) {
-      console.log(input);
       self.input = input;
       self.eventEmitter.emit('playerInput', self);
     });

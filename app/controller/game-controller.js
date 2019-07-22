@@ -186,7 +186,10 @@ class GameController {
   */
   setAction(player, input) {
     //check if the player is moving in any directions, if not he is idle
-    if(!(input.right || input.down || input.left || input.up)){
+    if(input.attack){
+      player.action = "1";
+    }
+    else if(!(input.right || input.down || input.left || input.up || input.attack)){
       player.action = "5";
     }
     // TODO implement more logic than if not afk then moving
