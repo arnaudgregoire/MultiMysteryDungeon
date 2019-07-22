@@ -22,14 +22,14 @@ class AnimationManager{
             self.game.anims.create({
                 key: gameIndex + '_0_' + orientation,
                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1,2], prefix: gameIndex + '_0_' + orientation + '_'}),
-               frameRate: 20,
+               frameRate: 10,
                repeat: -1 
             });
             // physical attack
             self.game.anims.create({
                 key: gameIndex + '_1_' + orientation,
-               frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0], prefix: gameIndex + '_1_' + orientation + '_'}),
-               frameRate: 4,
+               frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1,2], prefix: gameIndex + '_1_' + orientation + '_'}),
+               frameRate: 10,
                repeat: 0 
             });
             // special attack
@@ -56,7 +56,7 @@ class AnimationManager{
             // idle sprite
             self.game.anims.create({
                 key: gameIndex + '_5_' + orientation,
-                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1], prefix: gameIndex + '_0_' + orientation + '_'}),
+                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,2], prefix: gameIndex + '_0_' + orientation + '_'}),
                 frameRate: 2,
                 repeat: -1 
             });
