@@ -172,11 +172,20 @@ class GameController {
   */
   onPlayerInput(controller) {
     let input = controller.input;
+    if(input.attack){
+      this.onPlayerAttack(controller);
+    }
     let self = this;
     let player = self.game.getPlayerById(controller.userId);
     self.setOrientation(player, input);
     self.setMoveAlongAxes(player, input);
     self.setAction(player, input);
+  }
+
+  onPlayerAttack(controller){
+    let player = this.game.getPlayerById(controller.userId);
+    this.game.playPhysicalAttack(player);
+    player.turnPlayed = true;
   }
 
   /*
@@ -189,7 +198,7 @@ class GameController {
     if(input.attack){
       player.action = "1";
       //after .5s, the player return to idle state
-      setTimeout(()=>{player.action = "5"},1000);
+      setTimeout(()=>{player.action = "5"},500);
     }
     else if(!(input.right || input.down || input.left || input.up || input.attack)){
       player.action = "5";

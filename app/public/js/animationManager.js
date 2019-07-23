@@ -29,7 +29,7 @@ class AnimationManager{
             self.game.anims.create({
                 key: gameIndex + '_1_' + orientation,
                frames:  self.game.anims.generateFrameNames(gameIndex, {frames: [0,1,2], prefix: gameIndex + '_1_' + orientation + '_'}),
-               frameRate: 5,
+               frameRate: 10,
                repeat: 0 
             });
             // special attack

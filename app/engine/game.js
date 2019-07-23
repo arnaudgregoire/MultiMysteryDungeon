@@ -139,9 +139,10 @@ class Game {
     let directions = [-1,0,1];
     let dx = 0;
     let dy = 0;
-      this.ias.forEach(ia =>{
+      this.ias.forEach(ia =>{     
         dx = directions[this.getRandomInt(directions.length)];
         dy = directions[this.getRandomInt(directions.length)];
+        ia.action = "5";
         if(!(dx == 0 && dy == 0)){
           if(!this.collide(ia, ia.x + dx,ia.y + dy)){
             ia.orientation = this.getOrientation(dx, dy);
@@ -244,6 +245,7 @@ class Game {
     return playerMoved;
   }
 
+
   /**
    * Check if the entity (pokemon) collide with the map at position x,y
    * @param {Entity} entity 
@@ -291,7 +293,6 @@ class Game {
       return new Error("no player for given id ( " + id +" ) found");
     }
   }
-
   /**
   * Check if the player is in the game
   * @param {string} id The identifiant of the player
@@ -300,6 +301,56 @@ class Game {
     return this.players.filter(p => p.id === id).length > 0;
   }
 
+  playPhysicalAttack(player){
+    let conversion = {
+      "left":"right",
+      "up":"down",
+      "down":"up",
+      "right":"left",
+      "upright":"downleft",
+      "upleft":"downleft",
+      "downleft":"upright",
+      "downright":"upleft"
+    }
+    let potentialEntity = this.collidePhysicalAttack(player);
+    if(potentialEntity){
+      potentialEntity.action = "3";
+      potentialEntity.orientation = conversion[player.orientation];
+      setTimeout(()=>{potentialEntity.action = "5"},500);
+    }
+  }
+
+  collidePhysicalAttack(player){
+    let conversion = {
+      "left":[-1,0],
+      "up":[0,-1],
+      "right":[1,0],
+      "down":[0,1],
+      "downleft":[-1,1],
+      "downright":[1,1],
+      "upleft":[-1,-1],
+      "upright":[1,-1]
+    }
+    let x = player.x + conversion[player.orientation][0];
+    let y = player.y + conversion[player.orientation][1];
+    for (let i = 0; i < this.ias.length; i++) {
+      if(
+        this.ias[i].x == x
+     && this.ias[i].y == y){
+       return this.ias[i];
+     } 
+    }
+    for (let i = 0; i < this.players.length; i++) {
+      if(
+           this.players[i].x == x
+        && this.players[i].y == y
+        && this.players[i].userId != player.userId){
+        return this.players[i];
+      }
+    }
+    return false;
+  }
+  
   /**
   * add given player to game.players
   * @param {Player} player
