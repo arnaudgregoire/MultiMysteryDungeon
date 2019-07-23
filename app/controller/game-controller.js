@@ -171,21 +171,29 @@ class GameController {
   Possible orientation are : down, downleft, left, upleft, up, upright, right, downright
   */
   onPlayerInput(controller) {
+    let self = this;
     let input = controller.input;
     if(input.attack){
       this.onPlayerAttack(controller);
     }
-    let self = this;
-    let player = self.game.getPlayerById(controller.userId);
-    self.setOrientation(player, input);
-    self.setMoveAlongAxes(player, input);
-    self.setAction(player, input);
+    else{
+      let player = self.game.getPlayerById(controller.userId);
+      self.setOrientation(player, input);
+      self.setMoveAlongAxes(player, input);
+      self.setAction(player, input);
+    }
+
   }
 
   onPlayerAttack(controller){
     let player = this.game.getPlayerById(controller.userId);
-    this.game.playPhysicalAttack(player);
-    player.turnPlayed = true;
+    if(!player.turnPlayed){
+      player.action = "1";
+      //after .5s, the player return to idle state
+      setTimeout(()=>{player.action = "5"},500);
+      this.game.playPhysicalAttack(player);
+      player.turnPlayed = true;
+    }
   }
 
   /*
@@ -195,15 +203,9 @@ class GameController {
   */
   setAction(player, input) {
     //check if the player is moving in any directions, if not he is idle
-    if(input.attack){
-      player.action = "1";
-      //after .5s, the player return to idle state
-      setTimeout(()=>{player.action = "5"},500);
-    }
-    else if(!(input.right || input.down || input.left || input.up || input.attack)){
+    if(!(input.right || input.down || input.left || input.up || input.attack)){
       player.action = "5";
     }
-    // TODO implement more logic than if not afk then moving
     else{
       player.action = "0";
     }
