@@ -188,6 +188,8 @@ class GameController {
     //check if the player is moving in any directions, if not he is idle
     if(input.attack){
       player.action = "1";
+      //after .5s, the player return to idle state
+      setTimeout(()=>{player.action = "5"},1000);
     }
     else if(!(input.right || input.down || input.left || input.up || input.attack)){
       player.action = "5";
