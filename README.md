@@ -53,5 +53,4 @@ You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeono
  - sprite ripping: @redblueyellow,  @SilverDeoxys563
  - sprite standardisation: [@arnaudgregoire](https://github.com/arnaudgregoire),[@thomasSinno](https://github.com/ThomasSINNO)
  - sprite naming: [@arnaudgregoire](https://github.com/arnaudgregoire),[@arthurCoque](https://github.com/acoque)
- -
-
+ 
