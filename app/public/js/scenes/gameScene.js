@@ -70,7 +70,7 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
-        this.load.image('tiles','../../assets/tilesets/magma_cavern.png');
+        this.load.image('tiles','../../assets/tilesets/buried_relic.png');
     }
 
     create() {
