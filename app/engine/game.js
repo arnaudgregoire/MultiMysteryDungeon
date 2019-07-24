@@ -16,6 +16,7 @@ class Game {
     this.genericPokemonDBs = [];
     let mapCSV = String(fs.readFileSync(__dirname + "/../generation/maps/testMap.csv"));
     this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
+    this.eventEmitter = null;
   }
 
   getRandomInt(max) {
@@ -301,6 +302,10 @@ class Game {
     return this.players.filter(p => p.id === id).length > 0;
   }
 
+  /**
+   * Method called by the game controller when simple physical attack is triggered client side
+   * @param {*} player 
+   */
   playPhysicalAttack(player){
     let conversion = {
       "left":"right",
@@ -314,12 +319,38 @@ class Game {
     }
     let potentialEntity = this.collidePhysicalAttack(player);
     if(potentialEntity){
+      this.dealPhysicalAttack(player, potentialEntity);
       potentialEntity.action = "3";
       potentialEntity.orientation = conversion[player.orientation];
       setTimeout(()=>{potentialEntity.action = "5"},500);
     }
   }
 
+  /**
+   * Deal Damage to entity damaged by an attack
+   * @param {*} player 
+   */
+  dealPhysicalAttack(player, entity){
+    let damage = pokemonMath.computeDamage(player.pokemon.level,player.pokemon.stats[4].value,entity.pokemon.stats[3].value,20,1);
+    entity.pokemon.hp -= damage;
+    this.eventEmitter.emit('server-message',
+    {
+      message: player.name + ' ( ' + player.pokemon.name + ' ) ' + ' attacked ' + entity.pokemon.name  + ' dealing ' + damage + ' HP',
+      username:"Server"
+    });
+    if(entity.pokemon.hp <= 0){
+      this.onEntityKO(entity);
+    }
+  }
+
+  onEntityKO(entity){
+
+  }
+
+  /**
+   * Check if a simple physical attack of a pokemon hit an other entity
+   * @param {*} player 
+   */
   collidePhysicalAttack(player){
     let conversion = {
       "left":[-1,0],

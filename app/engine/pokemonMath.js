@@ -28,7 +28,30 @@ function computeHP(base,iv,ev,level){
     return value;
 }
 
+/**
+ * https://www.pokepedia.fr/Calcul_des_d%C3%A9g%C3%A2ts
+ * @param {*} level level of attacking pokemon
+ * @param {*} attack attack stat of attacking pokemon
+ * @param {*} def def of attacked pokemon
+ * @param {*} power base power of the attack move
+ * @param {*} cm coeff multiplicateur (stab * efficacité * random between 0.85 and 1 * others possibles)
+ */
+function computeDamage(level, attack, def, power, cm){
+    let value = level * 0.4 + 2;
+    value = value * attack;
+    value = value * power;
+    value = value / (def * 50);
+    value = value + 2;
+    value = Math.floor(value);
+    value = value * cm;
+    return value;
+}
+
+function getCM(typesAttack, typesDefense, typeMove){
+}
+
 module.exports={
     computeStat,
-    computeHP
+    computeHP,
+    computeDamage
 }

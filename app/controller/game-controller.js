@@ -24,6 +24,7 @@ class GameController {
     }).then(()=>{
       console.log("Generic Pokemons loaded from DB");
       this.eventEmitter = new EventEmitter();
+      this.game.eventEmitter =this.eventEmitter;
       this.initialize();
     })
   }
@@ -47,6 +48,9 @@ class GameController {
     });
     self.eventEmitter.on('newPlayer', (controller)=>{
       controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
+    });
+    self.eventEmitter.on('server-message', (message)=>{
+      self.websocket.emit('server-message', message);
     });
   }
 
@@ -72,7 +76,7 @@ class GameController {
     if(this.game.checkEndTurn()){
       this.game.computeIaTurn();
       this.game.setupNewTurn();
-      this.websocket.emit("turnUpdate", {
+      this.websocket.emit("server-message", {
         message:"Turn " + this.game.getTurn(),
         username:"Server"
       });

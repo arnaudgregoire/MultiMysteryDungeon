@@ -77,7 +77,7 @@ class ClientController{
             self.gameView.game.scene.getScene('uiScene').updatePlayers(entities.players);
         });
 
-        this.socket.on('turnUpdate', function (data){
+        this.socket.on('server-message', function (data){
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })
