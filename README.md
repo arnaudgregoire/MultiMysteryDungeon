@@ -31,6 +31,27 @@ You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeono
 
 ## Credits
 
-Spritesheet available on [Spriters ressource](https://www.spriters-resource.com/ds_dsi/pokemonmysterydungeonexplorersoftimedarkness/) ripped by:
- - @redblueyellow
- - @SilverDeoxys563
+ - Game concept: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game server-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game client-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game database-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Lead Director: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Artistic Director: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Artistic Research: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Hero Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Logo Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Animation: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Interface: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game Engine: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Music Composition: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Sound Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Level Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Artificial Intelligence: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Test: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Debug: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - sprite ripping: @redblueyellow,  @SilverDeoxys563
+ - sprite standardisation: [@arnaudgregoire](https://github.com/arnaudgregoire),[@thomasSinno](https://github.com/ThomasSINNO)
+ - sprite naming: [@arnaudgregoire](https://github.com/arnaudgregoire),[@arthurCoque](https://github.com/acoque)
+ -
+
