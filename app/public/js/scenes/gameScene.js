@@ -244,10 +244,18 @@ class GameScene extends Phaser.Scene{
         "right": 2,
         "downright":1
         };
+
         var key = "";
         key += entity.pokemon.gameIndex;
         key += "_";
-        key += entity.action;
+
+        //KO pokemon has the same animation as "hurt"
+        if(entity.action == '6'){
+            key += 3;
+        }
+        else{
+            key += entity.action;
+        }
         key += "_";
         key += orientationTable[entity.orientation];
         return key;

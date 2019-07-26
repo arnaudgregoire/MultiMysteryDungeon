@@ -104,7 +104,7 @@ const PokemonSchema = new Schema({
     types:[TypeSchema],
     ability:AbilitySchema,
     health:{
-        type:String,
+        type:Number,
         required:true
     },
     uniqid:{

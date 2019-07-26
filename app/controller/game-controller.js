@@ -176,21 +176,25 @@ class GameController {
   */
   onPlayerInput(controller) {
     let self = this;
+    let player = self.game.getPlayerById(controller.userId);
     let input = controller.input;
-    if(input.attack){
-      this.onPlayerAttack(controller);
+
+    // if player is dead, he can't do anything
+    if(player.action != '6'){
+      if(input.attack){
+        this.onPlayerAttack(player);
+      }
+      else{      
+        self.setOrientation(player, input);
+        self.setMoveAlongAxes(player, input);
+        self.setAction(player, input);
+      }
     }
-    else{
-      let player = self.game.getPlayerById(controller.userId);
-      self.setOrientation(player, input);
-      self.setMoveAlongAxes(player, input);
-      self.setAction(player, input);
-    }
+
 
   }
 
-  onPlayerAttack(controller){
-    let player = this.game.getPlayerById(controller.userId);
+  onPlayerAttack(player){
     if(!player.turnPlayed){
       player.action = "1";
       //after .5s, the player return to idle state

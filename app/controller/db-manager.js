@@ -30,6 +30,12 @@ class DbManager {
             let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id);
             player.orientation = doc.orientation;
             player.action = doc.action;
+            if(player.action == '6'){
+              player.turnPlayed = true;
+            }
+            else {
+              player.turnPlayed = false;
+            }
             console.log("player " + userId + " loaded");
             resolve(player);
           }
