@@ -32,7 +32,7 @@ You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeono
 ## Credits
 
  - Game concept: [@arnaudgregoire](https://github.com/arnaudgregoire)
- - Game Design: [@arnaudgregoire](https://github.com/arnaudgregoire)
+ - Game Design: [@arnaudgregoire](https://github.com/arnaudgregoire), [@azarz](https://github.com/azarz) 
  - Game server-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
  - Game client-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
  - Game database-side: [@arnaudgregoire](https://github.com/arnaudgregoire)
