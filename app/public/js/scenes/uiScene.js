@@ -79,7 +79,9 @@ class UIScene extends Phaser.Scene{
         )
 
         this.health = this.add.text(480, 860, player.pokemon.health + " / "+ player.pokemon.stats[5].value + " HP", this.textStyle);
+        this.healthBarBackground.fillRectShape(this.maxHealthBarGeometry);
         this.setHealth(player);
+
         this.ability = this.add.text(385, 920, 'Talent  : ' + player.pokemon.ability.name, this.textStyle);
         this.nature = this.add.text(385,960, 'Nature : ' + player.pokemon.nature, this.textStyle);
 
@@ -103,9 +105,10 @@ class UIScene extends Phaser.Scene{
     }
     
     setHealth(player){
-        this.healthBarBackground.fillRectShape(this.maxHealthBarGeometry);
         this.healthBarGeometry.setSize(Math.round(this.healthBarLength * player.pokemon.health/player.pokemon.stats[5].value),20);
+        this.healthBar.clear();
         this.healthBar.fillRectShape(this.healthBarGeometry);
+        this.health.setText(player.pokemon.health + " / "+ player.pokemon.stats[5].value);
     }
 
     displayPortrait(playerInfo){
@@ -157,6 +160,9 @@ class UIScene extends Phaser.Scene{
         let self = this;
         let rectStyle = {'false': 0xDC143C, 'true': 0x00C100};
         Object.keys(players).forEach(function (index) {
+            if(players[index].socketId == self.socketId){
+                self.setHealth(players[index]);
+            }
             self.portraits.iterate((portrait)=>{
                 if(portrait.userId == players[index].userId){
                     let graphic = portrait.getFirst();
@@ -165,5 +171,9 @@ class UIScene extends Phaser.Scene{
                 }
             },self);
         });
+    }
+
+    setSocketId(id){
+        this.socketId = id;
     }
 }

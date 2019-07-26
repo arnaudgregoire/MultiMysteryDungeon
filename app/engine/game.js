@@ -95,7 +95,9 @@ class Game {
 
   setupNewTurn(){
     this.players.forEach(player =>{
-      player.turnPlayed = false;
+      if(player.action != '6'){ // Dead can not play turns
+        player.turnPlayed = false;
+      }
     });
     this.ias.forEach(ia =>{
       ia.turnPlayed = false;
@@ -332,19 +334,35 @@ class Game {
    */
   dealPhysicalAttack(player, entity){
     let damage = pokemonMath.computeDamage(player.pokemon.level,player.pokemon.stats[4].value,entity.pokemon.stats[3].value,20,1);
-    entity.pokemon.hp -= damage;
+    entity.pokemon.health = entity.pokemon.health - damage;
     this.eventEmitter.emit('server-message',
     {
       message: player.name + ' ( ' + player.pokemon.name + ' ) ' + ' attacked ' + entity.pokemon.name  + ' dealing ' + damage + ' HP',
       username:"Server"
     });
-    if(entity.pokemon.hp <= 0){
+    if(entity.pokemon.health <= 0){  
       this.onEntityKO(entity);
     }
   }
 
   onEntityKO(entity){
+    this.entity.action = "6"; //KO state
+    this.entity.turnplayed = true;
+    switch (entity.entityType) {
+      case 'player':
+          this.eventEmitter.emit('server-message',
+          {
+            message: entity.name + ' ( ' + entity.pokemon.name + ' ) ' + ' is KO',
+            username:"Server"
+          });
+        break;
+      
+      case 'ia':
+        break;
 
+      default:
+        break;
+    }
   }
 
   /**
