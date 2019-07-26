@@ -350,6 +350,7 @@ class Game {
   onEntityKO(entity){
     entity.action = "6"; //KO state
     entity.turnPlayed = true;
+    
     switch (entity.entityType) {
       case 'player':
           this.eventEmitter.emit('server-message',
@@ -360,6 +361,16 @@ class Game {
         break;
       
       case 'ia':
+          this.eventEmitter.emit('server-message',
+          {
+            message: entity.pokemon.name  + ' is KO',
+            username:"Server"
+          });
+          let index = this.ias.indexOf(entity);
+          if(index > -1){
+            this.ias.splice(index, 1);
+          }
+          this.eventEmitter.emit('entity-suppression', entity);
         break;
 
       default:

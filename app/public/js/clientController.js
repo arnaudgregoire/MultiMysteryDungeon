@@ -62,14 +62,25 @@ class ClientController{
         });
         
         /*
-        When the  disconnect event is fired, we take that player’s id and we remove that player’s ship from the game.
+        When the  entity-suppression event is fired, we take that player’s id and we remove that player’s ship from the game.
         We do this by calling the  getChildren() method on our  players group.
         The  getChildren() method will return an array of all the game objects that are in that group,
         and from there we use the  forEach() method to loop through that array.
         */
-        this.socket.on('disconnect', function (id) {
-            self.gameView.game.scene.getScene('gameScene').removePlayer(id);
-            self.gameView.game.scene.getScene('uiScene').removePortrait(id);
+        this.socket.on('entity-suppression', function (info) {
+            let id = info.id;
+            let entityType = info.entityType;
+            switch (entityType) {
+                case 'player':
+                    self.gameView.game.scene.getScene('gameScene').removePlayer(id);
+                    self.gameView.game.scene.getScene('uiScene').removePortrait(id);
+                    break;
+                case 'ia':
+                        self.gameView.game.scene.getScene('gameScene').removeIa(id);
+                default:
+                    break;
+            }
+
         });
     
         this.socket.on('updateEntities', function (entities) {

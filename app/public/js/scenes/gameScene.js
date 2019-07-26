@@ -193,9 +193,18 @@ class GameScene extends Phaser.Scene{
 
     removePlayer(id){
         let self = this;
-        self.players.getChildren().forEach(function (entity) {
-            if (id === entity.userId) {
-                entity.destroy();
+        self.players.getChildren().forEach(function (player) {
+            if (id === player.userId) {
+                player.destroy();
+            }
+        });
+    }
+
+    removeIa(id){
+        let self = this;
+        self.ias.getChildren().forEach(function (ia) {
+            if (id === ia.uniqid) {
+                ia.destroy();
             }
         });
     }

@@ -40,6 +40,9 @@ class GameController {
     self.eventEmitter.on('playerInput', (controller)=>{
       self.onPlayerInput(controller);
     });
+    self.eventEmitter.on('entity-suppression', (entity)=>{
+      self.onEntitySuppression(entity);
+    });
     self.eventEmitter.on('disconnect', (controller)=>{
       self.onPlayerDisconnect(controller);
     });
@@ -52,6 +55,21 @@ class GameController {
     self.eventEmitter.on('server-message', (message)=>{
       self.websocket.emit('server-message', message);
     });
+  }
+
+  onEntitySuppression(entity){
+    let id = '';
+    switch (entity.entityType) {
+      case 'player':
+        id = entity.userId;
+        break;
+    
+      case 'ia':
+        id = entity.uniqid;
+      default:
+        break;
+    }
+    this.websocket.emit('entity-suppression',{'entityType': entity.entityType, 'id': id});
   }
 
   initializeIas(){
@@ -161,7 +179,7 @@ class GameController {
         // remove player from server
         self.removeObjectFromArray(player, self.game.players);
         player = null;
-        self.websocket.emit("disconnect", controller.userId);
+        self.websocket.emit("entity-suppression", controller.userId);
         console.log(controller.email +" disconnected");
         // delete player controller
         self.removeObjectFromArray(controller, self.playerControllers);
