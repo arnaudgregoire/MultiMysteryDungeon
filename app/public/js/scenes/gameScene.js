@@ -81,9 +81,11 @@ class GameScene extends Phaser.Scene{
         this.players = this.add.group();
         this.ias = this.add.group();
         this.map = this.make.tilemap({ key:'world'});
-        console.log(this.map);
         const tileset = this.map.addTilesetImage('tileset','buried_relic');
+        const tileset_object = this.map.addTilesetImage('objects','objects');
         const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
+        const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
+        console.log(objectLayer);
         this.animationManager = new AnimationManager(self);
       
         /* 
