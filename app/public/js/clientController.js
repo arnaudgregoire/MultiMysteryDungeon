@@ -7,21 +7,20 @@ class ClientController{
 
     initialize(){
         let self = this;
-        this.socket.on('getMap',function(map){
+        this.socket.on('get-world',function(world){
+            window.world = world;
             let config = GameView.getDefaultConfig();
-            // conversion to fit auto tiling format, 0 for path, 1 for walls
-            let conversion = JSON.parse(JSON.stringify(map));
-            for (let i = 0; i < conversion.length; i++) {
-                for (let j = 0; j < conversion[0].length; j++) {
-                    if(map[i][j] == 0){
-                        conversion[i][j] = 1;
+            for (let i = 0; i < window.world.layers[0].data.length; i++) {
+                for (let j = 0; j < window.world.layers[0].data[0].length; j++) {
+                    if(window.world.layers[0].data[i][j] == 0){
+                        window.world.layers[0].data[i][j] = 1;
                     }
-                    else if(map[i][j] == 1){
-                        conversion[i][j] =0;
+                    else if(window.world.layers[0].data[i][j] == 1){
+                        window.world.layers[0].data[i][j] =0;
                     }
                 }
             }
-            window.map = AutoTiling.tileMatrix(8, conversion, config.autoTilingConversion);
+            window.world.layers[0].data = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
             window.tilesize = config.tilesize;
             self.gameView = new GameView(config);
             self.chatController = new ChatController();

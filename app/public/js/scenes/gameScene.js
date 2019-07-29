@@ -71,6 +71,8 @@ class GameScene extends Phaser.Scene{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
         this.load.image('tiles','../../assets/tilesets/buried_relic.png');
+
+        this.load.tilemapTiledJSON('world', window.world);
     }
 
     create() {
@@ -78,7 +80,7 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.add.group();
         this.ias = this.add.group();
-        this.map = this.make.tilemap({ data: window.map, tileWidth: window.tilesize, tileHeight:window.tilesize});
+        this.map = this.make.tilemap({ data: window.world.layers[0].data, tileWidth: window.tilesize, tileHeight:window.tilesize});
         const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,1,1,0);
         const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
         this.animationManager = new AnimationManager(self);

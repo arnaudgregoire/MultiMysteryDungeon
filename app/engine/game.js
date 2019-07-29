@@ -14,8 +14,14 @@ class Game {
     this.ias = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
-    let mapCSV = String(fs.readFileSync(__dirname + "/../generation/maps/testMap.csv"));
-    this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
+    this.world = JSON.parse(fs.readFileSync(__dirname + "/../generation/maps/test.json"));
+    let map = this.world.layers[0].data;
+    this.map = [];
+    while(map.length){
+      this.map.push(map.splice(0,50));
+    };
+    this.world.layers[0].data = this.map;
+    //this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
     this.eventEmitter = null;
   }
 
