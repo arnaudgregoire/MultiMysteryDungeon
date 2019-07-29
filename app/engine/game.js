@@ -20,7 +20,7 @@ class Game {
     while(map.length){
       this.map.push(map.splice(0,50));
     };
-    this.world.layers[0].data = this.map;
+    this.world.layers[0].data = this.map
     //this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
     this.eventEmitter = null;
   }

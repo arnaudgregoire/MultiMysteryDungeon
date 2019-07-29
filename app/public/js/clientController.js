@@ -8,6 +8,7 @@ class ClientController{
     initialize(){
         let self = this;
         this.socket.on('get-world',function(world){
+            
             window.world = world;
             let config = GameView.getDefaultConfig();
             for (let i = 0; i < window.world.layers[0].data.length; i++) {
@@ -20,7 +21,13 @@ class ClientController{
                     }
                 }
             }
-            window.world.layers[0].data = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
+            let shapedArray = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
+            window.world.layers[0].data = [];
+            for (let i = 0; i < shapedArray.length; i++) {
+                for (let j = 0; j < shapedArray[0].length; j++) {      
+                    window.world.layers[0].data.push(shapedArray[i][j] + 1);
+                }
+            }
             window.tilesize = config.tilesize;
             self.gameView = new GameView(config);
             self.chatController = new ChatController();

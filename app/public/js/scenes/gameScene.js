@@ -70,8 +70,8 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
-        this.load.image('tiles','../../assets/tilesets/buried_relic.png');
-
+        this.load.image('buried_relic','../../assets/tilesets/buried_relic.png');
+        this.load.image('objects','../../assets/objects/objects.png');
         this.load.tilemapTiledJSON('world', window.world);
     }
 
@@ -80,9 +80,10 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.add.group();
         this.ias = this.add.group();
-        this.map = this.make.tilemap({ data: window.world.layers[0].data, tileWidth: window.tilesize, tileHeight:window.tilesize});
-        const tileset = this.map.addTilesetImage('tiles','tiles',window.tilesize,window.tilesize,1,1,0);
-        const worldLayer = this.map.createStaticLayer(0, tileset, 0, 0);
+        this.map = this.make.tilemap({ key:'world'});
+        console.log(this.map);
+        const tileset = this.map.addTilesetImage('tileset','buried_relic');
+        const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
         this.animationManager = new AnimationManager(self);
       
         /* 
