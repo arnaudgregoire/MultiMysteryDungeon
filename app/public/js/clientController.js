@@ -23,6 +23,7 @@ class ClientController{
             }
             let shapedArray = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
             window.world.layers[0].data = [];
+            // reshape matrix to 1D for phaser, add +1 cause Global ids in tiled start at 1, not 0, therefore we have to shift
             for (let i = 0; i < shapedArray.length; i++) {
                 for (let j = 0; j < shapedArray[0].length; j++) {      
                     window.world.layers[0].data.push(shapedArray[i][j] + 1);
