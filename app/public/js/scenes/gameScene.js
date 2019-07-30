@@ -54,11 +54,11 @@ class GameScene extends Phaser.Scene{
             progressBar.fillStyle(0xffffff, 1);
             progressBar.fillRect(250, 280, 1000 * value, 30);
         });
-                    
+
         this.load.on('fileprogress', function (file) {
             assetText.setText('Loading asset: ' + file.key);
         });
-        
+
         this.load.on('complete', function () {
             progressBar.destroy();
             progressBox.destroy();
@@ -70,7 +70,8 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
         })
-        this.load.image('buried_relic','../../assets/tilesets/buried_relic.png');
+        // this.load.image('buried_relic','../../assets/tilesets/buried_relic.png');
+        this.load.image('buried_relic','../../assets/tilesets/temporal_tower.png');
         this.load.image('objects','../../assets/objects/objects.png');
         this.load.tilemapTiledJSON('world', window.world);
     }
@@ -87,21 +88,21 @@ class GameScene extends Phaser.Scene{
         const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
         console.log(objectLayer);
         this.animationManager = new AnimationManager(self);
-      
-        /* 
+
+        /*
         This will populate the cursors object with our four main Key objects (up, down, left, and right),
         which will bind to those arrows on the keyboard
         */
         this.cursors = this.input.keyboard.createCursorKeys();
-        
-        this.keyAttack = this.input.keyboard.addKey('Q'); 
-        this.keyAttack.on('down',             
+
+        this.keyAttack = this.input.keyboard.addKey('Q');
+        this.keyAttack.on('down',
             function(event){window.dispatchEvent(
                 new CustomEvent(
                     'playerInput',
                     {
-                        detail: 
-                        { 
+                        detail:
+                        {
                             left: self.leftKeyPressed,
                             right: self.rightKeyPressed,
                             up: self.upKeyPressed,
@@ -124,28 +125,28 @@ class GameScene extends Phaser.Scene{
         const right = this.rightKeyPressed;
         const up = this.upKeyPressed;
         const down = this.downKeyPressed;
-        
+
         // Horizontal movement
         if (this.cursors.left.isDown){this.leftKeyPressed = true}
         else{this.leftKeyPressed = false}
-        
+
         if (this.cursors.right.isDown){this.rightKeyPressed = true}
         else{this.rightKeyPressed = false}
-        
+
         // Vertical movement
         if (this.cursors.up.isDown){this.upKeyPressed = true}
         else{this.upKeyPressed = false}
-        
+
         if (this.cursors.down.isDown){this.downKeyPressed = true}
-        else{this.downKeyPressed = false}  
-        
+        else{this.downKeyPressed = false}
+
         if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed || down != this.downKeyPressed) {
             window.dispatchEvent(
                 new CustomEvent(
                     'playerInput',
                     {
-                        detail: 
-                        { 
+                        detail:
+                        {
                             left: this.leftKeyPressed,
                             right: this.rightKeyPressed,
                             up: this.upKeyPressed,
@@ -171,7 +172,7 @@ class GameScene extends Phaser.Scene{
         entity.action = entityInfo.action;
         entity.name = entityInfo.name;
         entity.pokemon = entityInfo.pokemon;
-        
+
         if(entityInfo.entityType == 'player'){
             entity.userId = entityInfo.userId;
             entity.socketId = entityInfo.socketId;
@@ -325,9 +326,8 @@ class GameScene extends Phaser.Scene{
         }
 
     }
-    
+
     setSocketId(id){
         this.socketId = id;
     }
 }
- 

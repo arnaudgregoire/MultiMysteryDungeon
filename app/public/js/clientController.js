@@ -1,5 +1,5 @@
 class ClientController{
-    
+
     constructor(){
         this.socket = io();
         this.initialize();
@@ -8,25 +8,25 @@ class ClientController{
     initialize(){
         let self = this;
         this.socket.on('get-world',function(world){
-            
+
             window.world = world;
             let config = GameView.getDefaultConfig();
-            for (let i = 0; i < window.world.layers[0].data.length; i++) {
-                for (let j = 0; j < window.world.layers[0].data[0].length; j++) {
-                    if(window.world.layers[0].data[i][j] == 0){
-                        window.world.layers[0].data[i][j] = 1;
-                    }
-                    else if(window.world.layers[0].data[i][j] == 1){
-                        window.world.layers[0].data[i][j] =0;
-                    }
-                }
-            }
+            // for (let i = 0; i < window.world.layers[0].data.length; i++) {
+            //     for (let j = 0; j < window.world.layers[0].data[0].length; j++) {
+            //         if(window.world.layers[0].data[i][j] == 0){
+            //             window.world.layers[0].data[i][j] = 1;
+            //         }
+            //         else if(window.world.layers[0].data[i][j] == 1){
+            //             window.world.layers[0].data[i][j] =0;
+            //         }
+            //     }
+            // }
             let shapedArray = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
             window.world.layers[0].data = [];
             // reshape matrix to 1D for phaser, add +1 cause Global ids in tiled start at 1, not 0, therefore we have to shift
             for (let i = 0; i < shapedArray.length; i++) {
-                for (let j = 0; j < shapedArray[0].length; j++) {      
-                    window.world.layers[0].data.push(shapedArray[i][j] + 1);
+                for (let j = 0; j < shapedArray[0].length; j++) {
+                    window.world.layers[0].data.push(shapedArray[i][j]);// + 1);
                 }
             }
             window.tilesize = config.tilesize;
@@ -57,17 +57,17 @@ class ClientController{
                 self.gameView.game.scene.getScene('gameScene').displayEntities(entities.ias[id]);
             });
         });
-        
+
         this.socket.on('newPlayer', function (playerInfo) {
             self.gameView.game.scene.getScene('uiScene').displayPortrait(playerInfo);
             self.gameView.game.scene.getScene('gameScene').displayEntities(playerInfo);
         });
-    
+
         this.socket.on('alreadyLog', function (player_email) {
             alert("Account (" + player_email + ") already in use");
             window.location.replace('/index.html');
         });
-        
+
         /*
         When the  entity-suppression event is fired, we take that player’s id and we remove that player’s ship from the game.
         We do this by calling the  getChildren() method on our  players group.
@@ -89,7 +89,7 @@ class ClientController{
             }
 
         });
-    
+
         this.socket.on('updateEntities', function (entities) {
             self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.players);
             self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.ias);
@@ -100,7 +100,7 @@ class ClientController{
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
         })
-        
+
         this.socket.on('new-message', (data) => {
             self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
             self.chatController.addChatPartyElement(self.chatController.createMessageElement(data));

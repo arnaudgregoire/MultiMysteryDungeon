@@ -144,8 +144,6 @@
         else {
           result[i].push(other);
         }
-        // var r = eq(matrix, i, j, value) ? autotile(category, tiling, matrix, i, j) : null;
-        // result[i].push(r);
       }
     }
     return result;
