@@ -5,9 +5,9 @@ const addExtras = require('./generation').addExtras;
 
 let config =
 {
-	sizeX:50,	
-	sizeY:50,	
-	RoomCount:10,	
+	sizeX:50,
+	sizeY:50,
+	RoomCount:10,
 	minimumSize:3,	
 	maximumSize:10
 }
@@ -18,7 +18,3 @@ function defaultExport() {
 }
 
 module.exports = defaultExport;
-
-
-
-

@@ -1,119 +1,102 @@
-class ClientController{
-
-    constructor(){
-        this.socket = io();
-        this.initialize();
-    }
-
-    initialize(){
-        let self = this;
-        this.socket.on('get-world',function(world){
-
-            window.world = world;
-            let config = GameView.getDefaultConfig();
-            // for (let i = 0; i < window.world.layers[0].data.length; i++) {
-            //     for (let j = 0; j < window.world.layers[0].data[0].length; j++) {
-            //         if(window.world.layers[0].data[i][j] == 0){
-            //             window.world.layers[0].data[i][j] = 1;
-            //         }
-            //         else if(window.world.layers[0].data[i][j] == 1){
-            //             window.world.layers[0].data[i][j] =0;
-            //         }
-            //     }
-            // }
-            let shapedArray = AutoTiling.tileMatrix(8, window.world.layers[0].data, config.autoTilingConversion);
-            window.world.layers[0].data = [];
-            // reshape matrix to 1D for phaser, add +1 cause Global ids in tiled start at 1, not 0, therefore we have to shift
-            for (let i = 0; i < shapedArray.length; i++) {
-                for (let j = 0; j < shapedArray[0].length; j++) {
-                    window.world.layers[0].data.push(shapedArray[i][j]);// + 1);
-                }
-            }
-            window.tilesize = config.tilesize;
-            self.gameView = new GameView(config);
-            self.chatController = new ChatController();
-            window.addEventListener('gameSceneCreated',self.initializeConnection.bind(self));
-        })
-    }
-
-    initializeConnection(){
-        let self = this;
-        // id of the socket that server gave to the connection
-        this.socket.on('sendPlayer', function (player) {
-            self.gameView.game.scene.getScene('uiScene').setDashboard(player);
-            self.gameView.game.scene.getScene('uiScene').setSocketId(player.socketId);
-            self.gameView.game.scene.getScene('gameScene').setSocketId(player.socketId);
-        })
-        // We used  socket.on to listen for the  currentEntities event, and when this event is triggered,
-        // the function we provided will be called with the  players object that we passed from our server.
-        this.socket.on('currentEntities', function (entities) {
-            //When this function is called,
-            //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
-            Object.keys(entities.players).forEach(function (id) {
-                self.gameView.game.scene.getScene('uiScene').displayPortrait(entities.players[id]);
-                self.gameView.game.scene.getScene('gameScene').displayEntities(entities.players[id]);
-            });
-            Object.keys(entities.ias).forEach(function (id) {
-                self.gameView.game.scene.getScene('gameScene').displayEntities(entities.ias[id]);
-            });
-        });
-
-        this.socket.on('newPlayer', function (playerInfo) {
-            self.gameView.game.scene.getScene('uiScene').displayPortrait(playerInfo);
-            self.gameView.game.scene.getScene('gameScene').displayEntities(playerInfo);
-        });
-
-        this.socket.on('alreadyLog', function (player_email) {
-            alert("Account (" + player_email + ") already in use");
-            window.location.replace('/index.html');
-        });
-
-        /*
-        When the  entity-suppression event is fired, we take that player’s id and we remove that player’s ship from the game.
-        We do this by calling the  getChildren() method on our  players group.
-        The  getChildren() method will return an array of all the game objects that are in that group,
-        and from there we use the  forEach() method to loop through that array.
-        */
-        this.socket.on('entity-suppression', function (info) {
-            let id = info.id;
-            let entityType = info.entityType;
-            switch (entityType) {
-                case 'player':
-                    self.gameView.game.scene.getScene('gameScene').removePlayer(id);
-                    self.gameView.game.scene.getScene('uiScene').removePortrait(id);
-                    break;
-                case 'ia':
-                        self.gameView.game.scene.getScene('gameScene').removeIa(id);
-                default:
-                    break;
-            }
-
-        });
-
-        this.socket.on('updateEntities', function (entities) {
-            self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.players);
-            self.gameView.game.scene.getScene('gameScene').upadteEntities(entities.ias);
-            self.gameView.game.scene.getScene('uiScene').updatePlayers(entities.players);
-        });
-
-        this.socket.on('server-message', function (data){
-            self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
-            self.chatController.addChatBattleLogsElement(self.chatController.createMessageElement(data));
-        })
-
-        this.socket.on('new-message', (data) => {
-            self.chatController.addChatAllElement(self.chatController.createMessageElement(data));
-            self.chatController.addChatPartyElement(self.chatController.createMessageElement(data));
-        });
-
-        window.addEventListener('playerInput',function(e){
-            self.socket.emit('playerInput',e.detail);
-        });
-
-        window.addEventListener('submit-chatline',function(e){
-            self.socket.emit('submit-chatline', e.detail);
-        })
-        self.socket.emit('onClientLoad');
-        window.dispatchEvent(new CustomEvent('onClientLoad'));
-    }
+function ClientController() {
+  this.socket = io();
+  this.initialize();
 }
+
+ClientController.prototype.initialize = function () {
+  this.socket.on("get-world", this.initializeWorld.bind(this));
+};
+
+ClientController.prototype.initializeWorld = function (world) {
+  this.chatController = new ChatController();
+  this.gameView = new GameView();
+  window.world = world;
+  window.world.layers[0].data = [];
+  // auto tile the world and reshape the result as 1D Array for phaser
+  var tilingMatrix = AutoTiling.tileMatrix(8, window.world.layers[0].data, this.gameView.config.autoTilingConversion);
+  for (var i = 0; i < tilingMatrix.length; i++) {
+    for (var j = 0; j < tilingMatrix[i].length; j++) {
+      window.world.layers[0].data.push(tilingMatrix[i][j]);
+    }
+  }
+  window.tilesize = this.gameView.config.tilesize;
+  window.addEventListener("gameSceneCreated", this.initializeConnection.bind(this));
+};
+
+ClientController.prototype.initializeConnection = function () {
+  // id of the socket that server gave to the connection
+  this.socket.on("sendPlayer", function (player) {
+    this.gameView.game.scene.getScene("uiScene").setDashboard(player);
+    this.gameView.game.scene.getScene("uiScene").setSocketId(player.socketId);
+    this.gameView.game.scene.getScene("gameScene").setSocketId(player.socketId);
+  }.bind(this));
+  // We used  socket.on to listen for the  currentEntities event, and when this event is triggered,
+  // the function we provided will be called with the  players object that we passed from our server.
+  this.socket.on("currentEntities", function (entities) {
+    //When this function is called,
+    //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
+    for (var key in entities.players) {
+      this.gameView.game.scene.getScene("uiScene").displayPortrait(entities.players[key]);
+      this.gameView.game.scene.getScene("gameScene").displayEntities(entities.players[key]);
+    }
+    for (var key in entities.ias) {
+      this.gameView.game.scene.getScene("gameScene").displayEntities(entities.ias[key]);
+    }
+  }.bind(this));
+
+  this.socket.on("newPlayer", function (playerInfo) {
+    this.gameView.game.scene.getScene("uiScene").displayPortrait(playerInfo);
+    this.gameView.game.scene.getScene("gameScene").displayEntities(playerInfo);
+  }.bind(this));
+
+  this.socket.on("alreadyLog", function (player_email) {
+    alert("Account (" + player_email + ") already in use");
+    window.location.replace("/index.html");
+  });
+
+  /*
+  When the  entity-suppression event is fired, we take that player’s id and we remove that player’s ship from the game.
+  We do this by calling the  getChildren() method on our  players group.
+  The  getChildren() method will return an array of all the game objects that are in that group,
+  and from there we use the  forEach() method to loop through that array.
+  */
+  this.socket.on("entity-suppression", function (info) {
+    switch (info.entityType) {
+      case "player":
+        .bind(this).gameView.game.scene.getScene("gameScene").removePlayer(info.id);
+        .bind(this).gameView.game.scene.getScene("uiScene").removePortrait(info.id);
+        break;
+      case "ia":
+        .bind(this).gameView.game.scene.getScene("gameScene").removeIa(info.id);
+        default:
+        break;
+    }
+  }.bind(this));
+
+  this.socket.on("updateEntities", function (entities) {
+    this.gameView.game.scene.getScene("gameScene").upadteEntities(entities.players);
+    this.gameView.game.scene.getScene("gameScene").upadteEntities(entities.ias);
+    this.gameView.game.scene.getScene("uiScene").updatePlayers(entities.players);
+  }.bind(this));
+
+  this.socket.on("server-message", function (data) {
+    this.chatController.addChatAllElement(this.chatController.createMessageElement(data));
+    this.chatController.addChatBattleLogsElement(this.chatController.createMessageElement(data));
+  }.bind(this));
+
+  this.socket.on("new-message", function (data) {
+    this.chatController.addChatAllElement(this.chatController.createMessageElement(data));
+    this.chatController.addChatPartyElement(this.chatController.createMessageElement(data));
+  }.bind(this));
+
+  window.addEventListener("playerInput", function(e) {
+    this.socket.emit("playerInput", e.detail);
+  }.bind(this));
+
+  window.addEventListener("submit-chatline", function(e){
+    this.socket.emit("submit-chatline", e.detail);
+  }.bind(this));
+
+  this.socket.emit("onClientLoad");
+  window.dispatchEvent(new CustomEvent("onClientLoad"));
+};

@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const ServerController = require("./controller/server-controller");
-require('dotenv').config();
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 

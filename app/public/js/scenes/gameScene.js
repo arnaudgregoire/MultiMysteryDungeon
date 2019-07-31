@@ -2,64 +2,64 @@
 class GameScene extends Phaser.Scene{
 
     constructor(){
-        super({ key: 'gameScene', active: true });
+        super({ key: "gameScene", active: true });
     }
 
     preload() {
-        let progressBar = this.add.graphics();
-        let progressBox = this.add.graphics();
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(240, 270, 1000, 50);
 
-        let width = this.cameras.main.width;
-        let height = this.cameras.main.height;
+        var width = this.cameras.main.width;
+        var height = this.cameras.main.height;
 
         var assetText = this.make.text({
             x: width / 2,
             y: height / 2 + 50,
-            text: '',
+            text: "",
             style: {
-                font: '50px monospace',
-                fill: '#ffffff'
+                font: "50px monospace",
+                fill: "#ffffff"
             }
         });
         assetText.setOrigin(0.5, 0.5);
 
-        let percentText = this.make.text({
+        var percentText = this.make.text({
             x: width / 2,
             y: height / 2 - 5,
-            text: '0%',
+            text: "0%",
             style: {
-                font: '50px monospace',
-                fill: '#ffffff'
+                font: "50px monospace",
+                fill: "#ffffff"
             }
         });
         percentText.setOrigin(0.5, 0.5);
 
-        let loadingText = this.make.text({
+        var loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 100,
-            text: 'Loading...',
+            text: "Loading...",
             style: {
-                font: '50px monospace',
-                fill: '#ffffff'
+                font: "50px monospace",
+                fill: "#ffffff"
             }
         });
 
         loadingText.setOrigin(0.5, 0.5);
 
-        this.load.on('progress', function (value) {
-            percentText.setText(parseInt(value * 100) + '%');
+        this.load.on("progress", function (value) {
+            percentText.setText(parseInt(value * 100) + "%");
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
             progressBar.fillRect(250, 280, 1000 * value, 30);
         });
 
-        this.load.on('fileprogress', function (file) {
-            assetText.setText('Loading asset: ' + file.key);
+        this.load.on("fileprogress", function (file) {
+            assetText.setText("Loading asset: " + file.key);
         });
 
-        this.load.on('complete', function () {
+        this.load.on("complete", function () {
             progressBar.destroy();
             progressBox.destroy();
             loadingText.destroy();
@@ -68,24 +68,24 @@ class GameScene extends Phaser.Scene{
         });
 
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144].forEach((number)=>{
-            this.load.multiatlas(String(number), '../../assets/sprites/' + number + '/' + number + '.json');
+            this.load.multiatlas(String(number), "../../assets/sprites/" + number + "/" + number + ".json");
         })
-        // this.load.image('buried_relic','../../assets/tilesets/buried_relic.png');
-        this.load.image('buried_relic','../../assets/tilesets/temporal_tower.png');
-        this.load.image('objects','../../assets/objects/objects.png');
-        this.load.tilemapTiledJSON('world', window.world);
+        // this.load.image("buried_relic","../../assets/tilesets/buried_relic.png");
+        this.load.image("buried_relic","../../assets/tilesets/temporal_tower.png");
+        this.load.image("objects","../../assets/objects/objects.png");
+        this.load.tilemapTiledJSON("world", window.world);
     }
 
     create() {
-        let self = this;
+        var self = this;
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.add.group();
         this.ias = this.add.group();
-        this.map = this.make.tilemap({ key:'world'});
-        const tileset = this.map.addTilesetImage('tileset','buried_relic');
-        const tileset_object = this.map.addTilesetImage('objects','objects');
-        const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
-        const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
+        this.map = this.make.tilemap({ key:"world"});
+        var tileset = this.map.addTilesetImage("tileset","buried_relic");
+        var tileset_object = this.map.addTilesetImage("objects","objects");
+        var worldLayer = this.map.createStaticLayer("map", tileset, 0, 0);
+        var objectLayer = this.map.createFromObjects("objects",147,{key:"objects"},this);
         console.log(objectLayer);
         this.animationManager = new AnimationManager(self);
 
@@ -95,11 +95,11 @@ class GameScene extends Phaser.Scene{
         */
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.keyAttack = this.input.keyboard.addKey('Q');
-        this.keyAttack.on('down',
+        this.keyAttack = this.input.keyboard.addKey("Q");
+        this.keyAttack.on("down",
             function(event){window.dispatchEvent(
                 new CustomEvent(
-                    'playerInput',
+                    "playerInput",
                     {
                         detail:
                         {
@@ -121,10 +121,10 @@ class GameScene extends Phaser.Scene{
       }
 
     update() {
-        const left = this.leftKeyPressed;
-        const right = this.rightKeyPressed;
-        const up = this.upKeyPressed;
-        const down = this.downKeyPressed;
+        var left = this.leftKeyPressed;
+        var right = this.rightKeyPressed;
+        var up = this.upKeyPressed;
+        var down = this.downKeyPressed;
 
         // Horizontal movement
         if (this.cursors.left.isDown){this.leftKeyPressed = true}
@@ -143,7 +143,7 @@ class GameScene extends Phaser.Scene{
         if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed || down != this.downKeyPressed) {
             window.dispatchEvent(
                 new CustomEvent(
-                    'playerInput',
+                    "playerInput",
                     {
                         detail:
                         {
@@ -165,24 +165,24 @@ class GameScene extends Phaser.Scene{
     Lastly, we added the entity game object to the Phaser group we created.
     */
     displayEntities(entityInfo) {
-        let self = this;
-        let entity = self.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
+        var self = this;
+        var entity = self.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
         entity.entityType = entityInfo.entityType;
         entity.orientation = entityInfo.orientation;
         entity.action = entityInfo.action;
         entity.name = entityInfo.name;
         entity.pokemon = entityInfo.pokemon;
 
-        if(entityInfo.entityType == 'player'){
+        if(entityInfo.entityType == "player"){
             entity.userId = entityInfo.userId;
             entity.socketId = entityInfo.socketId;
         }
-        else if(entityInfo.entityType == 'ia'){
+        else if(entityInfo.entityType == "ia"){
             entity.uniqid = entityInfo.uniqid;
         }
 
         //we set the camera on the entity hero
-        if(entity.entityType == 'player'){
+        if(entity.entityType == "player"){
 
             if(entity.socketId == self.socketId){
                 self.setCamera(entity);
@@ -190,7 +190,7 @@ class GameScene extends Phaser.Scene{
             self.players.add(entity);
         }
 
-        else if(entity.entityType == 'ia'){
+        else if(entity.entityType == "ia"){
             self.ias.add(entity);
         }
 
@@ -198,7 +198,7 @@ class GameScene extends Phaser.Scene{
     }
 
     removePlayer(id){
-        let self = this;
+        var self = this;
         self.players.getChildren().forEach(function (player) {
             if (id === player.userId) {
                 player.destroy();
@@ -207,7 +207,7 @@ class GameScene extends Phaser.Scene{
     }
 
     removeIa(id){
-        let self = this;
+        var self = this;
         self.ias.getChildren().forEach(function (ia) {
             if (id === ia.uniqid) {
                 ia.destroy();
@@ -220,7 +220,7 @@ class GameScene extends Phaser.Scene{
     If the animation has not been used before, the animation is created
     */
     displayEntity(entity){
-        let self = this;
+        var self = this;
         // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
         var spriteKey = self.getSpriteKey(entity);
         // if sprite not already loaded, we create it
@@ -235,10 +235,10 @@ class GameScene extends Phaser.Scene{
     Set the camera on the pokemon that entity is controlling
     */
     setCamera(hero){
-        let self = this;
+        var self = this;
         //console.log("setting camera");
         // Phaser supports multiple cameras, but you can access the default camera like this:
-        const camera = self.cameras.main;
+        var camera = self.cameras.main;
         camera.startFollow(hero);
         camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
         camera.zoom = 3;
@@ -249,7 +249,7 @@ class GameScene extends Phaser.Scene{
      * for example a squirtle moving down will be 7_0_0
      */
     getSpriteKey(entity) {
-        const orientationTable = {
+        var orientationTable = {
         "down": 0,
         "downleft": 1,
         "left": 2,
@@ -265,7 +265,7 @@ class GameScene extends Phaser.Scene{
         key += "_";
 
         //KO pokemon has the same animation as "hurt"
-        if(entity.action == '6'){
+        if(entity.action == "6"){
             key += 3;
         }
         else{
@@ -287,9 +287,9 @@ class GameScene extends Phaser.Scene{
     }
 
     upadteEntities(entities){
-        let self = this;
+        var self = this;
         if(entities != []){
-            if(entities[0].entityType == 'player'){
+            if(entities[0].entityType == "player"){
                 Object.keys(entities).forEach(function (index) {
                     self.players.getChildren().forEach(function (player) {
                     if (entities[index].userId === player.userId) {
@@ -306,7 +306,7 @@ class GameScene extends Phaser.Scene{
                     });
                 });
             }
-            else if (entities[0].entityType == 'ia'){
+            else if (entities[0].entityType == "ia"){
                 Object.keys(entities).forEach(function (index) {
                     self.ias.getChildren().forEach(function (ia) {
                     if (entities[index].uniqid === ia.uniqid) {

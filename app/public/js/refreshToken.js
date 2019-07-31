@@ -1,14 +1,14 @@
-function getCookie(cname) {
-  var name = cname + "=";
+function getCookie(name) {
+  var key = name + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+  var cookies = decodedCookie.split(";");
+  for(var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    while (cookie.charAt(0) == " ") {
+      cookie = cookie.substring(1);
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+    if (cookie.indexOf(key) == 0) {
+      return cookie.substring(key.length, cookie.length);
     }
   }
   return "";
@@ -16,16 +16,16 @@ function getCookie(cname) {
 
 setInterval(function() {
   $.ajax({
-    type: 'POST',
-    url: '/token',
+    type: "POST",
+    url: "/token",
     data: {
-      refreshToken: getCookie('refreshJwt')
+      refreshToken: getCookie("refreshJwt")
     },
     success: function(data) {
     },
     error: function(xhr) {
       window.alert(JSON.stringify(xhr));
-      window.location.replace('/index.html');
+      window.location.replace("/index.html");
     }
   });
 }, 10000);

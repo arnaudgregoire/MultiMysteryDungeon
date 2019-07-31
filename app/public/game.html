@@ -3,23 +3,26 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Mystery Dungeon Online</title>
 
+  <link rel="icon" type="image/png" href="public/img/favicon.png"/>
   <link href="public/css/game.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
-  <script src="public/lib/auto-tiling.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="public/lib/auto-tiling.js"></script>
+  <script src="public/js/utils.js"></script>
+  <!-- <script src="public/js/refreshToken.js"></script> -->
   <script src="public/js/scenes/gameScene.js"></script>
   <script src="public/js/scenes/uiScene.js"></script>
-  <script src="public/js/chatController.js"></script>
-  <script src="public/js/refreshToken.js"></script>
   <script src="public/js/animationManager.js"></script>
-  <script src="public/js/clientController.js"></script>
   <script src="public/js/gameView.js"></script>
+  <script src="public/js/chatController.js"></script>
+  <script src="public/js/clientController.js"></script>
   <script src="public/js/main.js"></script>
-  <link rel="icon" type="image/png" href="public/img/favicon.png"/>
 </head>
 
 <body>
@@ -38,10 +41,10 @@
             <ul id="partyMessages" class="messages"></ul>
         </div>
       </div>
-      <div id="chatTab" class='btn-group' role="group" aria-label="tab chat buttons">
-          <button class="chatButton btn btn-secondary" id='chatAllButton'>All</button>
-          <button class="chatButton btn btn-secondary" id='chatBattleLogsButton'>Battle Logs</button>
-          <button class="chatButton btn btn-secondary" id='chatPartyButton'>Party</button>
+      <div id="chatTab" class="btn-group" role="group" aria-label="tab chat buttons">
+          <button class="chatButton btn btn-secondary" id="chatAllButton">All</button>
+          <button class="chatButton btn btn-secondary" id="chatBattleLogsButton">Battle Logs</button>
+          <button class="chatButton btn btn-secondary" id="chatPartyButton">Party</button>
       </div>
       <input id="inputMessage" class="inputMessage form-control" placeholder="Type here..." type="text">
     </div>
