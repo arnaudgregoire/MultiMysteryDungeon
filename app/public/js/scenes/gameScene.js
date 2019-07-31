@@ -1,4 +1,7 @@
 "use strict";
+
+//import { log } from "util";
+
 class GameScene extends Phaser.Scene{
 
     constructor(){
@@ -72,6 +75,7 @@ class GameScene extends Phaser.Scene{
         })
         // this.load.image('tileset_picture','../../assets/tilesets/buried_relic.png');
         this.load.image('tileset_picture','../../assets/tilesets/temporal_tower.png');
+        this.load.tilemapTiledJSON('world', window.world);
     }
 
     create() {
@@ -79,11 +83,10 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.add.group();
         this.ias = this.add.group();
-        const tileset = this.map.addTilesetImage('tileset','tileset_picture');
-
-        const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
         this.map = this.make.tilemap({ key:'world'});
         const tileset = this.map.addTilesetImage('tileset','tileset_picture');
+        const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
+        
 
         //const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
         this.animationManager = new AnimationManager(self);

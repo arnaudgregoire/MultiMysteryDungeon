@@ -11,6 +11,7 @@ AnimationManager.prototype.createAnimations = function (index) {
   4 : up
   */
   var orientations = ["0","1","2","3","4"];
+  var self = this;
   for (var i = 0; i < orientations.length; i++) {
     var orientation = orientations[i];
     //moving sprites

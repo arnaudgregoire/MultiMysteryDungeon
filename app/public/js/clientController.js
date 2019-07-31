@@ -11,9 +11,9 @@ ClientController.prototype.initializeWorld = function (world) {
   this.chatController = new ChatController();
   this.gameView = new GameView();
   window.world = world;
-  window.world.layers[0].data = [];
   // auto tile the world and reshape the result as 1D Array for phaser
   var tilingMatrix = AutoTiling.tileMatrix(8, window.world.layers[0].data, this.gameView.config.autoTilingConversion);
+  window.world.layers[0].data = [];
   for (var i = 0; i < tilingMatrix.length; i++) {
     for (var j = 0; j < tilingMatrix[i].length; j++) {
       window.world.layers[0].data.push(tilingMatrix[i][j]);
