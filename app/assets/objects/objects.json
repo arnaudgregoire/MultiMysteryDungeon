@@ -1,0 +1,1 @@
+{"textures":[{"image":"../assets/objects/objects.png","format":"RGBA8888","size":{"w":460,"h":484},"scale":1,"frames":[{"filename":"apple","frame":{"x":97,"y":54,"w":13,"h":15},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":13,"h":15},"sourceSize":{"w":13,"h":15}}]}]}

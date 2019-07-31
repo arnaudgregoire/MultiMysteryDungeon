@@ -72,8 +72,8 @@ class GameScene extends Phaser.Scene{
 
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144].forEach((number)=>{
             this.load.multiatlas(String(number), "../../assets/sprites/" + number + "/" + number + ".json");
-        })
-        // this.load.image('tileset_picture','../../assets/tilesets/buried_relic.png');
+        });
+        this.load.multiatlas('objects_picture','../../assets/objects/objects.json');
         this.load.image('tileset_picture','../../assets/tilesets/temporal_tower.png');
         this.load.tilemapTiledJSON('world', window.world);
     }
@@ -86,7 +86,7 @@ class GameScene extends Phaser.Scene{
         this.map = this.make.tilemap({ key:'world'});
         const tileset = this.map.addTilesetImage('tileset','tileset_picture');
         const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
-        
+        this.map.createFromObjects('objects',11,{key:'objects_picture', frame:'apple'},this.scene);
 
         //const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
         this.animationManager = new AnimationManager(self);

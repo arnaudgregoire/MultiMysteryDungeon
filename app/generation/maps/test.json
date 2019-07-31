@@ -20,7 +20,7 @@
          "objects":[
                 {
                  "height":0,
-                 "id":3,
+                 "id":10,
                  "name":"spawn_point",
                  "point":true,
                  "rotation":0,
@@ -29,6 +29,78 @@
                  "width":0,
                  "x":491,
                  "y":178
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":781,
+                 "y":441
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":661,
+                 "y":400
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":834,
+                 "y":878
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":470,
+                 "y":562
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":140,
+                 "y":361
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"apple",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":242,
+                 "y":794
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -37,7 +109,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":26,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.2.4",
