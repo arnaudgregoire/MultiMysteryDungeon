@@ -63,11 +63,11 @@ ClientController.prototype.initializeConnection = function () {
   this.socket.on("entity-suppression", function (info) {
     switch (info.entityType) {
       case "player":
-        .bind(this).gameView.game.scene.getScene("gameScene").removePlayer(info.id);
-        .bind(this).gameView.game.scene.getScene("uiScene").removePortrait(info.id);
+        this.gameView.game.scene.getScene("gameScene").removePlayer(info.id);
+        this.gameView.game.scene.getScene("uiScene").removePortrait(info.id);
         break;
       case "ia":
-        .bind(this).gameView.game.scene.getScene("gameScene").removeIa(info.id);
+        this.gameView.game.scene.getScene("gameScene").removeIa(info.id);
         default:
         break;
     }

@@ -62,7 +62,7 @@ ChatController.prototype.toggleChat = function (chatId) {
 ChatController.prototype.sendMessage = function () {
   var message = this.inputMessage.value;
   if (message.length > 0) {
-    window.dispatchEvent(new CustomEvent("submit-chatline", { detail: message });)
+    window.dispatchEvent(new CustomEvent("submit-chatline", { detail: message }));
     this.inputMessage.value = "";
   }
 };

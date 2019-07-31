@@ -24,7 +24,7 @@ GameView.prototype.setDefaultConfig = function () {
     tilesize: 24,
     autoTilingConversion: {
       0: {
-        "A": 74,v"B": 64,v"C": 56, "D": 66,
+        "A": 74, "B": 64, "C": 56, "D": 66,
         "AB": 46, "AC": 37, "AD": 48, "BC": 28, "BD": 29, "CD": 30,
         "ABC": 91, "ABD": 101, "ACD": 93, "BCD": 83,
         "ABCD": 65,
