@@ -212,6 +212,12 @@ Then the hurt sprite:
   - 83_2_3_0
   - 83_2_4_0
 
+Here is an orientation helper.
+
+<p align="center">
+  <img src="/screenshot/orientationExample.PNG" alt="orientation sprites">
+</p>
+
 Now we are almost done.
 You should have something like this.
 
