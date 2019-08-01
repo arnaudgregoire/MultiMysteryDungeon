@@ -215,7 +215,7 @@ Then the hurt sprite:
 Here is an orientation helper.
 
 <p align="center">
-  <img src="/screenshot/orientationExample.PNG" alt="orientation sprites">
+  <img src="/screenshot/orientationExample.png" alt="orientation sprites">
 </p>
 
 Now we are almost done.
