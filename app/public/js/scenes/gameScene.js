@@ -74,7 +74,7 @@ class GameScene extends Phaser.Scene{
             this.load.multiatlas(String(number), "../../assets/sprites/" + number + "/" + number + ".json");
         });
         this.load.multiatlas('objects_picture','../../assets/objects/objects.json');
-        this.load.image('tileset_picture','../../assets/tilesets/temporal_tower.png');
+        this.load.image('tileset_picture','../../assets/tilesets/buried_relic.png');
         this.load.tilemapTiledJSON('world', window.world);
     }
 
