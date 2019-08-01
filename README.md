@@ -52,7 +52,7 @@ You can also find a [Trello board](https://trello.com/b/7p8KeYpU/mysterydungeono
  - Debug: [@arnaudgregoire](https://github.com/arnaudgregoire)
  - sprite ripping: @redblueyellow,  @SilverDeoxys563
  - sprite standardisation: [@arnaudgregoire](https://github.com/arnaudgregoire),[@thomasSinno](https://github.com/ThomasSINNO)
- - sprite naming: [@arnaudgregoire](https://github.com/arnaudgregoire),[@arthurCoque](https://github.com/acoque)
+ - sprite naming: [@arnaudgregoire](https://github.com/arnaudgregoire),[@arthurCoque](https://github.com/acoque),  [@fnegrel](https://github.com/fnegrel)
  - tileset auto-tiling: [@ogus](https://github.com/ogus/auto-tiling)
  - remerciements spéciaux: [@arnaudgregoire](https://github.com/arnaudgregoire) 
 
