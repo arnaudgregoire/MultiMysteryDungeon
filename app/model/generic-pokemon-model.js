@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
-const ENUM_TYPE = require("../model/type/enums").ENUM_TYPE;
-const ENUM_MOVE_LEARN_METHOD = require("../model/type/enums").ENUM_MOVE_LEARN_METHOD;
+const ENUMS = require("../type/enums");
+const ENUM_STAT = ENUMS.ENUM_STAT;
+const ENUM_TYPE = ENUMS.ENUM_TYPE;
+const ENUM_MOVE_LEARN_METHOD = ENUMS.ENUM_MOVE_LEARN_METHOD;
 
 
 const AbilitySchema = new Schema({

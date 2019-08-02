@@ -1,4 +1,4 @@
-const MODIFIER_NATURE = require("../model/type/enums").MODIFIER_NATURE;
+const MODIFIER_NATURE = require("../type/enums").MODIFIER_NATURE;
 
 /**
  * https://www.pokepedia.fr/Calcul_des_statistiques

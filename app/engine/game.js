@@ -1,8 +1,9 @@
-const Player = require("../model/type/player");
-const Pokemon = require("../model/type/pokemon");
-const ENUM_STAT = require("../model/type/enums").ENUM_STAT;
-const ENUM_GENDER = require("../model/type/enums").ENUM_GENDER;
-const ENUM_NATURE = require("../model/type/enums").ENUM_NATURE;
+const Player = require("../type/entity/player");
+const Pokemon = require("../type/pokemon/pokemon");
+const ENUMS = require("../type/enums");
+const ENUM_STAT = ENUMS.ENUM_STAT;
+const ENUM_GENDER = ENUMS.ENUM_GENDER;
+const ENUM_NATURE = ENUMS.ENUM_NATURE;
 const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
 

@@ -1,11 +1,11 @@
+const EventEmitter = require('events'); 
+const uniqid = require('uniqid');
 const DbManager = require("./db-manager");
 const PlayerController = require("./player-controller");
 const Game = require("../engine/game");
-const Player = require("../model/type/player");
-const Ia = require("../model/type/ia");
-const EventEmitter = require('events'); 
-const genericPokemonDB = require('../model/type/generic-pokemon-db');
-const uniqid = require('uniqid');
+const Player = require("../type/entity/player");
+const Ia = require("../type/entity/ia");
+const genericPokemonDB = require('../type/pokemon/generic-pokemon-db');
 
 
 class GameController {

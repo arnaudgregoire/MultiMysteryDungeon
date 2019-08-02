@@ -1,6 +1,6 @@
 const PlayerModel = require("../model/player-model");
-const Player = require("../model/type/player");
-const Pokemon = require("../model/type/pokemon");
+const Player = require("../type/entity/player");
+const Pokemon = require("../type/pokemon/pokemon");
 const GenericPokemonModel = require("../model/generic-pokemon-model");
 const PokemonModel = require("../model/pokemon-model");
 
