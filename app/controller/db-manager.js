@@ -27,7 +27,7 @@ class DbManager {
         PlayerModel.find({user_id: userId}).then((docs,err) => {
           if (docs.length == 1) {
             let doc = docs[0];
-            let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id);
+            let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id, doc.belly, doc.status);
             player.orientation = doc.orientation;
             player.action = doc.action;
             if(player.action == '6'){
@@ -174,7 +174,9 @@ class DbManager {
                 pokemon_id:player.pokemonId,
                 orientation:player.orientation,
                 action:player.action,
-                name: player.name
+                name: player.name,
+                belly: player.belly,
+                status: player.status
               }
             ).then((res) =>{
               console.log("player " + player.userId + " updated");
@@ -191,7 +193,9 @@ class DbManager {
                 pokemon_id:player.pokemonId,
                 orientation:player.orientation,
                 action:player.action,
-                name: player.name
+                name: player.name,
+                belly: player.belly,
+                status: player.status
               }
             ).then((res) =>{
               console.log("player " + player.userId + " saved");

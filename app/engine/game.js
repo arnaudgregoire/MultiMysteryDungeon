@@ -6,6 +6,7 @@ const ENUM_GENDER = ENUMS.ENUM_GENDER;
 const ENUM_NATURE = ENUMS.ENUM_NATURE;
 const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
+const utils = require("../engine/utils");
 
 class Game {
   constructor(config) {
@@ -26,22 +27,18 @@ class Game {
     this.eventEmitter = null;
   }
 
-  getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
   createPokemon(uniqid, gameIndex){
       let level = 5;
       let happiness = 0;
       let nickname = "";
-      let nature = ENUM_NATURE[this.getRandomInt(ENUM_NATURE.length)];
-      let gender = ENUM_GENDER[this.getRandomInt(ENUM_GENDER.length)];
+      let nature = ENUM_NATURE[utils.randomIntFromInterval(0,ENUM_NATURE.length - 1)];
+      let gender = ENUM_GENDER[utils.randomIntFromInterval(0,ENUM_GENDER.length - 1)];
       let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
-      let ability = genericPokemon.abilities[this.getRandomInt(genericPokemon.abilities.length)].ability;
+      let ability = genericPokemon.abilities[utils.randomIntFromInterval(0, genericPokemon.abilities.length - 1)].ability;
       let ivs = [];
       let shiny = false;
       ENUM_STAT.forEach((stat)=>{
-        ivs.push({name:stat, value: this.getRandomInt(31)});
+        ivs.push({name:stat, value: utils.randomIntFromInterval(0, 31)});
       });
       let evs = [];
       ENUM_STAT.forEach((stat)=>{
@@ -145,13 +142,14 @@ class Game {
     return endTurn;
   }
 
-  computeIaTurn(){
+  computeIaTurn()
+  {
     let directions = [-1,0,1];
     let dx = 0;
     let dy = 0;
       this.ias.forEach(ia =>{     
-        dx = directions[this.getRandomInt(directions.length)];
-        dy = directions[this.getRandomInt(directions.length)];
+        dx = directions[utils.randomIntFromInterval(0, directions.length - 1)];
+        dy = directions[utils.randomIntFromInterval(0, directions.length - 1)];
         ia.action = "5";
         if(!(dx == 0 && dy == 0)){
           if(!this.collide(ia, ia.x + dx,ia.y + dy)){

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ENUM_STATUS = require('../type/enums').ENUM_STATUS;
 
 const PlayerSchema = new Schema({
   user_id:{
@@ -29,6 +30,15 @@ const PlayerSchema = new Schema({
   action:{
     type: Number,
     required: false
+  },
+  belly:{
+    type: Number,
+    required:true
+  },
+  status:{
+    type:String,
+    required:true,
+    enum:Object.values(ENUM_STATUS)
   }
 });
 

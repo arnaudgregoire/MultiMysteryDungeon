@@ -1,8 +1,23 @@
 const Edible = require('./Edible');
 const MDO = require('../enums').MDO;
 const MDO_TILESET = require('../enums').MDO_TILESET;
+const ENUM_STATUS = require('../enums').ENUM_STATUS;
+const utils = require('../../engine/utils');
 
-class Apple extends Edible
+class Food extends Edible
+{
+    constructor(x, y, hungerValue)
+    {
+        super(x, y, hungerValue);
+    }
+
+    consume(player)
+    {
+        player.belly += this.hungerValue;
+    }
+}
+
+class Apple extends Food
 {
     constructor(x, y)
     {
@@ -14,7 +29,7 @@ class Apple extends Edible
     }
 }
 
-class GoldenApple extends Edible
+class GoldenApple extends Food
 {
     constructor(x, y)
     {
@@ -26,7 +41,7 @@ class GoldenApple extends Edible
     }
 }
 
-class GrimyFood extends Edible
+class GrimyFood extends Food
 {
     constructor(x, y)
     {
@@ -35,6 +50,11 @@ class GrimyFood extends Edible
         this.id = MDO_TILESET.GRIMY_FOOD;
         this.name = "Grimy Food";
         this.description = "Slightly fills Belly, causes random status";
+    }
+    consume(player)
+    {
+        super.consume(player);
+        player.status = Object.values(ENUM_STATUS)[utils.randomIntFromInterval(0, Object.values(ENUM_STATUS).length - 1)];
     }
 } 
 

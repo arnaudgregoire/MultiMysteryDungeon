@@ -6,6 +6,8 @@ const Game = require("../engine/game");
 const Player = require("../type/entity/player");
 const Ia = require("../type/entity/ia");
 const genericPokemonDB = require('../type/pokemon/generic-pokemon-db');
+const ENUM_STATUS = require('../type/enums').ENUM_STATUS;
+const utils = require('../engine/utils');
 
 
 class GameController {
@@ -80,12 +82,12 @@ class GameController {
 
   createIa(){
     let id = uniqid();
-    let pokemon = this.game.createPokemon(id,this.pokedex[this.randomIntFromInterval(0,this.pokedex.length - 1)]);
+    let pokemon = this.game.createPokemon(id,this.pokedex[utils.randomIntFromInterval(0,this.pokedex.length - 1)]);
     let x = 0;
     let y = 0;
     while (this.game.map[y][x] != 1){
-      x = this.randomIntFromInterval(0,49);
-      y = this.randomIntFromInterval(0,49);
+      x = utils.randomIntFromInterval(0,49);
+      y = utils.randomIntFromInterval(0,49);
     }
     return new Ia(id,x,y,pokemon.name,pokemon);
   }
@@ -110,7 +112,7 @@ class GameController {
       socket.emit("get-world",self.game.world);
       let userId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
-      let randomPokedexNumber = self.pokedex[self.randomIntFromInterval(0,self.pokedex.length - 1)];
+      let randomPokedexNumber = self.pokedex[utils.randomIntFromInterval(0,self.pokedex.length - 1)];
       
       // if no player id corresponding in game players,then try to load it from db
       if(!self.game.isPlayer(userId)){
@@ -130,8 +132,8 @@ class GameController {
             else if(player == 0 && pokemon == 0){
               console.log("creating player with user id : " + userId);
               let pokemonId = uniqid();
-              // spawn coordinate
-              player = new Player(userId, 25, 25, name, pokemonId);  
+              // TODO Replace 25 25 with spawn coordinate spawn coordinate
+              player = new Player(userId, 25, 25, name, pokemonId, 100, ENUM_STATUS.NORMAL);  
               console.log("creating pokemon with uniqid : " + pokemonId);
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }
@@ -304,11 +306,6 @@ class GameController {
       if(controller.userId == userId){return controller}
     })
     return new Error("no player controller found for given id ( " +userId+ " )");
-  }
-
-  // min and max included
-  randomIntFromInterval(min,max) {
-    return Math.floor(Math.random()*(max-min+1)+min)
   }
 }
 

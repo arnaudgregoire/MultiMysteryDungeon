@@ -1,5 +1,13 @@
 // TODO : do all items https://www.serebii.net/dungeon2/items.shtml
 
+const ENUM_STATUS = Object.freeze({
+    NORMAL:'NORMAL',
+    BURN:'BURN',
+    SLEEP:'SLEEP',
+    POISON:'POISON'
+})
+
+
 const MDO = Object.freeze({
     GRIMY_FOOD:'GRIMY_FOOD',
     APPLE: 'APPLE',
@@ -370,5 +378,6 @@ module.exports= {
     ENUM_GENDER,
     MODIFIER_NATURE,
     MDO,
-    MDO_TILESET
+    MDO_TILESET,
+    ENUM_STATUS
 }

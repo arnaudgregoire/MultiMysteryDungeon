@@ -1,6 +1,6 @@
-const MdoObject  = require('./MdoObject');
+const MdoObject  = require('./Consumable');
 
-class Edible extends MdoObject
+class Edible extends Consumable
 {
     constructor(x, y, hungerValue)
     {

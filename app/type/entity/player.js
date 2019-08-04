@@ -1,5 +1,4 @@
 const Entity = require("./entity");
-
 /*
 x : pokemon position on map
 y : same
@@ -8,7 +7,7 @@ id : the id of the player
 */
 class Player extends Entity
 {
-  constructor(userId, x, y, name, pokemonId)
+  constructor(userId, x, y, name, pokemonId, belly, status)
   {
     super(x,y,name);
     this.entityType = 'player';
@@ -18,6 +17,8 @@ class Player extends Entity
     this.moveAlongX = 0;
     this.moveAlongY = 0;
     this.socketId = null;
+    this.belly = belly;
+    this.status = status;
   }
 }
 
