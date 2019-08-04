@@ -4,8 +4,17 @@ const MDO_TILESET = require('../enums').MDO_TILESET;
 const ENUM_STATUS = require('../enums').ENUM_STATUS;
 const utils = require('../../engine/utils');
 
+/**
+ * Real Class implementation for object APPLE
+ */
 class Apple extends Edible
 {
+    /**
+     * 
+     * @param {integer} x x position on map 
+     * @param {integer} y y position on map
+     * @param {String} id object identifier
+     */
     constructor(x, y, id)
     {
         super(
@@ -19,15 +28,19 @@ class Apple extends Edible
             , 50
         )
     }
-
-    consume(player)
-    {
-        super.consume(player);
-    }
 }
 
+/**
+ * Real Class implementation for object GOLDEN_APPLE
+ */
 class GoldenApple extends Edible
 {
+    /**
+     * 
+     * @param {integer} x x position on map 
+     * @param {integer} y y position on map
+     * @param {String} id object identifier
+     */
     constructor(x, y, id)
     {
         super(
@@ -41,15 +54,19 @@ class GoldenApple extends Edible
             , 100
         )
     }
-
-    consume(player)
-    {
-        super.consume(player);
-    }
 }
 
+/**
+ * Real Class implementation for object GRIMY_FOOD
+ */
 class GrimyFood extends Edible
 {
+    /**
+     * 
+     * @param {integer} x x position on map 
+     * @param {integer} y y position on map
+     * @param {String} id object identifier
+     */
     constructor(x, y, id)
     {
         super(
@@ -63,7 +80,10 @@ class GrimyFood extends Edible
             , 20
         )
     }
-
+    /**
+     * Grim Food cause random status effect on consumption
+     * @param {Player} player 
+     */
     consume(player)
     {
         super.consume(player);

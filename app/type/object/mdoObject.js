@@ -1,5 +1,17 @@
+/**
+ * Abstract class for all MDO objects
+ */
 class MdoObject
 {
+    /**
+     * 
+     * @param {integer} x x position on map 
+     * @param {integer} y y position on map
+     * @param {String} id object identifier
+     * @param {MDO} type MDO type of object
+     * @param {String} name Name of object
+     * @param {String} description Description of object
+     */
     constructor(x, y, id, type, name, description)
     {
         this.x = x;
