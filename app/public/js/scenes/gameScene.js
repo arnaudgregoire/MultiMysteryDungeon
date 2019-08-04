@@ -86,7 +86,6 @@ class GameScene extends Phaser.Scene{
         this.map = this.make.tilemap({ key:'world'});
         const tileset = this.map.addTilesetImage('tileset','tileset_picture');
         const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
-        this.map.createFromObjects('objects',11,{key:'objects_picture', frame:'apple'},this.scene);
 
         //const objectLayer = this.map.createFromObjects('objects',147,{key:'objects'},this);
         this.animationManager = new AnimationManager(self);

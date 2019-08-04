@@ -7,27 +7,45 @@ const ENUM_NATURE = ENUMS.ENUM_NATURE;
 const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
 const utils = require("../engine/utils");
+const MdoFactory = require("../type/MdoFactory");
 
-class Game {
-  constructor(config) {
+class Game
+{
+  constructor(config) 
+  {
     this.width = config.width;
     this.height = config.height;
     this.players = [];
     this.ias = [];
+    this.objects = [];
     this.turn = 0;
     this.genericPokemonDBs = [];
     this.world = JSON.parse(fs.readFileSync(__dirname + "/../generation/maps/test.json"));
+    this.loadMap();
+    this.loadObjects();
+    this.eventEmitter = null;
+  }
+
+  loadObjects()
+  {
+    this.world.layers[1].objects.forEach((jsonObject)=>
+    {
+      this.objects.push(MdoFactory.createMdoObject(jsonObject.x, jsonObject.y, jsonObject.type));
+    })
+  }
+
+  loadMap()
+  {
     let map = this.world.layers[0].data;
     this.map = [];
     while(map.length){
       this.map.push(map.splice(0,50));
     };
-    this.world.layers[0].data = this.map
-    //this.map = mapCSV.trim().split('\n').map(function (row) { return row.split(',') });
-    this.eventEmitter = null;
+    this.world.layers[0].data = this.map;
   }
 
-  createPokemon(uniqid, gameIndex){
+  createPokemon(uniqid, gameIndex)
+  {
       let level = 5;
       let happiness = 0;
       let nickname = "";

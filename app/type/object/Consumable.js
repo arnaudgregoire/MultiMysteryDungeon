@@ -1,10 +1,10 @@
-const MdoObject  = require('./MdoObject');
+const Visible = require('./Visible');
 
-class Consumable extends MdoObject
+class Consumable extends Visible
 {
-    constructor(x, y)
+    constructor(x, y, id, type, name, description, look)
     {
-        super(x, y);
+        super(x, y, id, type, name, description, look);
     }
 
     consume(player)

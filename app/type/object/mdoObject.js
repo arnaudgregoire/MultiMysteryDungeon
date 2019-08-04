@@ -1,13 +1,13 @@
 class MdoObject
 {
-    constructor(x, y)
+    constructor(x, y, id, type, name, description)
     {
         this.x = x;
         this.y = y;
-        this.type = "";
-        this.name = "";
-        this.description = "";
-        this.id = "";
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
     }
 }
 

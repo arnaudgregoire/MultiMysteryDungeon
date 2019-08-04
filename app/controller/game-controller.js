@@ -12,18 +12,22 @@ const utils = require('../engine/utils');
 
 class GameController {
 
-  constructor(websocket, config) {
+  constructor(websocket, config) 
+  {
     this.websocket = websocket;
     this.playerControllers = [];
     this.pokedex = [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144,147,148,149,150];
     this.game = new Game(config);
     this.config = config;
-    DbManager.loadGenericPokemon().then((docs)=>{
-      docs.forEach((doc)=>{
+    DbManager.loadGenericPokemon().then((docs)=>
+    {
+      docs.forEach((doc)=>
+      {
         //console.log("loading " + doc.name + "...");
         this.game.genericPokemonDBs.push(new genericPokemonDB(doc));
       })
-    }).then(()=>{
+    }).then(()=>
+    {
       console.log("Generic Pokemons loaded from DB");
       this.eventEmitter = new EventEmitter();
       this.game.eventEmitter =this.eventEmitter;
@@ -36,67 +40,84 @@ class GameController {
     self.initializeConnection();
     self.initializeIas();
     setInterval(this.update.bind(this), 100);
-    self.eventEmitter.on('submit-chatline',function (data){
+    self.eventEmitter.on('submit-chatline',function (data)
+    {
       self.websocket.emit("new-message", data);
     });
-    self.eventEmitter.on('playerInput', (controller)=>{
+    self.eventEmitter.on('playerInput', (controller)=>
+    {
       self.onPlayerInput(controller);
     });
-    self.eventEmitter.on('entity-suppression', (entity)=>{
+    self.eventEmitter.on('entity-suppression', (entity)=>
+    {
       self.onEntitySuppression(entity);
     });
-    self.eventEmitter.on('disconnect', (controller)=>{
+    self.eventEmitter.on('disconnect', (controller)=>
+    {
       self.onPlayerDisconnect(controller);
     });
-    self.eventEmitter.on('currentEntities', (controller)=>{
+    self.eventEmitter.on('currentEntities', (controller)=>
+    {
       controller.socket.emit("currentEntities", {"players":this.game.players, "ias":this.game.ias});
     });
-    self.eventEmitter.on('newPlayer', (controller)=>{
+    self.eventEmitter.on('newPlayer', (controller)=>
+    {
       controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
     });
-    self.eventEmitter.on('server-message', (message)=>{
+    self.eventEmitter.on('server-message', (message)=>
+    {
       self.websocket.emit('server-message', message);
     });
   }
 
-  onEntitySuppression(entity){
+  onEntitySuppression(entity)
+  {
     let id = '';
-    switch (entity.entityType) {
+    switch (entity.entityType)
+    {
       case 'player':
         id = entity.userId;
         break;
     
       case 'ia':
         id = entity.uniqid;
+        
       default:
         break;
     }
     this.websocket.emit('entity-suppression',{'entityType': entity.entityType, 'id': id});
   }
 
-  initializeIas(){
-    for (let i = 0; i < 10; i++) {
+  initializeIas()
+  {
+    for (let i = 0; i < 10; i++) 
+    {
       this.game.ias.push(this.createIa());
     }
   }
 
-  createIa(){
+  createIa()
+  {
     let id = uniqid();
     let pokemon = this.game.createPokemon(id,this.pokedex[utils.randomIntFromInterval(0,this.pokedex.length - 1)]);
     let x = 0;
     let y = 0;
-    while (this.game.map[y][x] != 1){
+    while (this.game.map[y][x] != 1)
+    {
       x = utils.randomIntFromInterval(0,49);
       y = utils.randomIntFromInterval(0,49);
     }
     return new Ia(id,x,y,pokemon.name,pokemon);
   }
 
-  update() {
-    if(this.game.checkEndTurn()){
+  update()
+  {
+    if(this.game.checkEndTurn())
+    {
       this.game.computeIaTurn();
       this.game.setupNewTurn();
-      this.websocket.emit("server-message", {
+      this.websocket.emit("server-message",
+      {
         message:"Turn " + this.game.getTurn(),
         username:"Server"
       });
@@ -105,17 +126,20 @@ class GameController {
     this.websocket.emit("updateEntities", {"players":this.game.players, "ias":this.game.ias});
   }
 
-  initializeConnection() {
+  initializeConnection() 
+  {
     let self = this;
     // on new connections
-    self.websocket.on("connection",function(socket){
+    self.websocket.on("connection",function(socket)
+    {
       socket.emit("get-world",self.game.world);
       let userId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
       let randomPokedexNumber = self.pokedex[utils.randomIntFromInterval(0,self.pokedex.length - 1)];
       
       // if no player id corresponding in game players,then try to load it from db
-      if(!self.game.isPlayer(userId)){
+      if(!self.game.isPlayer(userId))
+      {
         //console.log("player doesnt exist in world");
         DbManager.loadPlayer(userId)
         .then((playerDB)=>{
@@ -153,31 +177,38 @@ class GameController {
           })
         })
       }
-      else{
+      else
+      {
         socket.emit("alreadyLog",socket.handshake.session.passport.user.email);
         socket.disconnect();
       }
     })
   }
 
-  removeObjectFromArray(object, array) {
+  removeObjectFromArray(object, array)
+  {
     let index = array.indexOf(object);
-    if(index !== -1) {
+    if(index !== -1)
+    {
       array.splice(index, 1);
     }
-    else{
+    else
+    {
       return new Error("given object not found in given array");
     }
   }
 
-  onPlayerDisconnect(controller) {
+  onPlayerDisconnect(controller)
+  {
     // remove this player from our players object
     // save player properties in db
     let self = this;
     //console.log(controller);
     let player = self.game.getPlayerById(controller.userId);
-    DbManager.savePlayer(player).then((res)=>{
-      DbManager.savePokemon(player.pokemon).then((res)=>{
+    DbManager.savePlayer(player).then((res)=>
+    {
+      DbManager.savePokemon(player.pokemon).then((res)=>
+      {
         // remove player from server
         self.removeObjectFromArray(player, self.game.players);
         player = null;
@@ -194,28 +225,32 @@ class GameController {
   Set orientation of the player, it will be used to render proper pokemon sprite client side
   Possible orientation are : down, downleft, left, upleft, up, upright, right, downright
   */
-  onPlayerInput(controller) {
+  onPlayerInput(controller)
+  {
     let self = this;
     let player = self.game.getPlayerById(controller.userId);
     let input = controller.input;
 
     // if player is dead, he can't do anything
-    if(player.action != '6'){
-      if(input.attack){
+    if(player.action != '6')
+    {
+      if(input.attack)
+      {
         this.onPlayerAttack(player);
       }
-      else{      
+      else
+      {      
         self.setOrientation(player, input);
         self.setMoveAlongAxes(player, input);
         self.setAction(player, input);
       }
     }
-
-
   }
 
-  onPlayerAttack(player){
-    if(!player.turnPlayed){
+  onPlayerAttack(player)
+  {
+    if(!player.turnPlayed)
+    {
       player.action = "1";
       //after .5s, the player return to idle state
       setTimeout(()=>{player.action = "5"},500);
@@ -229,12 +264,15 @@ class GameController {
   Possibles actions are : 0: moving, 1: physical attack, 2: special attack, 3: hurt, 4: sleep
   TODO support other actions than moving and idle
   */
-  setAction(player, input) {
+  setAction(player, input)
+  {
     //check if the player is moving in any directions, if not he is idle
-    if(!(input.right || input.down || input.left || input.up || input.attack)){
+    if(!(input.right || input.down || input.left || input.up || input.attack))
+    {
       player.action = "5";
     }
-    else{
+    else
+    {
       player.action = "0";
     }
   }
@@ -245,46 +283,60 @@ class GameController {
    * @param {Player} player 
    * @param {left,right,down,up} input 
    */
-  setMoveAlongAxes(player, input) {
+  setMoveAlongAxes(player, input)
+  {
     player.moveAlongX = 0;
     player.moveAlongY = 0;
-    if (input.left) {
+    if (input.left)
+    {
       player.moveAlongX = -1;
     }
-    if (input.right) {
+    if (input.right)
+    {
       player.moveAlongX = 1;
     }
-    if (input.down) {
+    if (input.down)
+    {
       player.moveAlongY = 1;
     }
-    if (input.up) {
+    if (input.up)
+    {
       player.moveAlongY = -1;
     }
   }
 
-  setOrientation(player, input) {
-    if(input.left && input.up){
+  setOrientation(player, input) 
+  {
+    if(input.left && input.up)
+    {
       player.orientation = "upleft"
     }
-    else if(input.left && input.down){
+    else if(input.left && input.down)
+    {
       player.orientation = "downleft"
     }
-    else if(input.right && input.up){
+    else if(input.right && input.up)
+    {
       player.orientation = "upright"
     }
-    else if(input.right && input.down){
+    else if(input.right && input.down)
+    {
       player.orientation = "downright"
     }
-    else if (input.right) {
+    else if (input.right)
+    {
       player.orientation = "right"
     }
-    else if(input.left){
+    else if(input.left)
+    {
       player.orientation = "left"
     }
-    else if(input.up){
+    else if(input.up)
+    {
       player.orientation = "up"
     }
-    else if(input.down){
+    else if(input.down)
+    {
       player.orientation = "down"
     }
   }
@@ -295,15 +347,24 @@ class GameController {
   */
   isPlayerController(userId) {
     let is = false;
-    this.playerControllers.forEach(controller => {
-      if(controller.userId == userId){is=true};
+    this.playerControllers.forEach(controller =>
+    {
+      if(controller.userId == userId)
+      {
+        is=true
+      };
     });
     return is;
   }
 
-  getPlayerControllerById(userId) {
-    this.playerControllers.forEach(controller => {
-      if(controller.userId == userId){return controller}
+  getPlayerControllerById(userId)
+  {
+    this.playerControllers.forEach(controller =>
+    {
+      if(controller.userId == userId)
+      {
+        return controller
+      }
     })
     return new Error("no player controller found for given id ( " +userId+ " )");
   }

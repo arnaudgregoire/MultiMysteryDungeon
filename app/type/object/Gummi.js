@@ -2,28 +2,59 @@ const MDO = require('../enums').MDO;
 const MDO_TILESET = require('../enums').MDO_TILESET;
 const Edible = require('./Edible');
 
-
-class RedGummi extends Edible
+class Gummi extends Edible
 {
-    constructor(x, y)
+    constructor(x, y, id, type, name, description, look)
     {
-        super(x, y, 20);
-        this.name = 'Red Gummi';
-        this.description = 'Slightly fills Belly, raises IQ of fire types';
-        this.type = MDO.RED_GUMMI;
-        this.id = MDO_TILESET.RED_GUMMI;
+        super(x, y, id, type, name, description, look, 20);
+    }
+    
+    consume(player)
+    {
+        super.consume(player);
     }
 }
 
-class SilverGummi extends Edible
+class RedGummi extends Gummi
 {
-    constructor(x, y)
+    constructor(x, y, id)
     {
-        super(x, y, 20);
-        this.name = 'Silver Gummi';
-        this.description = 'Slightly fills Belly, raises IQ of steel types';
-        this.type = MDO.SILVER_GUMMI;
-        this.id = MDO_TILESET.RED_GUMMI;
+        super(
+            x
+            , y
+            , id
+            , MDO.RED_GUMMI
+            , 'Red Gummi'
+            , 'Slightly fills Belly, raises IQ of fire types'
+            , MDO_TILESET.RED_GUMMI
+        )
+    }
+
+    consume(player)
+    {
+        super.consume(player);
+    }
+}
+
+
+class SilverGummi extends Gummi
+{
+    constructor(x, y, id)
+    {
+        super(
+            x
+            , y
+            , id
+            , MDO.SILVER_GUMMI
+            , 'Red Gummi'
+            , 'Slightly fills Belly, raises IQ of steel types'
+            , MDO_TILESET.SILVER_GUMMI
+        )
+    }
+
+    consume(player)
+    {
+        super.consume(player);
     }
 }
 
