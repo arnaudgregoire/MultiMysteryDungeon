@@ -163,14 +163,13 @@ class GameScene extends Phaser.Scene{
 
     buildAndDisplayObject(objectInfo)
     {
-        var self = this;
-        var object = self.add.sprite(objectInfo.x, objectInfo.y ,'objects_picture', objectInfo.look).setOrigin(0.5,0.5);
+        var object = this.add.sprite(objectInfo.x, objectInfo.y ,'objects_picture', objectInfo.look).setOrigin(0.5,0.5);
         object.id = objectInfo.id;
         object.type = objectInfo.type;
         object.name = objectInfo.name;
         object.description = objectInfo.description;
         object.look = objectInfo.look;
-        self.objects.add(object);
+        this.objects.add(object);
     }
 
 
@@ -182,8 +181,7 @@ class GameScene extends Phaser.Scene{
     */
    buildAndDisplayEntity(entityInfo)
    {
-        var self = this;
-        var entity = self.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
+        var entity = this.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
         entity.entityType = entityInfo.entityType;
         entity.orientation = entityInfo.orientation;
         entity.action = entityInfo.action;
@@ -201,17 +199,17 @@ class GameScene extends Phaser.Scene{
         //we set the camera on the entity hero
         if(entity.entityType == "player"){
 
-            if(entity.socketId == self.socketId){
-                self.setCamera(entity);
+            if(entity.socketId == this.socketId){
+                this.setCamera(entity);
             }
-            self.players.add(entity);
+            this.players.add(entity);
         }
 
         else if(entity.entityType == "ia"){
-            self.ias.add(entity);
+            this.ias.add(entity);
         }
 
-        self.displayEntity(entity);
+        this.displayEntity(entity);
     }
 
     removePlayer(id){
