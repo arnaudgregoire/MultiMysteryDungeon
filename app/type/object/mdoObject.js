@@ -1,6 +1,8 @@
 /**
  * Abstract class for all MDO objects
  */
+const uniqid = require('uniqid');
+
 class MdoObject
 {
     /**
@@ -12,11 +14,11 @@ class MdoObject
      * @param {String} name Name of object
      * @param {String} description Description of object
      */
-    constructor(x, y, id, type, name, description)
+    constructor(x, y, type, name, description)
     {
         this.x = x;
         this.y = y;
-        this.id = id;
+        this.id = uniqid();
         this.type = type;
         this.name = name;
         this.description = description;

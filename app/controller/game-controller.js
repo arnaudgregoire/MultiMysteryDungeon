@@ -56,6 +56,10 @@ class GameController {
     {
       self.onPlayerDisconnect(controller);
     });
+    self.eventEmitter.on('currentObjects', (controller) =>
+    {
+      controller.socket.emit("currentObjects", this.game.getVisibleObjects());
+    });
     self.eventEmitter.on('currentEntities', (controller)=>
     {
       controller.socket.emit("currentEntities", {"players":this.game.players, "ias":this.game.ias});

@@ -8,9 +8,9 @@ const Edible = require('./Edible');
  */
 class Gummi extends Edible
 {
-    constructor(x, y, id, type, name, description, look)
+    constructor(x, y, type, name, description, look)
     {
-        super(x, y, id, type, name, description, look, 20);
+        super(x, y, type, name, description, look, 20);
     }
 }
 
@@ -24,14 +24,12 @@ class RedGummi extends Gummi
      * 
      * @param {integer} x x position on map 
      * @param {integer} y y position on map
-     * @param {String} id object identifier
      */
-    constructor(x, y, id)
+    constructor(x, y)
     {
         super(
             x
             , y
-            , id
             , MDO.RED_GUMMI
             , 'Red Gummi'
             , 'Slightly fills Belly, raises IQ of fire types'
@@ -50,14 +48,12 @@ class SilverGummi extends Gummi
      * 
      * @param {integer} x x position on map 
      * @param {integer} y y position on map
-     * @param {String} id object identifier
      */
-    constructor(x, y, id)
+    constructor(x, y)
     {
         super(
             x
             , y
-            , id
             , MDO.SILVER_GUMMI
             , 'Red Gummi'
             , 'Slightly fills Belly, raises IQ of steel types'

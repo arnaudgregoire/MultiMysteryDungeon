@@ -28,6 +28,7 @@ class PlayerController{
     let self = this;
     // send the players object to the new player
     self.eventEmitter.emit('currentEntities', self);
+    self.eventEmitter.emit('currentObjects', self);
     // update all other players of the new player
     self.eventEmitter.emit('newPlayer', self);
     // in case of disconnection

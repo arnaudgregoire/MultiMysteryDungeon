@@ -13,14 +13,12 @@ class Apple extends Edible
      * 
      * @param {integer} x x position on map 
      * @param {integer} y y position on map
-     * @param {String} id object identifier
      */
-    constructor(x, y, id)
+    constructor(x, y)
     {
         super(
             x
             , y
-            , id
             , MDO.APPLE
             , "Apple"
             , "A food item that somewhat fills the Pokémon's Belly. Eating this when its Belly is full will slightly enlarge its Belly size"
@@ -39,14 +37,12 @@ class GoldenApple extends Edible
      * 
      * @param {integer} x x position on map 
      * @param {integer} y y position on map
-     * @param {String} id object identifier
      */
-    constructor(x, y, id)
+    constructor(x, y)
     {
         super(
             x
             , y
-            , id
             , MDO.GOLDEN_APPLE
             , "Golden Apple"
             , "A miraculous apple that glows with an alluring golden aura. It's far too precious and beautiful to even consider eating! If it were eaten, however, it would completely fill and greatly enlarge the Pokémon's Belly."
@@ -65,14 +61,12 @@ class GrimyFood extends Edible
      * 
      * @param {integer} x x position on map 
      * @param {integer} y y position on map
-     * @param {String} id object identifier
      */
-    constructor(x, y, id)
+    constructor(x, y)
     {
         super(
             x
             , y
-            , id
             , MDO.GRIMY_FOOD
             , "Grimy Food"
             , "Slightly fills Belly, causes random status"

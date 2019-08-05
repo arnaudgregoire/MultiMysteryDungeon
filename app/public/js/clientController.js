@@ -3,7 +3,8 @@ function ClientController() {
   this.initialize();
 }
 
-ClientController.prototype.initialize = function () {
+ClientController.prototype.initialize = function ()
+{
   this.socket.on("get-world", this.initializeWorld.bind(this));
 };
 
@@ -23,33 +24,48 @@ ClientController.prototype.initializeWorld = function (world) {
   window.addEventListener("gameSceneCreated", this.initializeConnection.bind(this));
 };
 
-ClientController.prototype.initializeConnection = function () {
+ClientController.prototype.initializeConnection = function ()
+{
   // id of the socket that server gave to the connection
-  this.socket.on("sendPlayer", function (player) {
+  this.socket.on("sendPlayer", function (player)
+  {
     this.gameView.game.scene.getScene("uiScene").setDashboard(player);
     this.gameView.game.scene.getScene("uiScene").setSocketId(player.socketId);
     this.gameView.game.scene.getScene("gameScene").setSocketId(player.socketId);
   }.bind(this));
   // We used  socket.on to listen for the  currentEntities event, and when this event is triggered,
   // the function we provided will be called with the  players object that we passed from our server.
-  this.socket.on("currentEntities", function (entities) {
+  this.socket.on("currentEntities", function (entities)
+  {
     //When this function is called,
     //we loop through each of the players and we check to see if that player’s id matches the current player’s socket id.
-    for (var key in entities.players) {
+    for (var key in entities.players)
+    {
       this.gameView.game.scene.getScene("uiScene").displayPortrait(entities.players[key]);
-      this.gameView.game.scene.getScene("gameScene").displayEntities(entities.players[key]);
+      this.gameView.game.scene.getScene("gameScene").buildAndDisplayEntity(entities.players[key]);
     }
-    for (var key in entities.ias) {
-      this.gameView.game.scene.getScene("gameScene").displayEntities(entities.ias[key]);
+    for (var key in entities.ias)
+    {
+      this.gameView.game.scene.getScene("gameScene").buildAndDisplayEntity(entities.ias[key]);
     }
   }.bind(this));
 
-  this.socket.on("newPlayer", function (playerInfo) {
+  this.socket.on("currentObjects", function (objects)
+  {
+    for(var key in objects)
+    {
+      this.gameView.game.scene.getScene("gameScene").buildAndDisplayObject(objects[key]);
+    }
+  }.bind(this));
+
+  this.socket.on("newPlayer", function (playerInfo)
+  {
     this.gameView.game.scene.getScene("uiScene").displayPortrait(playerInfo);
-    this.gameView.game.scene.getScene("gameScene").displayEntities(playerInfo);
+    this.gameView.game.scene.getScene("gameScene").buildAndDisplayEntity(playerInfo);
   }.bind(this));
 
-  this.socket.on("alreadyLog", function (player_email) {
+  this.socket.on("alreadyLog", function (player_email)
+  {
     alert("Account (" + player_email + ") already in use");
     window.location.replace("/index.html");
   });

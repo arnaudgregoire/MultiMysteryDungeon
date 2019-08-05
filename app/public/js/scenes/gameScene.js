@@ -83,6 +83,7 @@ class GameScene extends Phaser.Scene{
         // First, we created a new Phaser group which will be used to manage all of the player’s game objects on the client side.
         this.players = this.add.group();
         this.ias = this.add.group();
+        this.objects = this.add.group();
         this.map = this.make.tilemap({ key:'world'});
         const tileset = this.map.addTilesetImage('tileset','tileset_picture');
         const worldLayer = this.map.createStaticLayer('map', tileset, 0, 0);
@@ -159,13 +160,28 @@ class GameScene extends Phaser.Scene{
             )
         }
     }
+
+    buildAndDisplayObject(objectInfo)
+    {
+        var self = this;
+        var object = self.add.sprite(objectInfo.x, objectInfo.y ,'objects_picture', objectInfo.look).setOrigin(0.5,0.5);
+        object.id = objectInfo.id;
+        object.type = objectInfo.type;
+        object.name = objectInfo.name;
+        object.description = objectInfo.description;
+        object.look = objectInfo.look;
+        self.objects.add(object);
+    }
+
+
     /*
     Created our entity by using the x and y coordinates that we generated in our server code.
     We used  setOrigin() to set the origin of the game object to be in the middle of the object instead of the top left.
     We stored the id so we can find the game object by that id later.
     Lastly, we added the entity game object to the Phaser group we created.
     */
-    displayEntities(entityInfo) {
+   buildAndDisplayEntity(entityInfo)
+   {
         var self = this;
         var entity = self.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
         entity.entityType = entityInfo.entityType;

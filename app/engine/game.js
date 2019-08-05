@@ -104,40 +104,64 @@ class Game
         gameIndex) 
   }
 
+  getVisibleObjects()
+  {
+    let visibleObjs = [];
+    this.objects.forEach(obj =>
+    {
+      if(obj.visible)
+      {
+        visibleObjs.push(obj);
+      }
+    })
+    return visibleObjs;
+  }
 
-  getGenericPokemonDbByGameIndex(gameIndex){
+  getGenericPokemonDbByGameIndex(gameIndex)
+  {
     let pokemonFound =  null;
-    this.genericPokemonDBs.forEach((genericPokemon) =>{
-      if(gameIndex ==  genericPokemon.gameIndex){
+    this.genericPokemonDBs.forEach((genericPokemon)=>
+    {
+      if(gameIndex ==  genericPokemon.gameIndex)
+      {
         pokemonFound = genericPokemon;
       }
     })
     return pokemonFound;
   }
 
-  setupNewTurn(){
-    this.players.forEach(player =>{
-      if(player.action != '6'){ // Dead can not play turns
+  setupNewTurn()
+  {
+    this.players.forEach(player =>
+      {
+      if(player.action != '6')
+      { // Dead can not play turns
         player.turnPlayed = false;
       }
     });
-    this.ias.forEach(ia =>{
+    this.ias.forEach(ia =>
+      {
       ia.turnPlayed = false;
     });
     this.turn += 1;
   }
 
-  getTurn(){
+  getTurn()
+  {
     return this.turn;
   }
 
-  computePositions() {
+  computePositions()
+  {
     // down, downleft, left, upleft, up, upright, right, downright
-    this.players.forEach(player => {
+    this.players.forEach(player =>
+      {
       // if the player did not already played his turn
-      if(!player.turnPlayed){
+      if(!player.turnPlayed)
+      {
         // if the player really moved
-        if(this.move(player)){
+        if(this.move(player))
+        {
             // then his turn is played
             player.turnPlayed = true;
         }
@@ -147,12 +171,16 @@ class Game
 /**
  * check if all playe played their turn
  */
-  checkEndTurn(){
+  checkEndTurn()
+  {
     let endTurn = false;
-    if(this.players.length != 0){
+    if(this.players.length != 0)
+    {
       endTurn = true;
-      this.players.forEach(player =>{
-        if(!player.turnPlayed){
+      this.players.forEach(player =>
+        {
+        if(!player.turnPlayed)
+        {
           endTurn = false;
         }
       })
