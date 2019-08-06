@@ -16,37 +16,28 @@ const AbilitySchema = new Schema({
     }
 });
 
-const StatSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
-        enum: ENUM_STAT
-    },
-    value:{
+const StatsSchema = new Schema({
+    SPEED:{
         type:Number,
         required:true
-    }
-});
-
-const IvSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
-        enum: ENUM_STAT
     },
-    value:{
+    SPECIAL_DEFENSE:{
         type:Number,
         required:true
-    }
-});
-
-const EvSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
-        enum: ENUM_STAT
     },
-    value:{
+    SPECIAL_ATTACK:{
+        type:Number,
+        required:true
+    },
+    DEFENSE:{
+        type:Number,
+        required:true
+    },
+    ATTACK:{
+        type:Number,
+        required:true
+    },
+    HP:{
         type:Number,
         required:true
     }
@@ -74,9 +65,9 @@ const PokemonSchema = new Schema({
         type: Number,
         required:true
     },
-    ivs:[IvSchema],
-    evs:[EvSchema],
-    stats:[StatSchema],
+    ivs: StatsSchema,
+    evs: StatsSchema,
+    stats: StatsSchema,
     gender:{
         type:String,
         required:true

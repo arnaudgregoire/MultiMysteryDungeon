@@ -119,219 +119,220 @@ const MDO_TILESET = Object.freeze({
     DEEP_SEA_SCALE:'DEEP_SEA_SCALE'
 });
 
-const ENUM_STAT = Object.freeze([
-    "speed",
-    "special-defense",
-    "special-attack",
-    "defense",
-    "attack",
-    "hp"
-]);
+const ENUM_STAT = Object.freeze({
+    SPEED:'SPEED',
+    SPECIAL_DEFENSE:'SPECIAL_DEFENSE',
+    SPECIAL_ATTACK:'SPECIAL_ATTACK',
+    DEFENSE:'DEFENSE',
+    ATTACK:'ATTACK',
+    HP:'HP'
+});
+
 
 const ENUM_NATURE = Object.freeze([
-    "Adamant",
-    "Bashful",
-    "Bold",
-    "Brave",	
-    "Calm",
-    "Careful",
-    "Docile",
-    "Gentle",
-    "Hardy",
-    "Hasty",
-    "Impish",
-    "Jolly",
-    "Lax",
-    "Lonely",
-    "Mild",
-    "Modest",
-    "Naive",
-    "Naughty",
-    "Quiet",
-    "Quirky",
-    "Rash",
-    "Relaxed",
-    "Sassy",
-    "Serious",
-    "Timid"
+    "ADAMANT",
+    "BASHFUL",
+    "BOLD",
+    "BRAVE",	
+    "CALM",
+    "CAREFUL",
+    "DOCILE",
+    "GENTLE",
+    "HARDY",
+    "HASTY",
+    "IMPISH",
+    "JOLLY",
+    "LAX",
+    "LONELY",
+    "MILD",
+    "MODEST",
+    "NAIVE",
+    "NAUGHTY",
+    "QUIET",
+    "QUIRKY",
+    "RASH",
+    "RELAXED",
+    "SASSY",
+    "SERIOUS",
+    "TIMID"
 ]);
 
 const MODIFIER_NATURE = Object.freeze(
     {
-        "Adamant":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":0.9,
-            "defense":1,
-            "attack":1.1
+        "ADAMANT":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":0.9,
+            "DEFENSE":1,
+            "ATTACK":1.1
         },
-        "Bashful":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "BASHFUL":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Bold":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1.1,
-            "attack":0.9
+        "BOLD":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1.1,
+            "ATTACK":0.9
         },
-        "Brave":{
-            "speed":0.9,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1.1
+        "BRAVE":{
+            "SPEED":0.9,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1.1
         },
-        "Calm":{
-            "speed":1,
-            "special-defense":1.1,
-            "special-attack":1,
-            "defense":1,
-            "attack":0.9
+        "CALM":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1.1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":0.9
         },
-        "Careful":{
-            "speed":1,
-            "special-defense":1.1,
-            "special-attack":0.9,
-            "defense":1,
-            "attack":1
+        "CAREFUL":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1.1,
+            "SPECIAL_ATTACK":0.9,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Docile":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "DOCILE":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Gentle":{
-            "speed":1,
-            "special-defense":1.1,
-            "special-attack":1,
-            "defense":0.9,
-            "attack":1
+        "GENTLE":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1.1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":0.9,
+            "ATTACK":1
         },
-        "Hardy":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "HARDY":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Hasty":{
-            "speed":1.1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":0.9,
-            "attack":1
+        "HASTY":{
+            "SPEED":1.1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":0.9,
+            "ATTACK":1
         },
-        "Impish":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":0.9,
-            "defense":1.1,
-            "attack":1
+        "IMPISH":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":0.9,
+            "DEFENSE":1.1,
+            "ATTACK":1
         },
-        "Jolly":{
-            "speed":1.1,
-            "special-defense":1,
-            "special-attack":0.9,
-            "defense":1,
-            "attack":1
+        "JOLLY":{
+            "SPEED":1.1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":0.9,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Lax":{
-            "speed":1,
-            "special-defense":0.9,
-            "special-attack":1,
-            "defense":1.1,
-            "attack":1
+        "LAX":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":0.9,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1.1,
+            "ATTACK":1
         },
-        "Lonely":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":0.9,
-            "attack":1.1
+        "LONELY":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":0.9,
+            "ATTACK":1.1
         },
-        "Mild":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1.1,
-            "defense":0.9,
-            "attack":1
+        "MILD":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1.1,
+            "DEFENSE":0.9,
+            "ATTACK":1
         },
-        "Modest":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1.1,
-            "defense":1,
-            "attack":0.9
+        "MODEST":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1.1,
+            "DEFENSE":1,
+            "ATTACK":0.9
         },
-        "Naive":{
-            "speed":1.1,
-            "special-defense":0.9,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "NAIVE":{
+            "SPEED":1.1,
+            "SPECIAL_DEFENSE":0.9,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Naughty":{
-            "speed":1,
-            "special-defense":0.9,
-            "special-attack":1,
-            "defense":1,
-            "attack":1.1
+        "NAUGHTY":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":0.9,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1.1
         },
-        "Quiet":{
-            "speed":0.9,
-            "special-defense":1,
-            "special-attack":1.1,
-            "defense":1,
-            "attack":1
+        "QUIET":{
+            "SPEED":0.9,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1.1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Quirky":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "QUIRKY":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Rash":{
-            "speed":1,
-            "special-defense":0.9,
-            "special-attack":1.1,
-            "defense":1,
-            "attack":1
+        "RASH":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":0.9,
+            "SPECIAL_ATTACK":1.1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Relaxed":{
-            "speed":0.9,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1.1,
-            "attack":1
+        "RELAXED":{
+            "SPEED":0.9,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1.1,
+            "ATTACK":1
         },
-        "Sassy":{
-            "speed":0.9,
-            "special-defense":1.1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "SASSY":{
+            "SPEED":0.9,
+            "SPECIAL_DEFENSE":1.1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Serious":{
-            "speed":1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":1
+        "SERIOUS":{
+            "SPEED":1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":1
         },
-        "Timid":{
-            "speed":1.1,
-            "special-defense":1,
-            "special-attack":1,
-            "defense":1,
-            "attack":0.9
+        "TIMID":{
+            "SPEED":1.1,
+            "SPECIAL_DEFENSE":1,
+            "SPECIAL_ATTACK":1,
+            "DEFENSE":1,
+            "ATTACK":0.9
         }
     }
 )

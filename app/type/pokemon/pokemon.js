@@ -1,6 +1,3 @@
-const Stat = require('./stat');
-const Type = require('./type');
-
 class Pokemon{
     constructor(level, ivs, evs, stats, gender, shiny, happiness, nature, nickname, name, types, ability, health, uniqid, gameIndex){
         this.level = level;

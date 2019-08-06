@@ -53,38 +53,22 @@ class Game
       let gender = ENUM_GENDER[utils.randomIntFromInterval(0,ENUM_GENDER.length - 1)];
       let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
       let ability = genericPokemon.abilities[utils.randomIntFromInterval(0, genericPokemon.abilities.length - 1)].ability;
-      let ivs = [];
+      let ivs = {};
+      let evs = {};
+      let stats = {};
       let shiny = false;
-      ENUM_STAT.forEach((stat)=>{
-        ivs.push({name:stat, value: utils.randomIntFromInterval(0, 31)});
-      });
-      let evs = [];
-      ENUM_STAT.forEach((stat)=>{
-        evs.push({name:stat, value: 0});
-      });
-      let stats = [];
-      for (let i = 0; i < ENUM_STAT.length - 1; i++) {
-        stats.push({
-          name:ENUM_STAT[i],
-          value: pokemonMath.computeStat(
-            ENUM_STAT[i],
-            genericPokemon.stats[i].baseStat,
-            ivs[i].value,
-            evs[i].value,
-            level,
-            nature)
-        })
-      }
-      let hp = pokemonMath.computeHP(
-        genericPokemon.stats[5].baseStat,
-        ivs[5].value,
-        evs[5].value,
-        level);
 
-      stats.push({
-        name:ENUM_STAT[5],
-        value: hp
+      Object.keys(ENUM_STAT).forEach(key=>{
+        ivs[key] = utils.randomIntFromInterval(0,31);
+        evs[key] = utils.randomIntFromInterval(0,31);
       });
+
+      ['SPEED', 'SPECIAL_DEFENSE', 'SPECIAL_ATTACK', 'DEFENSE', 'ATTACK'].forEach(key=>
+      {
+        stats[key] = pokemonMath.computeStat(ENUM_STAT[key], genericPokemon.stats[key], ivs[key], evs[key], level, nature);
+      });
+      let hp = pokemonMath.computeHP(genericPokemon.stats.HP, ivs.HP, evs.HP, level);
+      stats.HP = hp;
 
       return new Pokemon(
         level,
@@ -381,7 +365,7 @@ class Game
       "downleft":"upright",
       "downright":"upleft"
     };
-    let damage = pokemonMath.computeDamage(player.pokemon.level,player.pokemon.stats[4].value,entity.pokemon.stats[3].value,20,1);
+    let damage = pokemonMath.computeDamage(player.pokemon.level,player.pokemon.stats.ATTACK,entity.pokemon.stats.DEFENSE,20,1);
     entity.pokemon.health = entity.pokemon.health - damage;
     this.eventEmitter.emit('server-message',
     {

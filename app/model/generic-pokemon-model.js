@@ -56,7 +56,7 @@ const StatSchema = new Schema({
     name:{
         type:String,
         required:true,
-        enum: ENUM_STAT
+        enum: Object.values(ENUM_STAT)
     },
     url:{
         type:String
