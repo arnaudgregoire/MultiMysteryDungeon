@@ -47,7 +47,6 @@ ClientController.prototype.onSceneCreation = function()
 
 ClientController.prototype.initializeConnection = function ()
 {
-  console.log('test');
   
   // id of the socket that server gave to the connection
   this.socket.on("sendPlayer", function (player)
