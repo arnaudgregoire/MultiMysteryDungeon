@@ -120,6 +120,7 @@ class GameScene extends Phaser.Scene{
         this.rightKeyPressed = false;
         this.upKeyPressed = false;
         this.downKeyPressed = false;
+        window.dispatchEvent(new CustomEvent("gameSceneCreated"));
       }
 
     update() {

@@ -35,7 +35,7 @@ class UIScene extends Phaser.Scene{
     };
     this.portraits = this.add.container(70,70);
     this.add.image(800,900,"dashboard");
-    window.dispatchEvent(new CustomEvent("gameSceneCreated"));
+    window.dispatchEvent(new CustomEvent("uiSceneCreated"));
   }
 
   setDashboard(player){

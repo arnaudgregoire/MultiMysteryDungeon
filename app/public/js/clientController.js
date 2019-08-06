@@ -1,4 +1,6 @@
 function ClientController() {
+  this.uiSceneCreated = false;
+  this.gameSceneCreated = false;
   this.socket = io();
   this.initialize();
 }
@@ -21,11 +23,32 @@ ClientController.prototype.initializeWorld = function (world) {
     }
   }
   window.tilesize = this.gameView.config.tilesize;
-  window.addEventListener("gameSceneCreated", this.initializeConnection.bind(this));
+
+  window.addEventListener("gameSceneCreated", ()=>
+  {
+    this.gameSceneCreated = true;
+    this.onSceneCreation();
+  });
+
+  window.addEventListener("uiSceneCreated", ()=>
+  {
+    this.uiSceneCreated = true;
+    this.onSceneCreation();
+  });
 };
+
+ClientController.prototype.onSceneCreation = function()
+{
+  if(this.uiSceneCreated && this.gameSceneCreated)
+  {
+    this.initializeConnection();
+  }
+}
 
 ClientController.prototype.initializeConnection = function ()
 {
+  console.log('test');
+  
   // id of the socket that server gave to the connection
   this.socket.on("sendPlayer", function (player)
   {
