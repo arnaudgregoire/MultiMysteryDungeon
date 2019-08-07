@@ -186,35 +186,45 @@ class Game
             ia.orientation = this.getOrientation(dx, dy);
             ia.x = ia.x + dx;
             ia.y = ia.y + dy;
+            this.onEntityMove(ia);
           }
         }
         ia.turnPlayed = true;
       })
   }
 
-  getOrientation(dx,dy){
-    if(dx == 0 && dy == 1){
+  getOrientation(dx,dy)
+  {
+    if(dx == 0 && dy == 1)
+    {
       return 'down';
     }
-    else if(dx == 0 && dy == -1){
+    else if(dx == 0 && dy == -1)
+    {
       return 'up';
     }
-    else if(dx == 1 && dy == 0){
+    else if(dx == 1 && dy == 0)
+    {
       return 'right';
     }
-    else if(dx == -1 && dy == 0){
+    else if(dx == -1 && dy == 0)
+    {
       return 'left';
     }
-    else if(dx == 1 && dy == 1){
+    else if(dx == 1 && dy == 1)
+    {
       return 'downright';
     }
-    else if(dx == 1 && dy == -1){
+    else if(dx == 1 && dy == -1)
+    {
       return 'upright';
     }
-    else if(dx == -1 && dy == 1){
+    else if(dx == -1 && dy == 1)
+    {
       return 'downleft';
     }
-    else if(dx == -1 && dy == -1){
+    else if(dx == -1 && dy == -1)
+    {
       return 'upleft';
     }
   }
@@ -223,61 +233,81 @@ class Game
  * Attempt to move the player in direction he want
  * @param {Player} player 
  */
-  move(player){
+  move(player)
+  {
     let playerMoved = false;
     // check if move
-    if(player.moveAlongX != 0 || player.moveAlongY != 0){
+    if(player.moveAlongX != 0 || player.moveAlongY != 0)
+    {
       //right
-      if(player.moveAlongX == 1 && player.moveAlongY == 0){
-        if(!this.collide(player, player.x + 1, player.y)){
+      if(player.moveAlongX == 1 && player.moveAlongY == 0)
+      {
+        if(!this.collide(player, player.x + 1, player.y))
+        {
           playerMoved = true;
         }
       }
       //left
-      else if(player.moveAlongX == -1 && player.moveAlongY == 0){
-        if(!this.collide(player, player.x -1, player.y)){
+      else if(player.moveAlongX == -1 && player.moveAlongY == 0)
+      {
+        if(!this.collide(player, player.x -1, player.y))
+        {
           playerMoved = true;
         }
       }
       //up
-      else if(player.moveAlongX == 0 && player.moveAlongY == 1){
-        if(!this.collide(player, player.x, player.y + 1)){
+      else if(player.moveAlongX == 0 && player.moveAlongY == 1)
+      {
+        if(!this.collide(player, player.x, player.y + 1))
+        {
           playerMoved = true;
         }
       }
       //down
-      else if(player.moveAlongX == 0 && player.moveAlongY == -1){
-        if(!this.collide(player, player.x, player.y - 1)){
+      else if(player.moveAlongX == 0 && player.moveAlongY == -1)
+      {
+        if(!this.collide(player, player.x, player.y - 1))
+        {
           playerMoved = true;
         }
       }
       //down right
-      else if(player.moveAlongX == 1 && player.moveAlongY == -1){
-        if(!this.collide(player, player.x + 1, player.y - 1)){
+      else if(player.moveAlongX == 1 && player.moveAlongY == -1)
+      {
+        if(!this.collide(player, player.x + 1, player.y - 1))
+        {
           playerMoved = true;
         }
       }
       //down left
-      else if(player.moveAlongX == - 1 && player.moveAlongY == -1){
-        if(!this.collide(player, player.x - 1, player.y - 1)){
+      else if(player.moveAlongX == - 1 && player.moveAlongY == -1)
+      {
+        if(!this.collide(player, player.x - 1, player.y - 1))
+        {
           playerMoved = true;
         }
       }
       //up right
-      else if(player.moveAlongX == 1 && player.moveAlongY == 1){
-        if(!this.collide(player, player.x + 1, player.y + 1)){
+      else if(player.moveAlongX == 1 && player.moveAlongY == 1)
+      {
+        if(!this.collide(player, player.x + 1, player.y + 1))
+        {
           playerMoved = true;
         }
       }
       //up left
-      else if(player.moveAlongX == - 1 && player.moveAlongY == 1){
-        if(!this.collide(player, player.x - 1, player.y + 1)){
+      else if(player.moveAlongX == - 1 && player.moveAlongY == 1)
+      {
+        if(!this.collide(player, player.x - 1, player.y + 1))
+        {
           playerMoved = true;
         }
       }
-      if(playerMoved){
+      if(playerMoved)
+      {
         player.x = player.x + player.moveAlongX;
         player.y = player.y + player.moveAlongY;
+        this.onEntityMove(player);
       }
     }
     return playerMoved;
@@ -290,24 +320,28 @@ class Game
    * @param {integer} x 
    * @param {interger} y 
    */
-  collide(entity, x, y){
+  collide(entity, x, y)
+  {
     // check for map borders
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
       return true;
     }
     // check for walls
-    if(this.map[y][x] == 0){
+    if(this.map[y][x] == 0)
+    {
       return true;
     }
     // check for other players
-    for (let i = 0; i < this.players.length; i++) {
+    for (let i = 0; i < this.players.length; i++) 
+    {
       if(this.players[i] != entity && this.players[i].x == x && this.players[i].y == y){
         return true;
       }
     }
 
     //check with ias
-    for (let i = 0; i < this.ias.length; i++) {
+    for (let i = 0; i < this.ias.length; i++) 
+    {
       if(this.ias[i] != entity && this.ias[i].x == x && this.ias[i].y == y){
         return true;
       }
@@ -315,7 +349,8 @@ class Game
     return false;
   }
 
-  getPlayerById(id) {
+  getPlayerById(id) 
+  {
     let found = false;
     let foundPlayer;
     this.players.forEach(player => {
@@ -324,7 +359,8 @@ class Game
         foundPlayer = player;
       }
     });
-    if (found) {
+    if (found) 
+    {
       return foundPlayer;
     }
     else {
@@ -335,7 +371,8 @@ class Game
   * Check if the player is in the game
   * @param {string} id The identifiant of the player
   */
-  isPlayer(id) {
+  isPlayer(id)
+  {
     return this.players.filter(p => p.id === id).length > 0;
   }
 
@@ -343,7 +380,8 @@ class Game
    * Method called by the game controller when simple physical attack is triggered client side
    * @param {*} player 
    */
-  playPhysicalAttack(player){
+  playPhysicalAttack(player)
+  {
     let potentialEntity = this.collidePhysicalAttack(player);
     if(potentialEntity){
       this.dealPhysicalAttack(player, potentialEntity);
@@ -354,7 +392,8 @@ class Game
    * Deal Damage to entity damaged by an attack
    * @param {*} player 
    */
-  dealPhysicalAttack(player, entity){
+  dealPhysicalAttack(player, entity)
+  {
     let conversion = {
       "left":"right",
       "up":"down",
@@ -382,11 +421,52 @@ class Game
     }
   }
 
-  onEntityKO(entity){
+  onEntityMove(entity)
+  {
+    let index = -1;
+    for (let i = 0; i < this.objects.length; i++) 
+    {
+      if(this.objects[i].x == entity.x && this.objects[i].y == entity.y)
+      {
+        index = i;
+      }
+    }
+    if(index != -1)
+    {
+      let object = this.objects.splice(index, 1)[0];
+      entity.inventory.push(object);
+      switch (entity.entityType) 
+      {
+        case 'player':
+            this.eventEmitter.emit('server-message',
+            {
+              message: entity.name + ' ( ' + entity.pokemon.name + ' ) ' + ' picked ' + object.name,
+              username:"Server"
+            });
+          break;
+        
+        case 'ia':
+            this.eventEmitter.emit('server-message',
+            {
+              message: entity.pokemon.name  + ' picked ' + object.name,
+              username:"Server"
+            });
+          break;
+
+        default:
+          break;
+      }
+      this.eventEmitter.emit('object-suppression', object);
+    }
+  }
+
+  onEntityKO(entity)
+  {
     entity.action = "6"; //KO state
     entity.turnPlayed = true;
     
-    switch (entity.entityType) {
+    switch (entity.entityType) 
+    {
       case 'player':
           this.eventEmitter.emit('server-message',
           {
@@ -417,7 +497,8 @@ class Game
    * Check if a simple physical attack of a pokemon hit an other entity
    * @param {*} player 
    */
-  collidePhysicalAttack(player){
+  collidePhysicalAttack(player)
+  {
     let conversion = {
       "left":[-1,0],
       "up":[0,-1],
@@ -430,18 +511,22 @@ class Game
     }
     let x = player.x + conversion[player.orientation][0];
     let y = player.y + conversion[player.orientation][1];
-    for (let i = 0; i < this.ias.length; i++) {
+    for (let i = 0; i < this.ias.length; i++) 
+    {
       if(
         this.ias[i].x == x
-     && this.ias[i].y == y){
+     && this.ias[i].y == y)
+     {
        return this.ias[i];
      } 
     }
-    for (let i = 0; i < this.players.length; i++) {
+    for (let i = 0; i < this.players.length; i++) 
+    {
       if(
            this.players[i].x == x
         && this.players[i].y == y
-        && this.players[i].userId != player.userId){
+        && this.players[i].userId != player.userId)
+      {
         return this.players[i];
       }
     }
@@ -452,7 +537,8 @@ class Game
   * add given player to game.players
   * @param {Player} player
   */
-  addPlayer(player) {
+  addPlayer(player) 
+  {
     this.players.push(player);
   }
 }

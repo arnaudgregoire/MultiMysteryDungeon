@@ -1,7 +1,4 @@
 "use strict";
-
-//import { log } from "util";
-
 class GameScene extends Phaser.Scene{
 
     constructor(){
@@ -123,7 +120,8 @@ class GameScene extends Phaser.Scene{
         window.dispatchEvent(new CustomEvent("gameSceneCreated"));
       }
 
-    update() {
+    update() 
+    {
         var left = this.leftKeyPressed;
         var right = this.rightKeyPressed;
         var up = this.upKeyPressed;
@@ -143,7 +141,8 @@ class GameScene extends Phaser.Scene{
         if (this.cursors.down.isDown){this.downKeyPressed = true}
         else{this.downKeyPressed = false}
 
-        if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed || down != this.downKeyPressed) {
+        if (left !== this.leftKeyPressed || right !== this.rightKeyPressed || up !== this.upKeyPressed || down != this.downKeyPressed) 
+        {
             window.dispatchEvent(
                 new CustomEvent(
                     "playerInput",
@@ -164,7 +163,7 @@ class GameScene extends Phaser.Scene{
 
     buildAndDisplayObject(objectInfo)
     {
-        var object = this.add.sprite(objectInfo.x, objectInfo.y ,'objects_picture', objectInfo.look).setOrigin(0.5,0.5);
+        var object = this.add.sprite(objectInfo.x * window.tilesize, objectInfo.y * window.tilesize,'objects_picture', objectInfo.look).setOrigin(-0.5,0.1);
         object.id = objectInfo.id;
         object.type = objectInfo.type;
         object.name = objectInfo.name;
@@ -189,58 +188,83 @@ class GameScene extends Phaser.Scene{
         entity.name = entityInfo.name;
         entity.pokemon = entityInfo.pokemon;
 
-        if(entityInfo.entityType == "player"){
+        if(entityInfo.entityType == "player")
+        {
             entity.userId = entityInfo.userId;
             entity.socketId = entityInfo.socketId;
         }
-        else if(entityInfo.entityType == "ia"){
+        else if(entityInfo.entityType == "ia")
+        {
             entity.uniqid = entityInfo.uniqid;
         }
 
         //we set the camera on the entity hero
-        if(entity.entityType == "player"){
-
-            if(entity.socketId == this.socketId){
+        if(entity.entityType == "player")
+        {
+            if(entity.socketId == this.socketId)
+            {
                 this.setCamera(entity);
             }
             this.players.add(entity);
         }
 
-        else if(entity.entityType == "ia"){
+        else if(entity.entityType == "ia")
+        {
             this.ias.add(entity);
         }
 
         this.displayEntity(entity);
     }
 
-    removePlayer(id){
+    removePlayer(id)
+    {
         var self = this;
-        self.players.getChildren().forEach(function (player) {
-            if (id === player.userId) {
+        self.players.getChildren().forEach(function (player) 
+        {
+            if (id === player.userId) 
+            {
                 player.destroy();
             }
         });
     }
 
-    removeIa(id){
+    removeIa(id)
+    {
         var self = this;
-        self.ias.getChildren().forEach(function (ia) {
-            if (id === ia.uniqid) {
+        self.ias.getChildren().forEach(function (ia)
+        {
+            if (id === ia.uniqid) 
+            {
                 ia.destroy();
             }
         });
+    }
+    removeObject(id)
+    {
+        var self = this;
+        self.objects.getChildren().forEach(function (obj)
+        {
+            console.log(obj.id);
+            console.log(id);
+            if (id === obj.id)
+            {
+                obj.destroy();
+            }
+        })
     }
 
     /*
     Display one entity animation, by playing his new animation. Only called if something (orientation or action) changed server side
     If the animation has not been used before, the animation is created
     */
-    displayEntity(entity){
+    displayEntity(entity)
+    {
         var self = this;
         // We get the key corresponding of the sprite animation for example a bulbasaur moving left will be 1_0_2
         var spriteKey = self.getSpriteKey(entity);
         // if sprite not already loaded, we create it
-        if(!self.anims.exists(spriteKey)){
+        if(!self.anims.exists(spriteKey))
+        {
             self.animationManager.createAnimations(entity.pokemon.gameIndex);
         }
         // We play the new correct animation
@@ -250,7 +274,8 @@ class GameScene extends Phaser.Scene{
     /*
     Set the camera on the pokemon that entity is controlling
     */
-    setCamera(hero){
+    setCamera(hero)
+    {
         var self = this;
         //console.log("setting camera");
         // Phaser supports multiple cameras, but you can access the default camera like this:
@@ -264,8 +289,10 @@ class GameScene extends Phaser.Scene{
      * Get the sprite key corresponding to entity orientation and action
      * for example a squirtle moving down will be 7_0_0
      */
-    getSpriteKey(entity) {
-        var orientationTable = {
+    getSpriteKey(entity) 
+    {
+        var orientationTable = 
+        {
         "down": 0,
         "downleft": 1,
         "left": 2,
@@ -281,10 +308,12 @@ class GameScene extends Phaser.Scene{
         key += "_";
 
         //KO pokemon has the same animation as "hurt"
-        if(entity.action == "6"){
+        if(entity.action == "6")
+        {
             key += 3;
         }
-        else{
+        else
+        {
             key += entity.action;
         }
         key += "_";
@@ -296,41 +325,53 @@ class GameScene extends Phaser.Scene{
     Change the animation on phaser
     change the flipX value to, cause we only load down, left, upleft and downleft sprites and then flip them for right etc ...
     */
-    playAnimation(entity, spriteKey){
+    playAnimation(entity, spriteKey)
+    {
         var flipxTable = {"down":false, "downleft":false, "left":false, "upleft":false, "up":false, "upright":true, "right":true, "downright":true};
         entity.flipX = flipxTable[entity.orientation];
         entity.anims.play(spriteKey);
     }
 
-    upadteEntities(entities){
+    upadteEntities(entities)
+    {
         var self = this;
         if(entities != []){
-            if(entities[0].entityType == "player"){
-                Object.keys(entities).forEach(function (index) {
-                    self.players.getChildren().forEach(function (player) {
-                    if (entities[index].userId === player.userId) {
-                        player.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
-                        //if the actual animation sprite currently played client side is different from the server one,
-                        // the client start to play and save the new sprite
-                        if(player.orientation != entities[index].orientation
-                        || player.action != entities[index].action){
-                            player.action = entities[index].action;
-                            player.orientation = entities[index].orientation;
-                            self.displayEntity(player);
+            if(entities[0].entityType == "player")
+            {
+                Object.keys(entities).forEach(function (index)
+                 {
+                    self.players.getChildren().forEach(function (player) 
+                    {
+                        if (entities[index].userId === player.userId) 
+                        {
+                            player.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
+                            //if the actual animation sprite currently played client side is different from the server one,
+                            // the client start to play and save the new sprite
+                            if(player.orientation != entities[index].orientation
+                            || player.action != entities[index].action)
+                            {
+                                player.action = entities[index].action;
+                                player.orientation = entities[index].orientation;
+                                self.displayEntity(player);
+                            }
                         }
-                    }
                     });
                 });
             }
-            else if (entities[0].entityType == "ia"){
-                Object.keys(entities).forEach(function (index) {
-                    self.ias.getChildren().forEach(function (ia) {
-                    if (entities[index].uniqid === ia.uniqid) {
+            else if (entities[0].entityType == "ia")
+            {
+                Object.keys(entities).forEach(function (index) 
+                {
+                    self.ias.getChildren().forEach(function (ia) 
+                    {
+                    if (entities[index].uniqid === ia.uniqid) 
+                    {
                         ia.setPosition(entities[index].x * window.tilesize, entities[index].y * window.tilesize);
                         //if the actual animation sprite currently played client side is different from the server one,
                         // the client start to play and save the new sprite
                         if(ia.orientation != entities[index].orientation
-                        || ia.action != entities[index].action){
+                        || ia.action != entities[index].action)
+                        {
                             ia.action = entities[index].action;
                             ia.orientation = entities[index].orientation;
                             self.displayEntity(ia);

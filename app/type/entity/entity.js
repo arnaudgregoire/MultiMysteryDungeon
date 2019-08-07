@@ -8,6 +8,7 @@ class Entity
       this.orientation = "left";
       this.action = "5";
       this.turnPlayed = false;
+      this.inventory = [];
     }
 }
 

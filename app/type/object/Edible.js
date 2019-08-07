@@ -19,6 +19,7 @@ class Edible extends Consumable
     {
         super(x, y, type, name, description, look);
         this.hungerValue = hungerValue;
+        this.edible = true;
     }
 
     /**

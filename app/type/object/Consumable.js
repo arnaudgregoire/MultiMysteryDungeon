@@ -1,9 +1,9 @@
-const Visible = require('./Visible');
+const Collectable = require('./Collectable');
 
 /**
  * Abstract class for all Visible objects that can be consumed
  */
-class Consumable extends Visible
+class Consumable extends Collectable
 {
      /**
      * 
@@ -17,6 +17,7 @@ class Consumable extends Visible
     constructor(x, y, type, name, description, look)
     {
         super(x, y, type, name, description, look);
+        this.consumable = true;
     }
 
     /**

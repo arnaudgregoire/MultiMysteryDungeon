@@ -27,8 +27,8 @@
                  "type":"APPLE",
                  "visible":true,
                  "width":0,
-                 "x":710,
-                 "y":373
+                 "x":30,
+                 "y":16
                 }, 
                 {
                  "height":0,
@@ -39,8 +39,8 @@
                  "type":"GOLDEN_APPLE",
                  "visible":true,
                  "width":0,
-                 "x":492,
-                 "y":228.666666666667
+                 "x":20,
+                 "y":9
                 }, 
                 {
                  "height":0,
@@ -51,8 +51,8 @@
                  "type":"GRIMY_FOOD",
                  "visible":true,
                  "width":0,
-                 "x":646,
-                 "y":1043.33333333333
+                 "x":27,
+                 "y":43
                 }, 
                 {
                  "height":0,
@@ -60,11 +60,11 @@
                  "name":"",
                  "point":true,
                  "rotation":0,
-                 "type":"APPLE",
+                 "type":"CHERRI_BERRY",
                  "visible":true,
                  "width":0,
-                 "x":871.333333333333,
-                 "y":956
+                 "x":36,
+                 "y":40
                 }, 
                 {
                  "height":0,
@@ -72,11 +72,11 @@
                  "name":"",
                  "point":true,
                  "rotation":0,
-                 "type":"APPLE",
+                 "type":"ORAN_BERRY",
                  "visible":true,
                  "width":0,
-                 "x":267.333333333333,
-                 "y":798
+                 "x":11,
+                 "y":33
                 }, 
                 {
                  "height":0,
@@ -87,8 +87,8 @@
                  "type":"RED_GUMMI",
                  "visible":true,
                  "width":0,
-                 "x":470.666666666667,
-                 "y":586.666666666667
+                 "x":20,
+                 "y":24
                 }, 
                 {
                  "height":0,
@@ -99,8 +99,8 @@
                  "type":"SILVER_GUMMI",
                  "visible":true,
                  "width":0,
-                 "x":804,
-                 "y":512.666666666667
+                 "x":33,
+                 "y":21
                 }, 
                 {
                  "height":0,
@@ -108,11 +108,11 @@
                  "name":"",
                  "point":true,
                  "rotation":0,
-                 "type":"APPLE",
+                 "type":"CHESTO_BERRY",
                  "visible":true,
                  "width":0,
-                 "x":1071.33333333333,
-                 "y":157.333333333333
+                 "x":45,
+                 "y":7
                 }, 
                 {
                  "height":0,
@@ -123,8 +123,8 @@
                  "type":"APPLE",
                  "visible":true,
                  "width":0,
-                 "x":184.666666666667,
-                 "y":321.333333333333
+                 "x":8,
+                 "y":13
                 }],
          "opacity":1,
          "type":"objectgroup",

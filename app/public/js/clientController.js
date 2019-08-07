@@ -98,12 +98,15 @@ ClientController.prototype.initializeConnection = function ()
   The  getChildren() method will return an array of all the game objects that are in that group,
   and from there we use the  forEach() method to loop through that array.
   */
-  this.socket.on("entity-suppression", function (info) {
-    switch (info.entityType) {
+  this.socket.on("entity-suppression", function (info) 
+  {
+    switch (info.entityType) 
+    {
       case "player":
         this.gameView.game.scene.getScene("gameScene").removePlayer(info.id);
         this.gameView.game.scene.getScene("uiScene").removePortrait(info.id);
         break;
+        
       case "ia":
         this.gameView.game.scene.getScene("gameScene").removeIa(info.id);
         default:
@@ -111,27 +114,37 @@ ClientController.prototype.initializeConnection = function ()
     }
   }.bind(this));
 
-  this.socket.on("updateEntities", function (entities) {
+  this.socket.on("object-suppression", function (info) 
+  {
+    this.gameView.game.scene.getScene("gameScene").removeObject(info.id);
+  }.bind(this));
+
+  this.socket.on("updateEntities", function (entities) 
+  {
     this.gameView.game.scene.getScene("gameScene").upadteEntities(entities.players);
     this.gameView.game.scene.getScene("gameScene").upadteEntities(entities.ias);
     this.gameView.game.scene.getScene("uiScene").updatePlayers(entities.players);
   }.bind(this));
 
-  this.socket.on("server-message", function (data) {
+  this.socket.on("server-message", function (data) 
+  {
     this.chatController.addChatAllElement(this.chatController.createMessageElement(data));
     this.chatController.addChatBattleLogsElement(this.chatController.createMessageElement(data));
   }.bind(this));
 
-  this.socket.on("new-message", function (data) {
+  this.socket.on("new-message", function (data) 
+  {
     this.chatController.addChatAllElement(this.chatController.createMessageElement(data));
     this.chatController.addChatPartyElement(this.chatController.createMessageElement(data));
   }.bind(this));
 
-  window.addEventListener("playerInput", function(e) {
+  window.addEventListener("playerInput", function(e) 
+  {
     this.socket.emit("playerInput", e.detail);
   }.bind(this));
 
-  window.addEventListener("submit-chatline", function(e){
+  window.addEventListener("submit-chatline", function(e)
+  {
     this.socket.emit("submit-chatline", e.detail);
   }.bind(this));
 

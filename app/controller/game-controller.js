@@ -10,8 +10,8 @@ const ENUM_STATUS = require('../type/enums').ENUM_STATUS;
 const utils = require('../engine/utils');
 
 
-class GameController {
-
+class GameController 
+{
   constructor(websocket, config) 
   {
     this.websocket = websocket;
@@ -52,6 +52,10 @@ class GameController {
     {
       self.onEntitySuppression(entity);
     });
+    self.eventEmitter.on('object-suppression', (entity)=>
+    {
+      self.onObjectSuppression(entity);
+    });
     self.eventEmitter.on('disconnect', (controller)=>
     {
       self.onPlayerDisconnect(controller);
@@ -72,6 +76,11 @@ class GameController {
     {
       self.websocket.emit('server-message', message);
     });
+  }
+
+  onObjectSuppression(obj)
+  {
+    this.websocket.emit('object-suppression',{'id': obj.id});
   }
 
   onEntitySuppression(entity)
