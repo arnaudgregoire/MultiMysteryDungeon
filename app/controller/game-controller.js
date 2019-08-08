@@ -76,6 +76,11 @@ class GameController
     {
       self.websocket.emit('server-message', message);
     });
+    self.eventEmitter.on('update-inventory', (player)=>
+    {
+      let controller = self.getPlayerControllerById(player.userId);
+      controller.onInventoryUpdate(player);
+    })
   }
 
   onObjectSuppression(obj)
@@ -372,13 +377,13 @@ class GameController
 
   getPlayerControllerById(userId)
   {
-    this.playerControllers.forEach(controller =>
-    {
-      if(controller.userId == userId)
+    for (let i = 0; i < this.playerControllers.length; i++) 
+    {         
+      if(this.playerControllers[i].userId == userId)
       {
-        return controller
+        return this.playerControllers[i];
       }
-    })
+    }
     return new Error("no player controller found for given id ( " +userId+ " )");
   }
 }

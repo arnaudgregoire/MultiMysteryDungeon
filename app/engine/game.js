@@ -423,6 +423,7 @@ class Game
 
   onEntityMove(entity)
   {
+    
     let index = -1;
     for (let i = 0; i < this.objects.length; i++) 
     {
@@ -443,6 +444,7 @@ class Game
               message: entity.name + ' ( ' + entity.pokemon.name + ' ) ' + ' picked ' + object.name,
               username:"Server"
             });
+            this.eventEmitter.emit('update-inventory', entity);
           break;
         
         case 'ia':
@@ -457,6 +459,7 @@ class Game
           break;
       }
       this.eventEmitter.emit('object-suppression', object);
+      
     }
   }
 

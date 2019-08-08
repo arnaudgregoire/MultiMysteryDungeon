@@ -1,6 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ENUM_STATUS = require('../type/enums').ENUM_STATUS;
+const ENUM_MDO = require('../type/enums').MDO;
+
+const ObjectSchema = new Schema({
+  x:{
+    type:Number,
+    required:true
+  },
+  y:{
+    type:Number,
+    required:true
+  },
+  id:{
+    type:String,
+    required:true
+  },
+  type:{
+    type:String,
+    required:true,
+    enum : Object.values(ENUM_MDO)
+  }
+})
 
 const PlayerSchema = new Schema({
   user_id:{
@@ -39,7 +60,8 @@ const PlayerSchema = new Schema({
     type:String,
     required:true,
     enum:Object.values(ENUM_STATUS)
-  }
+  },
+  inventory:[ObjectSchema]
 });
 
 const playerModel = mongoose.model("player", PlayerSchema);

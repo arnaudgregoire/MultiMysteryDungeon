@@ -11,6 +11,7 @@ class UIScene extends Phaser.Scene{
   preload(){
     this.load.multiatlas("portraits","../../assets/pokemonPortraits.json");
     this.load.multiatlas("typeIcons", "../../assets/typeIcons.json");
+    this.load.multiatlas("objects",'../../assets/objects/objects.json');
     this.load.image("dashboard","../../assets/ui/dashboard.png" );
   }
 
@@ -33,12 +34,15 @@ class UIScene extends Phaser.Scene{
       color: "lightgreen",
       align: "center"
     };
-    this.portraits = this.add.container(70,70);
+    this.portraits = this.add.container(70, 70);
     this.add.image(800,900,"dashboard");
+    this.inventory = this.add.container(1000, 885);
+
     window.dispatchEvent(new CustomEvent("uiSceneCreated"));
   }
 
-  setDashboard(player){
+  setDashboard(player)
+  {
     this.dashboardPortrait = this.add.sprite(100,900,"portraits","portrait" + player.pokemon.gameIndex).setScale(3,3);
     this.dashboardName = this.add.text(200,830,player.name,this.textStyle);
     this.dashboardPokemonName = this.add.text(200,870,player.pokemon.name, this.textStyle);
@@ -85,14 +89,25 @@ class UIScene extends Phaser.Scene{
     this.evSpd = this.add.text(900, 950, "(" + player.pokemon.evs.SPECIAL_DEFENSE + ")", this.greenTextStyle);
   }
 
-  setHealth(player){
+  setHealth(player)
+  {
     this.healthBarGeometry.setSize(Math.round(this.healthBarLength * player.pokemon.health/player.pokemon.stats.HP),20);
     this.healthBar.clear();
     this.healthBar.fillRectShape(this.healthBarGeometry);
     this.health.setText(player.pokemon.health + " / "+ player.pokemon.stats.HP);
   }
 
-  displayPortrait(playerInfo){
+  setInventory(player)
+  {
+    this.add.text(980,830,"Inventory :", this.textStyle); 
+    for (let i = 0; i < player.inventory.length; i++) 
+    {
+      this.inventory.add(this.add.sprite(i * 51, 0, "objects", player.inventory[i].look).setScale(3,3))
+    }
+  }
+
+  displayPortrait(playerInfo)
+  {
     var self = this;
     var portrait = self.add.container(0, 180 * self.portraits.length);
     portrait.userId = playerInfo.userId;
@@ -118,7 +133,8 @@ class UIScene extends Phaser.Scene{
   }
 
 
-  removePortrait(userId) {
+  removePortrait(userId) 
+  {
     var self = this;
     self.portraits.remove(self.portraits.getFirst("userId", userId));
     self.portraits.iterate(function(portrait) {
@@ -126,7 +142,8 @@ class UIScene extends Phaser.Scene{
     }, self);
   }
 
-  updatePlayers(players){
+  updatePlayers(players)
+  {
     var self = this;
     var rectStyle = {"false": 0xDC143C, "true": 0x00C100};
     Object.keys(players).forEach(function (index) {
@@ -142,6 +159,7 @@ class UIScene extends Phaser.Scene{
       }, self);
     });
   }
+
 
   setSocketId(id){
     this.socketId = id;

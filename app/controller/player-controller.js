@@ -40,12 +40,18 @@ class PlayerController{
       self.input = input;
       self.eventEmitter.emit('playerInput', self);
     });
-    self.socket.on('submit-chatline', function(chatline){
+    self.socket.on('submit-chatline', function(chatline)
+    {
       // await ChatModel.create({ email, message });
-      self.eventEmitter.emit('submit-chatline', {
+      self.eventEmitter.emit('submit-chatline', 
+      {
         username:self.name,
         message:chatline});
     })
+  }
+
+  onInventoryUpdate(player){
+    this.socket.emit('update-inventory', player);
   }
 }
 

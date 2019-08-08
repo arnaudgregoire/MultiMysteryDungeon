@@ -3,6 +3,7 @@ const Player = require("../type/entity/player");
 const Pokemon = require("../type/pokemon/pokemon");
 const GenericPokemonModel = require("../model/generic-pokemon-model");
 const PokemonModel = require("../model/pokemon-model");
+const MdoFactory = require('../type/MdoFactory');
 
 class DbManager 
 {
@@ -37,6 +38,11 @@ class DbManager
           {
             let doc = docs[0];
             let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id, doc.belly, doc.status);
+            doc.inventory.forEach(item => {
+              let obj = MdoFactory.createMdoObject(item.x, item.y, item.type);
+              obj.id = item.id;
+              player.inventory.push(obj);
+            });
             player.orientation = doc.orientation;
             player.action = doc.action;
             if(player.action == '6')
@@ -203,7 +209,8 @@ class DbManager
                 action:player.action,
                 name: player.name,
                 belly: player.belly,
-                status: player.status
+                status: player.status,
+                inventory: player.inventory
               }
             ).then((res) =>
             {
@@ -224,7 +231,8 @@ class DbManager
                 action:player.action,
                 name: player.name,
                 belly: player.belly,
-                status: player.status
+                status: player.status,
+                inventory: player.inventory
               }
             ).then((res) =>
             {
