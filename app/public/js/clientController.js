@@ -82,6 +82,11 @@ ClientController.prototype.initializeConnection = function ()
     }
   }.bind(this));
 
+  this.socket.on("new-object", function (object)
+  {
+    this.gameView.game.scene.getScene("gameScene").buildAndDisplayObject(object);
+  }.bind(this));
+
   this.socket.on("update-inventory",function (player)
   {
     this.gameView.game.scene.getScene("uiScene").setInventory(player);
