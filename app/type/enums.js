@@ -378,6 +378,14 @@ const ENUM_GENDER = Object.freeze([
     "Female"
 ]);
 
+const ENUM_RARITY = Object.freeze([
+	COMMON:'COMMON'
+	UNCOMMON:'UNCOMMON'
+	RARE:'RARE'
+	EPIC:'EPIC'
+	LEGENDARY:'LEGENDARY'
+]);
+
 module.exports= {
     ENUM_TYPE,
     ENUM_NATURE,
@@ -387,5 +395,6 @@ module.exports= {
     MODIFIER_NATURE,
     MDO,
     MDO_TILESET,
-    ENUM_STATUS
+    ENUM_STATUS,
+	ENUM_RARITY
 }
