@@ -123,9 +123,21 @@
                  "type":"APPLE",
                  "visible":true,
                  "width":0,
-                 "x":8,
+                 "x":7,
                  "y":13
-                }],
+                },
+                {
+              "height":0,
+              "id":"48",
+              "name":"",
+              "point":true,
+              "rotation":0,
+              "type":"CHESTO_BERRY",
+              "visible":true,
+              "width":0,
+              "x":7,
+              "y":13
+              }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,

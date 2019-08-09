@@ -467,6 +467,7 @@ class Game
   {
     entity.action = "6"; //KO state
     entity.turnPlayed = true;
+    this.dropInventory(entity);
     
     switch (entity.entityType) 
     {
@@ -493,6 +494,18 @@ class Game
 
       default:
         break;
+    }
+  }
+
+  dropInventory(entity)
+  {
+    while (entity.inventory.length > 0) 
+    {
+      let item = entity.inventory.pop();
+      item.x = entity.x;
+      item.y = entity.y;
+      this.objects.push(item);
+      this.eventEmitter.emit('new-object', item);
     }
   }
 

@@ -72,6 +72,10 @@ class GameController
     {
       controller.socket.broadcast.emit("newPlayer", self.game.getPlayerById(controller.userId));
     });
+    self.eventEmitter.on('new-object',(object)=>
+    {
+      self.websocket.emit('new-object', object);
+    })
     self.eventEmitter.on('server-message', (message)=>
     {
       self.websocket.emit('server-message', message);

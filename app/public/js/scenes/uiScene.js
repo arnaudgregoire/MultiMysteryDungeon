@@ -1,6 +1,7 @@
 "use strict";
 class UIScene extends Phaser.Scene{
-  constructor(){
+  constructor()
+  {
     super({ key: "uiScene", active: true });
     this.rectangleGeometry = new Phaser.Geom.Rectangle(0,0,140,140);
     this.healthBarLength = 150;
@@ -8,27 +9,32 @@ class UIScene extends Phaser.Scene{
     this.healthBarGeometry = new Phaser.Geom.Rectangle(0,0,this.healthBarLength,20);
   }
 
-  preload(){
+  preload()
+  {
     this.load.multiatlas("portraits","../../assets/pokemonPortraits.json");
     this.load.multiatlas("typeIcons", "../../assets/typeIcons.json");
     this.load.multiatlas("objects",'../../assets/objects/objects.json');
     this.load.image("dashboard","../../assets/ui/dashboard.png" );
   }
 
-  create(){
-    this.textStyle = {
+  create()
+  {
+    this.textStyle = 
+    {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "white",
       align: "center"
     };
-    this.redTextStyle = {
+    this.redTextStyle = 
+    {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "red",
       align: "center"
     };
-    this.greenTextStyle = {
+    this.greenTextStyle = 
+    {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "lightgreen",
@@ -49,7 +55,8 @@ class UIScene extends Phaser.Scene{
     this.dashboardLevel = this.add.text(200,910, "Lvl " + player.pokemon.level, this.textStyle);
     this.gender = this.add.text(200, 950, player.pokemon.gender, this.textStyle);
     this.types = [];
-    for (var i = 0; i < player.pokemon.types.length; i++) {
+    for (var i = 0; i < player.pokemon.types.length; i++) 
+    {
       this.types.push(this.add.sprite(420, 850 + 50 * i, "typeIcons", player.pokemon.types[i].type.name));
     }
     this.healthBarBackground = this.add.graphics({
@@ -146,12 +153,16 @@ class UIScene extends Phaser.Scene{
   {
     var self = this;
     var rectStyle = {"false": 0xDC143C, "true": 0x00C100};
-    Object.keys(players).forEach(function (index) {
-      if (players[index].socketId == self.socketId) {
+    Object.keys(players).forEach(function (index)
+    {
+      if (players[index].socketId == self.socketId)
+      {
         self.setHealth(players[index]);
       }
-      self.portraits.iterate(function (portrait) {
-        if (portrait.userId == players[index].userId) {
+      self.portraits.iterate(function (portrait)
+      {
+        if (portrait.userId == players[index].userId)
+        {
           var graphic = portrait.getFirst();
           graphic.fillStyle(rectStyle[players[index].turnPlayed], 1);
           graphic.fillRectShape(self.rectangleGeometry);
