@@ -1,6 +1,7 @@
 const Food = require('./object/Food');
 const Gummi = require('./object/Gummi');
 const Berry = require('./object/Berry');
+const Stairs  = require('./object/Stairs');
 const MDO = require('./enums').MDO;
 
 class MdoFactory{
@@ -39,6 +40,12 @@ class MdoFactory{
 
             case MDO.SITRUS_BERRY:
                 return new Berry.SitrusBerry(x, y);
+
+            case MDO.DOWNSTAIRS:
+                return new Stairs.DownStairs(x, y);
+            
+            case MDO.UPSTAIRS:
+                return new Stairs.UpStairs(x, y);
                 
             default:
                 return new Error('Object type not found');
