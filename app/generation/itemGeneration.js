@@ -40,7 +40,7 @@ function addItems(roomList,config){
 		const rarity = computeSpawnRarity();
 		var itemOfCurrentRarityList = [];
 		
-		for(j=0,j<config.items.length,j++){
+		for(j=0;j<config.items.length;j++){
 			
 			if(config.items[j].rarity == rarity){
 				itemOfCurrentRarityList.push(config.items[j]);
@@ -54,7 +54,7 @@ function addItems(roomList,config){
 		const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
 		const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
 		
-		boolean isPositionFree=true;
+		isPositionFree = true;
 		
 		for(item in itemList){
 			if((item[0]==spawnPointX)&&(item[1]==spawnPointY)){
@@ -81,8 +81,8 @@ function addItems(roomList,config){
 		posY: 0
 	}
 	
-	bool isPlayerSpawnPointValid = false;
-	bool isStairsPositionValid = false;
+	isPlayerSpawnPointValid = false;
+	isStairsPositionValid = false;
 	
 	while(!isPlayerSpawnPointValid){
 		
@@ -145,15 +145,24 @@ function computeSpawnRarity(){
 	const spawnValue = Math.floor((Math.random()*100)+1);
 	var rarity;
 	
-	if (spawnValue>99){
+	if (spawnValue>99)
+	{
 		rarity = Rarities.LEGENDARY;
-	} else if(spawnValue>95){
+	} 
+	else if(spawnValue>95)
+	{
 		rarity = Rarities.EPIC;
-	} else if(spawnValue>80){
+	} 
+	else if(spawnValue>80)
+	{
 		rarity = Rarities.RARE;
-	} else if(spawnValue>50){
+	} 
+	else if(spawnValue>50)
+	{
 		rarity = Rarities.UNCOMMON;
-	} else {
+	} 
+	else 
+	{
 		rarity = Rarities.COMMON;
 	}
 	
