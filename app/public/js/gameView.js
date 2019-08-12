@@ -154,7 +154,7 @@ GameView.prototype.setDefaultConfig = function () {
         "A1B": 24, "B2C": 6, "C3D": 8, "AD4": 26,
         "A1B2C": 15, "B2C3D": 7, "AC3D4": 17, "A1BD4": 25,
         "A1BC": 159, "AB2C": 168, "B2CD": 178, "BC3D": 177,
-        "AC3D": 168, "ACD4": 160, "A1BD": 189, "ABD4": 186,
+        "AC3D": 169, "ACD4": 160, "A1BD": 187, "ABD4": 186,
         "A1BCD": 204, "AB2CD": 195,
         "ABC3D": 196, "ABCD4": 205,
         "A1B2CD": 125, "AB2C3D": 133,
