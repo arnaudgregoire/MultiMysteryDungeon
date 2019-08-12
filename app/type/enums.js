@@ -378,13 +378,13 @@ const ENUM_GENDER = Object.freeze([
     "Female"
 ]);
 
-const ENUM_RARITY = Object.freeze([
-	COMMON:'COMMON'
-	UNCOMMON:'UNCOMMON'
-	RARE:'RARE'
-	EPIC:'EPIC'
+const ENUM_RARITY = Object.freeze({
+	COMMON:'COMMON',
+	UNCOMMON:'UNCOMMON',
+	RARE:'RARE',
+	EPIC:'EPIC',
 	LEGENDARY:'LEGENDARY'
-]);
+});
 
 module.exports= {
     ENUM_TYPE,
