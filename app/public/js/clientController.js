@@ -7,22 +7,16 @@ function ClientController() {
 
 ClientController.prototype.initialize = function ()
 {
-  this.socket.on("get-world", this.initializeWorld.bind(this));
+  this.socket.on("get-map", this.initializeWorld.bind(this));
 };
 
-ClientController.prototype.initializeWorld = function (world) 
+ClientController.prototype.initializeWorld = function (typeMap) 
 {
   this.chatController = new ChatController();
   this.gameView = new GameView();
-  window.world = world;
+  window.typeMap = typeMap;
   // auto tile the world and reshape the result as 1D Array for phaser
-  var tilingMatrix = AutoTiling.tileMatrix(8, window.world.layers[0].data, this.gameView.config.autoTilingConversion);
-  window.world.layers[0].data = [];
-  for (var i = 0; i < tilingMatrix.length; i++) {
-    for (var j = 0; j < tilingMatrix[i].length; j++) {
-      window.world.layers[0].data.push(tilingMatrix[i][j]);
-    }
-  }
+  window.map = AutoTiling.tileMatrix(8, typeMap, this.gameView.config.autoTilingConversion);
   window.tilesize = this.gameView.config.tilesize;
 
   window.addEventListener("gameSceneCreated", ()=>
@@ -112,8 +106,6 @@ ClientController.prototype.initializeConnection = function ()
   */
   this.socket.on("entity-suppression", function (info) 
   {
-    console.log(info);
-    
     switch (info.entityType) 
     {
       case "player":
@@ -123,7 +115,9 @@ ClientController.prototype.initializeConnection = function ()
         
       case "ia":
         this.gameView.game.scene.getScene("gameScene").removeIa(info.id);
-        default:
+        break;
+
+      default:
         break;
     }
   }.bind(this));

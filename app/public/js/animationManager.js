@@ -53,7 +53,7 @@ AnimationManager.prototype.createAnimations = function (index) {
     self.game.anims.create({
         key: index + "_5_" + orientation,
         frames:  self.game.anims.generateFrameNames(index, {frames: [0,2], prefix: index + "_0_" + orientation + "_"}),
-        frameRate: 2,
+        frameRate: 1,
         repeat: -1
     });
   }

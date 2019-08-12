@@ -8,6 +8,7 @@ const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
 const utils = require("../engine/utils");
 const MdoFactory = require("../type/MdoFactory");
+const Generation = require('../generation/Generation');
 
 class Game
 {
@@ -22,26 +23,19 @@ class Game
     this.genericPokemonDBs = [];
     this.world = JSON.parse(fs.readFileSync(__dirname + "/../generation/maps/test.json"));
     this.loadMap();
-    this.loadObjects();
     this.eventEmitter = null;
   }
 
-  loadObjects()
-  {
-    this.world.layers[1].objects.forEach((jsonObject)=>
-    {
-      this.objects.push(MdoFactory.createMdoObject(jsonObject.x, jsonObject.y, jsonObject.type));
-    })
-  }
 
   loadMap()
   {
-    let map = this.world.layers[0].data;
-    this.map = [];
-    while(map.length){
-      this.map.push(map.splice(0,50));
-    };
-    this.world.layers[0].data = this.map;
+    this.generation = new Generation();
+    this.generation.generate();
+    this.map = this.generation.map;
+    this.generation.objects.forEach((jsonObject)=>
+    {
+      this.objects.push(MdoFactory.createMdoObject(jsonObject.x, jsonObject.y, jsonObject.type));
+    })
   }
 
   createPokemon(uniqid, gameIndex)

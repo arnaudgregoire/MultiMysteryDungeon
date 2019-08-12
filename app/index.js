@@ -55,9 +55,9 @@ require("./script/auth");
 const mainRouting   = require("./route/main");
 
 // TODO: WTF is this shit ?
-const defaultExport = require("./generation/generationBenchmark");
+const Generation = require("./generation/Generation");
 app.get("/generation", function (req, res) {
-  defaultExport().then(() => {
+  Generation.defaultExport().then(() => {
     res.sendFile(__dirname + "/public/generationViewer/generationViewer.html");
   });
 });

@@ -12,7 +12,7 @@
   "main": "app/index.js",
   "scripts": {
     "start": "node app/index.js",
-    "benchmark": "node app/generation/generationBenchmark.js"
+    "benchmark": "node app/generation/generation.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.4",
