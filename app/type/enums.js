@@ -25,7 +25,7 @@ const MDO = Object.freeze({
     DOWNSTAIRS:'DOWNSTAIRS'
 });
 
-const MDO_TILESET = Object.freeze({
+const MDO_LOOK = Object.freeze({
     RED_GUMMI:'RED_GUMMI',
     ORANGE_GUMMI:'ORANGE_GUMMI',
     SILVER_GUMMI:'SILVER_GUMMI',
@@ -398,7 +398,7 @@ module.exports= {
     ENUM_GENDER,
     MODIFIER_NATURE,
     MDO,
-    MDO_TILESET,
+    MDO_LOOK,
     ENUM_STATUS,
 	ENUM_RARITY
 }

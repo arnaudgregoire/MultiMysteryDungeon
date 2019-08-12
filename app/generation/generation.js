@@ -28,7 +28,7 @@ class Generation
 
 	createMap(){
 		this.map = GenerationEngine.generateMap(this.config);
-		this.map = GenerationEngine.addExtras(this.map);
+		this.map = GenerationEngine.addExtras(this.map, 400);
 	}
 	
 	createObjects(){
@@ -60,7 +60,7 @@ class Generation
 	
 	static defaultExport() {
 		var tempmap=GenerationEngine.generateMap(config);
-		return GenerationEngine.exportMapToCsv(addExtras(tempmap, 100), "app/generation/maps/testMap.csv");
+		return GenerationEngine.exportMapToCsv(addExtras(tempmap, 300), "app/generation/maps/testMap.csv");
 	}
 
 }

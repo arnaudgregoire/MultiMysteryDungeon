@@ -1,6 +1,6 @@
 const Visible = require('./Visible');
 const MDO = require('../enums').MDO;
-const MDO_TILESET = require('../enums').MDO_TILESET;
+const MDO_LOOK = require('../enums').MDO_LOOK;
 
 /**
  * Abstract class for down stairs and up stairs
@@ -22,7 +22,7 @@ class UpStairs extends Stairs
             , MDO.UPSTAIRS
             , 'Upstairs'
             , 'Those stairs leads to the next stage'
-            , MDO_TILESET.UPSTAIRS
+            , MDO_LOOK.UPSTAIRS
         )
     }
 }
@@ -40,7 +40,7 @@ class DownStairs extends Stairs
             , MDO.DOWNSTAIRS
             , 'Upstairs'
             , 'Those stairs leads to the next stage'
-            , MDO_TILESET.DOWNSTAIRS
+            , MDO_LOOK.DOWNSTAIRS
         )
     }
 }

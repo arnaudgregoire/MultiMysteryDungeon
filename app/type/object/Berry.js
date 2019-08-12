@@ -1,6 +1,6 @@
 const Edible = require('./Edible');
 const MDO = require('../enums').MDO;
-const MDO_TILESET = require('../enums').MDO_TILESET;
+const MDO_LOOK = require('../enums').MDO_LOOK;
 const ENUM_STATUS = require('../enums').ENUM_STATUS;
 
 /**
@@ -69,7 +69,7 @@ class CheriBerry extends StatusBerry
             , MDO.CHERI_BERRY
             , "Cheri Berry"
             , "A food item that heals the Pokémon from paralysis. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.CHERI_BERRY
+            , MDO_LOOK.CHERI_BERRY
         )
     }
 
@@ -97,7 +97,7 @@ class ChestoBerry extends StatusBerry
             , MDO.CHESTO_BERRY
             , "Chesto Berry"
             , "A food item that heals the Pokémon from sleep. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.CHESTO_BERRY
+            , MDO_LOOK.CHESTO_BERRY
         )
     }
 
@@ -125,7 +125,7 @@ class PechaBerry extends StatusBerry
             , MDO.PECHA_BERRY
             , "Pecha Berry"
             , "A food item that heals the Pokémon from poison. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.PECHA_BERRY
+            , MDO_LOOK.PECHA_BERRY
         )
     }
 
@@ -153,7 +153,7 @@ class RawstBerry extends StatusBerry
             , MDO.RAWST_BERRY
             , "Rawst Berry"
             , "A food item that heals the Pokémon from burn. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.RAWST_BERRY
+            , MDO_LOOK.RAWST_BERRY
         )
     }
 
@@ -181,7 +181,7 @@ class OranBerry extends HealBerry
             , MDO.ORAN_BERRY
             , "Oran Berry"
             , "A food item that heals 30 hp. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.ORAN_BERRY
+            , MDO_LOOK.ORAN_BERRY
         )
     }
 
@@ -209,7 +209,7 @@ class SitrusBerry extends HealBerry
             , MDO.SITRUS_BERRY
             , "Sitrus Berry"
             , "A food item that heals 100 hp. It also slightly fills the Pokémon's Belly."
-            , MDO_TILESET.SITRUS_BERRY
+            , MDO_LOOK.SITRUS_BERRY
         )
     }
 

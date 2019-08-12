@@ -54,13 +54,6 @@ mongoose.connection.on("connected", function () {
 require("./script/auth");
 const mainRouting   = require("./route/main");
 
-// TODO: WTF is this shit ?
-const Generation = require("./generation/Generation");
-app.get("/generation", function (req, res) {
-  Generation.defaultExport().then(() => {
-    res.sendFile(__dirname + "/public/generationViewer/generationViewer.html");
-  });
-});
 app.get("/game.html", passport.authenticate("jwt", { session : true }), function (req, res) {
   res.sendFile(__dirname + "/public/game.html");
 });

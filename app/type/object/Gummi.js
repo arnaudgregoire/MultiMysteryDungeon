@@ -1,5 +1,5 @@
 const MDO = require('../enums').MDO;
-const MDO_TILESET = require('../enums').MDO_TILESET;
+const MDO_LOOK = require('../enums').MDO_LOOK;
 const Edible = require('./Edible');
 
 /**
@@ -33,7 +33,7 @@ class RedGummi extends Gummi
             , MDO.RED_GUMMI
             , 'Red Gummi'
             , 'Slightly fills Belly, raises IQ of fire types'
-            , MDO_TILESET.RED_GUMMI
+            , MDO_LOOK.RED_GUMMI
         )
     }
 }
@@ -57,7 +57,7 @@ class SilverGummi extends Gummi
             , MDO.SILVER_GUMMI
             , 'Red Gummi'
             , 'Slightly fills Belly, raises IQ of steel types'
-            , MDO_TILESET.SILVER_GUMMI
+            , MDO_LOOK.SILVER_GUMMI
         )
     }
 }

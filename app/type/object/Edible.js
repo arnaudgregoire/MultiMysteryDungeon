@@ -12,7 +12,7 @@ class Edible extends Consumable
      * @param {MDO} type MDO type of object
      * @param {String} name Name of object
      * @param {String} description Description of object
-     * @param {MDO_TILESET} look the key name associated to a pixel representation
+     * @param {MDO_LOOK} look the key name associated to a pixel representation
      * @param {integer} hungerValue the hunger value that this object restore to player's belly
      */
     constructor(x, y, type, name, description, look, hungerValue)

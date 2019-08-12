@@ -1,6 +1,6 @@
 const Edible = require('./Edible');
 const MDO = require('../enums').MDO;
-const MDO_TILESET = require('../enums').MDO_TILESET;
+const MDO_LOOK = require('../enums').MDO_LOOK;
 const ENUM_STATUS = require('../enums').ENUM_STATUS;
 const utils = require('../../engine/utils');
 
@@ -22,7 +22,7 @@ class Apple extends Edible
             , MDO.APPLE
             , "Apple"
             , "A food item that somewhat fills the Pokémon's Belly. Eating this when its Belly is full will slightly enlarge its Belly size"
-            , MDO_TILESET.RED_APPLE
+            , MDO_LOOK.RED_APPLE
             , 50
         )
     }
@@ -46,7 +46,7 @@ class GoldenApple extends Edible
             , MDO.GOLDEN_APPLE
             , "Golden Apple"
             , "A miraculous apple that glows with an alluring golden aura. It's far too precious and beautiful to even consider eating! If it were eaten, however, it would completely fill and greatly enlarge the Pokémon's Belly."
-            , MDO_TILESET.GOLDEN_APPLE
+            , MDO_LOOK.GOLDEN_APPLE
             , 100
         )
     }
@@ -70,7 +70,7 @@ class GrimyFood extends Edible
             , MDO.GRIMY_FOOD
             , "Grimy Food"
             , "Slightly fills Belly, causes random status"
-            , MDO_TILESET.GRIMY_FOOD
+            , MDO_LOOK.GRIMY_FOOD
             , 20
         )
     }

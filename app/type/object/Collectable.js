@@ -10,7 +10,7 @@ class Collectable extends Visible
      * @param {MDO} type MDO type of object
      * @param {String} name Name of object
      * @param {String} description Description of object
-     * @param {MDO_TILESET} look the key name associated to a pixel representation
+     * @param {MDO_LOOK} look the key name associated to a pixel representation
      */
     constructor(x, y, type, name, description, look)
     {
