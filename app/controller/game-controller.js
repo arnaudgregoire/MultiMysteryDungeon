@@ -234,7 +234,7 @@ class GameController
         // remove player from server
         self.removeObjectFromArray(player, self.game.players);
         player = null;
-        self.websocket.emit("entity-suppression", controller.userId);
+        self.websocket.emit("entity-suppression", {entityType:'player', id: controller.userId});
         console.log(controller.email +" disconnected");
         // delete player controller
         self.removeObjectFromArray(controller, self.playerControllers);

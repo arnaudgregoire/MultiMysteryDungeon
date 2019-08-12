@@ -406,6 +406,10 @@ class Game
     };
     let damage = pokemonMath.computeDamage(player.pokemon.level,player.pokemon.stats.ATTACK,entity.pokemon.stats.DEFENSE,20,1);
     entity.pokemon.health = entity.pokemon.health - damage;
+    if(entity.pokemon.health < 0)
+    {
+      entity.pokemon.health = 0;
+    }
     this.eventEmitter.emit('server-message',
     {
       message: player.name + ' ( ' + player.pokemon.name + ' ) ' + ' attacked ' + entity.pokemon.name  + ' dealing ' + damage + ' HP',

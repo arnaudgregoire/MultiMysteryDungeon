@@ -112,6 +112,8 @@ ClientController.prototype.initializeConnection = function ()
   */
   this.socket.on("entity-suppression", function (info) 
   {
+    console.log(info);
+    
     switch (info.entityType) 
     {
       case "player":
