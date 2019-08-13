@@ -45,7 +45,7 @@ class GoldenApple extends Edible
             , y
             , MDO.GOLDEN_APPLE
             , "Golden Apple"
-            , "A miraculous apple that glows with an alluring golden aura. It's far too precious and beautiful to even consider eating! If it were eaten, however, it would completely fill and greatly enlarge the Pokémon's Belly."
+            , "A miraculous apple that glows with an alluring golden aura. It's far too precious and beautiful to even consider eating! "
             , MDO_LOOK.GOLDEN_APPLE
             , 100
         )

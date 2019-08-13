@@ -15,35 +15,41 @@ class UIScene extends Phaser.Scene{
     this.load.multiatlas("typeIcons", "../../assets/typeIcons.json");
     this.load.multiatlas("objects",'../../assets/objects/objects.json');
     this.load.image("dashboard","../../assets/ui/dashboard.png" );
+    this.load.image("inventory", "../../assets/ui/inventory.png");
+    this.load.image("whiteBackground", "../../assets/ui/whiteBackground.png");
+    this.load.image("yellowBackground", "../../assets/ui/yellowBackground.png");
   }
 
   create()
   {
-    this.textStyle = 
+    let self = this;
+    self.textStyle = 
     {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "white",
       align: "center"
     };
-    this.redTextStyle = 
+    self.redTextStyle = 
     {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "red",
       align: "center"
     };
-    this.greenTextStyle = 
+    self.greenTextStyle = 
     {
       fontSize: "30px",
       fontFamily: "Verdana",
       color: "lightgreen",
       align: "center"
     };
-    this.portraits = this.add.container(70, 70);
-    this.add.image(800,900,"dashboard");
-    this.inventory = this.add.container(1000, 885);
+    self.portraits = self.add.container(70, 70);
+    self.add.image(800,900,"dashboard");
+    self.inventory = self.add.container(1000, 885);
 
+    let keyI = self.input.keyboard.addKey('I');
+    keyI.on('down',function(){self.switchInventoryUI()});
     window.dispatchEvent(new CustomEvent("uiSceneCreated"));
   }
 
@@ -106,11 +112,7 @@ class UIScene extends Phaser.Scene{
 
   setInventory(player)
   {
-    this.add.text(980,830,"Inventory :", this.textStyle); 
-    for (let i = 0; i < player.inventory.length; i++) 
-    {
-      this.inventory.add(this.add.sprite(i * 51, 0, "objects", player.inventory[i].look).setScale(3,3))
-    }
+    this.inventory =player.inventory;
   }
 
   displayPortrait(playerInfo)
@@ -171,6 +173,17 @@ class UIScene extends Phaser.Scene{
     });
   }
 
+  switchInventoryUI()
+  {
+    if(this.inventoryUI == undefined)
+    {
+      this.inventoryUI = new InventoryUI(this, this.inventory);
+    }
+    else{
+      this.inventoryUI.destroy();
+      this.inventoryUI = null;
+    }
+  }
 
   setSocketId(id){
     this.socketId = id;
