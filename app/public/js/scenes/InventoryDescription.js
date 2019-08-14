@@ -1,4 +1,3 @@
-
 class InventoryDescription extends Phaser.GameObjects.Container
 {
     constructor(scene,x,y)
@@ -19,9 +18,7 @@ class InventoryDescription extends Phaser.GameObjects.Container
         self.add(self.look);
         self.add(self.name);
         self.add(self.description);
-        window.addEventListener('setItemDescription',function(e){
-            self.setItemDescription(e.detail);
-        });
+
     }
 
     setItemDescription(item)

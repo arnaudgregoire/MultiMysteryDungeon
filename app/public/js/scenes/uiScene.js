@@ -50,6 +50,10 @@ class UIScene extends Phaser.Scene{
 
     let keyI = self.input.keyboard.addKey('I');
     keyI.on('down',function(){self.switchInventoryUI()});
+
+    window.addEventListener('setItemDescription',function(e){
+      self.setItemDescription(e.detail);
+  });
     window.dispatchEvent(new CustomEvent("uiSceneCreated"));
   }
 
@@ -182,6 +186,14 @@ class UIScene extends Phaser.Scene{
     else{
       this.inventoryUI.destroy();
       this.inventoryUI = null;
+    }
+  }
+
+  setItemDescription(item)
+  {
+    if(this.inventoryUI != undefined)
+    {
+      this.inventoryUI.inventoryDescription.setItemDescription(item);
     }
   }
 
