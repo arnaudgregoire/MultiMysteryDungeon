@@ -18,6 +18,7 @@ class Collectable extends Visible
     {
         super(x, y, type, name, description, look);
         this.collectable = true;
+        this.rarity = this.constructor.getRarity();
     }
 
     /**

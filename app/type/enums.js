@@ -385,11 +385,11 @@ const ENUM_GENDER = Object.freeze([
 ]);
 
 const ENUM_RARITY = Object.freeze({
-	COMMON:1,
-	UNCOMMON:0.2,
-	RARE:0.04,
-	EPIC:0.008,
-	LEGENDARY:0.00016
+	COMMON:'COMMON',
+	UNCOMMON:'UNCOMMON',
+	RARE:'RARE',
+	EPIC:'EPIC',
+	LEGENDARY:'LEGENDARY'
 });
 
 module.exports= {

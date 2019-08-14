@@ -1,5 +1,6 @@
 const MDO = require('../enums').MDO;
 const MDO_LOOK = require('../enums').MDO_LOOK;
+const MDO_RARITY = require('../enums').ENUM_RARITY;
 const Edible = require('./Edible');
 
 /**
@@ -11,6 +12,11 @@ class Gummi extends Edible
     constructor(x, y, type, name, description, look)
     {
         super(x, y, type, name, description, look, 20);
+    }
+
+    static getRarity()
+    {
+        return MDO_RARITY.UNCOMMON;
     }
 }
 
