@@ -392,6 +392,10 @@ const ENUM_RARITY = Object.freeze({
 	LEGENDARY:'LEGENDARY'
 });
 
+const ENUM_DUNGEON = Object.freeze({
+    TINY_WOODS:'TINY_WOODS'
+})
+
 module.exports= {
     ENUM_TYPE,
     ENUM_NATURE,
@@ -402,5 +406,6 @@ module.exports= {
     MDO,
     MDO_LOOK,
     ENUM_STATUS,
-	ENUM_RARITY
+    ENUM_RARITY,
+    ENUM_DUNGEON
 }
