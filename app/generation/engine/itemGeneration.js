@@ -17,8 +17,8 @@ date : far too late
 
 */
 
-const Rarities = requires('../../type/enums').ENUM_RARITY;
-const Types = requires('../../type/enums').MDO;
+const Rarities = require('../../type/enums').ENUM_RARITY;
+const Types = require('../../type/enums').MDO;
 
 /*
 
@@ -37,11 +37,15 @@ class ItemGeneration{
 	
 	static addItems(roomList,config){
 	
+	console.log(config);
+	
 	const numberOfItems = config.itemCount;
 	
 	var itemList = [];
 	
-	for(i=0;i<numberOfItems;i++){
+
+
+	for(let i=0;i<numberOfItems;i++){
 		
 		var itemToSpawn = {
 			posX : 0,
@@ -49,10 +53,10 @@ class ItemGeneration{
 			type : null
 		}
 		
-		const rarity = computeSpawnRarity();
+		const rarity = ItemGeneration.computeSpawnRarity();
 		var itemOfCurrentRarityList = [];
 		
-		for(j=0,j<config.items.length,j++){
+		for(let j=0;j<config.items.length;j++){
 			
 			if(config.items[j].rarity == rarity){
 				itemOfCurrentRarityList.push(config.items[j]);
@@ -66,13 +70,13 @@ class ItemGeneration{
 		const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
 		const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
 		
-		boolean isPositionFree=true;
+		let isPositionFree = true;
 		
-		for(item in itemList){
+		itemList.forEach(item=>{
 			if((item[0]==spawnPointX)&&(item[1]==spawnPointY)){
 				isPositionFree = false;
 			}
-		}
+		})
 		
 		if(isPositionFree){
 			itemToSpawn.posX = spawnPointX;
@@ -98,8 +102,8 @@ class ItemGeneration{
 		type: Types.DOWNSTAIRS
 	}
 	
-	bool isPlayerSpawnPointValid = false;
-	bool isStairsPositionValid = false;
+	let isPlayerSpawnPointValid = false;
+	let isStairsPositionValid = false;
 	
 	while(!isPlayerSpawnPointValid){
 		
@@ -109,11 +113,12 @@ class ItemGeneration{
 		const playerSpawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
 		
 		isPlayerSpawnPointValid = true;
-		for(item in itemList){
+
+		itemList.forEach(item=>{
 			if((item[0]==playerSpawnPointX)&&(item[1]==playerSpawnPointY)){
 				isPlayerSpawnPointValid = false;
 			}
-		}
+		});
 		if(isPlayerSpawnPointValid){
 			playerSpawnPoint.posX = playerSpawnPointX;
 			playerSpawnPoint.posY = playerSpawnPointY;
@@ -129,19 +134,17 @@ class ItemGeneration{
 		const stairsLocationY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
 		
 		isStairsPositionValid = true;
-		for(item in itemList){
+		itemList.forEach(item=>{
 			if((item[0]==stairsLocationX)&&(item[1]==stairsLocationY)){
 				isStairsPositionValid = false;
 			}
-		}
+		});
 		if(isStairsPositionValid){
 			stairsPosition.posX = stairsLocationX;
 			stairsPosition.posY = stairsLocationY;
 			itemList.push(stairsPosition);
 		}
 	}
-	
-	console.log(itemList);
 	
 	return itemList;
 	
@@ -184,4 +187,4 @@ static computeSpawnRarity(){
 
 
 
-module.exports = itemGeneration;
+module.exports = ItemGeneration;

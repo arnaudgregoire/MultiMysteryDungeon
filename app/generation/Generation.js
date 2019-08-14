@@ -14,7 +14,7 @@ class Generation
 				sizeY:50,
 				RoomCount:10,
 				minimumSize:3,	
-				maximumSize:10
+				maximumSize:10,
 				itemConfig: {
 					items: [
 						{ type: Types.APPLE,
@@ -48,11 +48,10 @@ class Generation
 	generate()
 	{
 		this.createMap();
-		this.createObjects();
 	}
 
 	createMap()
-	{
+	{	
 		this.map = GenerationEngine.generateMap(this.config);
 		this.map = GenerationEngine.addExtras(this.map, 400);
 	}
