@@ -1,6 +1,7 @@
 const Edible = require('./Edible');
 const MDO = require('../enums').MDO;
 const MDO_LOOK = require('../enums').MDO_LOOK;
+const MDO_RARITY = require('../enums').ENUM_RARITY;
 const ENUM_STATUS = require('../enums').ENUM_STATUS;
 const utils = require('../../engine/utils');
 
@@ -49,6 +50,11 @@ class GoldenApple extends Edible
             , MDO_LOOK.GOLDEN_APPLE
             , 100
         )
+    }
+
+    static getRarity()
+    {
+        return MDO_RARITY.RARE;
     }
 }
 

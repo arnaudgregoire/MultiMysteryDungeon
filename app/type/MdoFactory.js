@@ -5,6 +5,51 @@ const Stairs  = require('./object/Stairs');
 const MDO = require('./enums').MDO;
 
 class MdoFactory{
+    /**
+     * Get Rarity of a collectable object
+     * @param {String} type MDO type, must be collectable 
+     */
+    static getRarity(type)
+    {
+        switch (type) {
+            case MDO.APPLE:
+                return Food.Apple.getRarity();
+        
+            case MDO.GOLDEN_APPLE:
+                return Food.GoldenApple.getRarity();
+            
+            case MDO.GRIMY_FOOD:
+                return Food.GrimyFood.getRarity();
+
+            case MDO.RED_GUMMI:
+                return Gummi.RedGummi.getRarity();
+            
+            case MDO.SILVER_GUMMI:
+                return Gummi.SilverGummi.getRarity();
+            
+            case MDO.CHERI_BERRY:
+                return Berry.CheriBerry.getRarity();
+            
+            case MDO.CHESTO_BERRY:
+                return Berry.ChestoBerry.getRarity();
+
+            case MDO.ORAN_BERRY:
+                return Berry.OranBerry.getRarity();
+
+            case MDO.PECHA_BERRY:
+                return Berry.PechaBerry.getRarity();
+
+            case MDO.RAWST_BERRY:
+                return Berry.RawstBerry.getRarity();
+
+            case MDO.SITRUS_BERRY:
+                return Berry.SitrusBerry.getRarity();
+                
+            default:
+                return new Error('Object type not found');
+        }
+    }
+
     static createMdoObject(x, y, type)
     {
         switch (type) {

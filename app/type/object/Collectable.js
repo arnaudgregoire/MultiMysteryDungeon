@@ -1,4 +1,6 @@
 const Visible = require('./Visible');
+const MDO_RARITY = require('../enums').ENUM_RARITY;
+
 /**
  * Abstract class for collectable MDO object. A collectable object is an object that the player can be picked
  */
@@ -16,6 +18,14 @@ class Collectable extends Visible
     {
         super(x, y, type, name, description, look);
         this.collectable = true;
+    }
+
+    /**
+     * By default, rarity is common
+     */
+    static getRarity()
+    {
+        return MDO_RARITY.COMMON;
     }
 }
 

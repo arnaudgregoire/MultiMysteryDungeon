@@ -2,7 +2,8 @@ const GenerationEngine = require('./engine/GenerationEngine');
 
 class Generation
 {
-	constructor(config){
+	constructor(config)
+	{
 		if(config === undefined)
 		{
 			this.config =
@@ -14,24 +15,28 @@ class Generation
 				maximumSize:10
 			}
 		}
-		else{
+		else
+		{
 			this.config = config;
 		}
 		this.map = [];
 		this.objects = [];
 	}
 
-	generate(){
+	generate()
+	{
 		this.createMap();
 		this.createObjects();
 	}
 
-	createMap(){
+	createMap()
+	{
 		this.map = GenerationEngine.generateMap(this.config);
 		this.map = GenerationEngine.addExtras(this.map, 400);
 	}
 	
-	createObjects(){
+	createObjects()
+	{
 		this.objects = 
 		[
 			{
@@ -58,12 +63,11 @@ class Generation
 		]
 	}
 	
-	static defaultExport() {
+	static defaultExport() 
+	{
 		var tempmap=GenerationEngine.generateMap(config);
 		return GenerationEngine.exportMapToCsv(addExtras(tempmap, 300), "app/generation/maps/testMap.csv");
 	}
-
 }
-
 
 module.exports = Generation;
