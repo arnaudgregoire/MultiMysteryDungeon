@@ -17,19 +17,25 @@ date : far too late
 
 */
 
-const Rarities = requires('../type/enums').ENUM_RARITY;
+const Rarities = requires('../../type/enums').ENUM_RARITY;
+const Types = requires('../../type/enums').MDO;
 
 /*
 
 Function to generate the map of items of a level + spawn point of player + location of stairs
 
 This is not over, this shouldn't work for now, but the global idea is here
+EDIT: This is better, yet still not perfect
 
 Lots of refactoring to do
+EDIT: Less of refactoring
 
+format of input config : a list of items (rarity should be a member of item, otherwise some modifications will be needed) and a number of items to spawn (player spawn point and stairs position excluded)
 
 */
-function addItems(roomList,config){
+class ItemGeneration{
+	
+	static addItems(roomList,config){
 	
 	const numberOfItems = config.itemCount;
 	
@@ -37,10 +43,16 @@ function addItems(roomList,config){
 	
 	for(i=0;i<numberOfItems;i++){
 		
+		var itemToSpawn = {
+			posX : 0,
+			posY : 0,
+			type : null
+		}
+		
 		const rarity = computeSpawnRarity();
 		var itemOfCurrentRarityList = [];
 		
-		for(j=0;j<config.items.length;j++){
+		for(j=0,j<config.items.length,j++){
 			
 			if(config.items[j].rarity == rarity){
 				itemOfCurrentRarityList.push(config.items[j]);
@@ -54,7 +66,7 @@ function addItems(roomList,config){
 		const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
 		const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
 		
-		isPositionFree = true;
+		boolean isPositionFree=true;
 		
 		for(item in itemList){
 			if((item[0]==spawnPointX)&&(item[1]==spawnPointY)){
@@ -63,7 +75,10 @@ function addItems(roomList,config){
 		}
 		
 		if(isPositionFree){
-			itemList.push([spawnPointX,spawnPointY,itemOfCurrentRarityList[itemNumberToSpawn]]);
+			itemToSpawn.posX = spawnPointX;
+			itemToSpawn.posY = spawnPointY;
+			itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn].type;
+			itemList.push(itemToSpawn);
 		} else {
 			i--;
 		}
@@ -73,16 +88,18 @@ function addItems(roomList,config){
 	
 	var playerSpawnPoint = {
 		posX: 0,
-		posY: 0
+		posY: 0,
+		type: Types.SPAWN_POINT_PLAYER
 	}
 	
 	var stairsPosition = {
 		posX: 0,
-		posY: 0
+		posY: 0,
+		type: Types.DOWNSTAIRS
 	}
 	
-	isPlayerSpawnPointValid = false;
-	isStairsPositionValid = false;
+	bool isPlayerSpawnPointValid = false;
+	bool isStairsPositionValid = false;
 	
 	while(!isPlayerSpawnPointValid){
 		
@@ -100,6 +117,7 @@ function addItems(roomList,config){
 		if(isPlayerSpawnPointValid){
 			playerSpawnPoint.posX = playerSpawnPointX;
 			playerSpawnPoint.posY = playerSpawnPointY;
+			itemList.push(playerSpawnPoint);
 		}
 	}
 	
@@ -119,12 +137,13 @@ function addItems(roomList,config){
 		if(isStairsPositionValid){
 			stairsPosition.posX = stairsLocationX;
 			stairsPosition.posY = stairsLocationY;
+			itemList.push(stairsPosition);
 		}
 	}
 	
+	console.log(itemList);
 	
-	
-	return {playerSpawnPoint,stairsPosition,itemList};
+	return itemList;
 	
 	
 }
@@ -140,32 +159,29 @@ Function to randomly compute the rarity level of an item to spawn
 TODO : Refactor this function to remove everything that is hardcoded
 
 */
-function computeSpawnRarity(){
+static computeSpawnRarity(){
 	
 	const spawnValue = Math.floor((Math.random()*100)+1);
 	var rarity;
 	
-	if (spawnValue>99)
-	{
+	if (spawnValue>99){
 		rarity = Rarities.LEGENDARY;
-	} 
-	else if(spawnValue>95)
-	{
+	} else if(spawnValue>95){
 		rarity = Rarities.EPIC;
-	} 
-	else if(spawnValue>80)
-	{
+	} else if(spawnValue>80){
 		rarity = Rarities.RARE;
-	} 
-	else if(spawnValue>50)
-	{
+	} else if(spawnValue>50){
 		rarity = Rarities.UNCOMMON;
-	} 
-	else 
-	{
+	} else {
 		rarity = Rarities.COMMON;
 	}
 	
 	return rarity;
 	
 }
+	
+}
+
+
+
+module.exports = itemGeneration;

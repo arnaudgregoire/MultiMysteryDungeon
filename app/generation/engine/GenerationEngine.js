@@ -15,6 +15,7 @@ maximumSize: taille maximale d'une salle ( taille en X ou en Y )
 const Delaunator = require('delaunator');
 const Room = require('./room');
 var fs = require('fs');
+const Items = require(./itemGeneration);
 
 
 
@@ -60,6 +61,8 @@ class GenerationEngine{
 			
 				
 		}
+		
+		Items.addItems(config.itemConfig);
 		
 		var centers=[];
 		for (var i=0;i<Rooms.length;i++){

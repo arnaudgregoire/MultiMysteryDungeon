@@ -1,4 +1,6 @@
 const GenerationEngine = require('./engine/GenerationEngine');
+const Types = require('../type/enums').MDO;
+const Rarity = require('../type/enums').ENUM_RARITY;
 
 class Generation
 {
@@ -13,6 +15,26 @@ class Generation
 				RoomCount:10,
 				minimumSize:3,	
 				maximumSize:10
+				itemConfig: {
+					items: [
+						{ type: Types.APPLE,
+						  rarity: Rarity.COMMON
+						},
+						{ type: Types.RED_GUMMI,
+						  rarity: Rarity.UNCOMMON
+						},
+						{ type: Types.CHERI_BERRY,
+						  rarity: Rarity.RARE
+						},
+						{ type: Types.RAWST_BERRY,
+						  rarity: Rarity.EPIC
+						},
+						{ type: Types.PECHA_BERRY,
+						  rarity: Rarity.LEGENDARY
+						}
+					],
+					itemCount: 5
+				}
 			}
 		}
 		else
