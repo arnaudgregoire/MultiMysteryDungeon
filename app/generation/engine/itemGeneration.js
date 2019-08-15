@@ -42,8 +42,8 @@ class ItemGeneration{
 		for(let i=0;i<numberOfItems;i++)
 		{
 			var itemToSpawn = {
-				posX : 0,
-				posY : 0,
+				x : 0,
+				y : 0,
 				type : null
 			}
 			const rarity = ItemGeneration.computeSpawnRarity();
@@ -69,8 +69,8 @@ class ItemGeneration{
 			})
 			if(isPositionFree)
 			{
-				itemToSpawn.posX = spawnPointX;
-				itemToSpawn.posY = spawnPointY;
+				itemToSpawn.x = spawnPointX;
+				itemToSpawn.y = spawnPointY;
 				itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn].type;
 				itemList.push(itemToSpawn);
 			} else 
@@ -79,14 +79,14 @@ class ItemGeneration{
 			}
 		}
 		var playerSpawnPoint = {
-			posX: 0,
-			posY: 0,
+			x: 0,
+			y: 0,
 			type: Types.SPAWN_POINT_PLAYER
 		}
 		
 		var stairsPosition = {
-			posX: 0,
-			posY: 0,
+			x: 0,
+			y: 0,
 			type: Types.DOWNSTAIRS
 		}
 		
@@ -108,8 +108,8 @@ class ItemGeneration{
 			});
 			if(isPlayerSpawnPointValid)
 			{
-				playerSpawnPoint.posX = playerSpawnPointX;
-				playerSpawnPoint.posY = playerSpawnPointY;
+				playerSpawnPoint.x = playerSpawnPointX;
+				playerSpawnPoint.y = playerSpawnPointY;
 				itemList.push(playerSpawnPoint);
 			}
 		}
@@ -128,8 +128,8 @@ class ItemGeneration{
 			});
 			if(isStairsPositionValid)
 			{
-				stairsPosition.posX = stairsLocationX;
-				stairsPosition.posY = stairsLocationY;
+				stairsPosition.x = stairsLocationX;
+				stairsPosition.y = stairsLocationY;
 				itemList.push(stairsPosition);
 			}
 		}

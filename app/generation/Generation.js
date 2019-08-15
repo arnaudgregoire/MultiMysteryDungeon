@@ -47,42 +47,21 @@ class Generation
 
 	generate()
 	{
+		this.generator = new GenerationEngine(this.config);
 		this.createMap();
 		this.createObjects();
 	}
 
 	createMap()
 	{	
-		this.map = GenerationEngine.generateMap(this.config);
-		this.map = GenerationEngine.addExtras(this.map, 400);
+		this.map = this.generator.generateMap();
+		this.map = this.generator.addExtras(this.map, 400);
 	}
 	
 	createObjects()
 	{
-		this.objects = 
-		[
-			{
-			 "type":"APPLE",
-			 "x":30,
-			 "y":16
-			}, 
-			{
-
-			 "type":"GOLDEN_APPLE",
-			 "x":20,
-			 "y":9
-			}, 
-			{
-			 "type":"GRIMY_FOOD",
-			 "x":27,
-			 "y":43
-			}, 
-			{
-			 "type":"CHERRI_BERRY",
-			 "x":36,
-			 "y":40
-			}
-		]
+		this.objects = this.generator.generateObject();
+		console.log(this.objects);
 	}
 	
 	static defaultExport() 
