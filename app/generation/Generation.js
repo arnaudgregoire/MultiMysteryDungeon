@@ -48,6 +48,7 @@ class Generation
 	generate()
 	{
 		this.createMap();
+		this.createObjects();
 	}
 
 	createMap()
