@@ -35,154 +35,130 @@ format of input config : a list of items (rarity should be a member of item, oth
 */
 class ItemGeneration{
 	
-	static addItems(roomList,config){
-	
-	console.log(config);
-	
-	const numberOfItems = config.itemCount;
-	
-	var itemList = [];
-	
-
-
-	for(let i=0;i<numberOfItems;i++){
-		
-		var itemToSpawn = {
-			posX : 0,
-			posY : 0,
-			type : null
+	static addItems(roomList,config)
+	{
+		const numberOfItems = config.itemCount;
+		var itemList = [];
+		for(let i=0;i<numberOfItems;i++)
+		{
+			var itemToSpawn = {
+				posX : 0,
+				posY : 0,
+				type : null
+			}
+			const rarity = ItemGeneration.computeSpawnRarity();
+			var itemOfCurrentRarityList = [];
+			for(let j=0;j<config.items.length;j++)
+			{
+				if(config.items[j].rarity == rarity)
+				{
+					itemOfCurrentRarityList.push(config.items[j]);
+				}
+			}
+			const itemNumberToSpawn = Math.floor((Math.random()*itemOfCurrentRarityList.length));
+			const roomNumber = Math.floor((Math.random()*roomList.length));
+			const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
+			const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
+			let isPositionFree = true;
+			itemList.forEach(item=>
+				{
+				if((item[0]==spawnPointX)&&(item[1]==spawnPointY))
+				{
+					isPositionFree = false;
+				}
+			})
+			if(isPositionFree)
+			{
+				itemToSpawn.posX = spawnPointX;
+				itemToSpawn.posY = spawnPointY;
+				itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn].type;
+				itemList.push(itemToSpawn);
+			} else 
+			{
+				i--;
+			}
+		}
+		var playerSpawnPoint = {
+			posX: 0,
+			posY: 0,
+			type: Types.SPAWN_POINT_PLAYER
 		}
 		
-		const rarity = ItemGeneration.computeSpawnRarity();
-		var itemOfCurrentRarityList = [];
+		var stairsPosition = {
+			posX: 0,
+			posY: 0,
+			type: Types.DOWNSTAIRS
+		}
 		
-		for(let j=0;j<config.items.length;j++){
-			
-			if(config.items[j].rarity == rarity){
-				itemOfCurrentRarityList.push(config.items[j]);
+		let isPlayerSpawnPointValid = false;
+		let isStairsPositionValid = false;
+		
+		while(!isPlayerSpawnPointValid)
+		{
+			const roomNumber = Math.floor((Math.random()*roomList.length));
+			const playerSpawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
+			const playerSpawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
+			isPlayerSpawnPointValid = true;
+
+			itemList.forEach(item=>
+				{
+				if((item[0]==playerSpawnPointX)&&(item[1]==playerSpawnPointY)){
+					isPlayerSpawnPointValid = false;
+				}
+			});
+			if(isPlayerSpawnPointValid)
+			{
+				playerSpawnPoint.posX = playerSpawnPointX;
+				playerSpawnPoint.posY = playerSpawnPointY;
+				itemList.push(playerSpawnPoint);
 			}
 		}
 		
-		const itemNumberToSpawn = Math.floor((Math.random()*itemOfCurrentRarityList.length));
-		
-		const roomNumber = Math.floor((Math.random()*roomList.length));
-		
-		const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
-		const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
-		
-		let isPositionFree = true;
-		
-		itemList.forEach(item=>{
-			if((item[0]==spawnPointX)&&(item[1]==spawnPointY)){
-				isPositionFree = false;
+		while(!isStairsPositionValid)
+		{
+			const roomNumber = Math.floor((Math.random()*roomList.length));
+			const stairsLocationX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
+			const stairsLocationY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
+			isStairsPositionValid = true;
+			itemList.forEach(item=>
+				{
+				if((item[0]==stairsLocationX)&&(item[1]==stairsLocationY)){
+					isStairsPositionValid = false;
+				}
+			});
+			if(isStairsPositionValid)
+			{
+				stairsPosition.posX = stairsLocationX;
+				stairsPosition.posY = stairsLocationY;
+				itemList.push(stairsPosition);
 			}
-		})
+		}
+		return itemList;
+	}
+
+	/*
+	Function to randomly compute the rarity level of an item to spawn
+	TODO : Refactor this function to remove everything that is hardcoded
+	*/
+	static computeSpawnRarity()
+	{
 		
-		if(isPositionFree){
-			itemToSpawn.posX = spawnPointX;
-			itemToSpawn.posY = spawnPointY;
-			itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn].type;
-			itemList.push(itemToSpawn);
+		const spawnValue = Math.floor((Math.random()*100)+1);
+		var rarity;
+		
+		if (spawnValue>99){
+			rarity = Rarities.LEGENDARY;
+		} else if(spawnValue>95){
+			rarity = Rarities.EPIC;
+		} else if(spawnValue>80){
+			rarity = Rarities.RARE;
+		} else if(spawnValue>50){
+			rarity = Rarities.UNCOMMON;
 		} else {
-			i--;
+			rarity = Rarities.COMMON;
 		}
-		
-		
+		return rarity;
 	}
-	
-	var playerSpawnPoint = {
-		posX: 0,
-		posY: 0,
-		type: Types.SPAWN_POINT_PLAYER
-	}
-	
-	var stairsPosition = {
-		posX: 0,
-		posY: 0,
-		type: Types.DOWNSTAIRS
-	}
-	
-	let isPlayerSpawnPointValid = false;
-	let isStairsPositionValid = false;
-	
-	while(!isPlayerSpawnPointValid){
-		
-		const roomNumber = Math.floor((Math.random()*roomList.length));
-		
-		const playerSpawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
-		const playerSpawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
-		
-		isPlayerSpawnPointValid = true;
-
-		itemList.forEach(item=>{
-			if((item[0]==playerSpawnPointX)&&(item[1]==playerSpawnPointY)){
-				isPlayerSpawnPointValid = false;
-			}
-		});
-		if(isPlayerSpawnPointValid){
-			playerSpawnPoint.posX = playerSpawnPointX;
-			playerSpawnPoint.posY = playerSpawnPointY;
-			itemList.push(playerSpawnPoint);
-		}
-	}
-	
-	while(!isStairsPositionValid){
-		
-		const roomNumber = Math.floor((Math.random()*roomList.length));
-		
-		const stairsLocationX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
-		const stairsLocationY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
-		
-		isStairsPositionValid = true;
-		itemList.forEach(item=>{
-			if((item[0]==stairsLocationX)&&(item[1]==stairsLocationY)){
-				isStairsPositionValid = false;
-			}
-		});
-		if(isStairsPositionValid){
-			stairsPosition.posX = stairsLocationX;
-			stairsPosition.posY = stairsLocationY;
-			itemList.push(stairsPosition);
-		}
-	}
-	
-	return itemList;
-	
-	
-}
-
-
-
-
-
-/*
-
-Function to randomly compute the rarity level of an item to spawn
-
-TODO : Refactor this function to remove everything that is hardcoded
-
-*/
-static computeSpawnRarity(){
-	
-	const spawnValue = Math.floor((Math.random()*100)+1);
-	var rarity;
-	
-	if (spawnValue>99){
-		rarity = Rarities.LEGENDARY;
-	} else if(spawnValue>95){
-		rarity = Rarities.EPIC;
-	} else if(spawnValue>80){
-		rarity = Rarities.RARE;
-	} else if(spawnValue>50){
-		rarity = Rarities.UNCOMMON;
-	} else {
-		rarity = Rarities.COMMON;
-	}
-	
-	return rarity;
-	
-}
-	
 }
 
 
