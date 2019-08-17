@@ -1,6 +1,7 @@
 const GenerationEngine = require('./engine/GenerationEngine');
 const Types = require('../type/enums').MDO;
 const Rarity = require('../type/enums').ENUM_RARITY;
+const uniqid = require('uniqid');
 
 class Generation
 {
@@ -48,6 +49,7 @@ class Generation
 	generate()
 	{
 		this.generator = new GenerationEngine(this.config);
+		this.id = uniqid();
 		this.createMap();
 		this.createObjects();
 	}
@@ -61,7 +63,6 @@ class Generation
 	createObjects()
 	{
 		this.objects = this.generator.generateObject();
-		console.log(this.objects);
 	}
 	
 	static defaultExport() 

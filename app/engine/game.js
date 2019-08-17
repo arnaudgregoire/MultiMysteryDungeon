@@ -4,6 +4,7 @@ const ENUMS = require("../type/enums");
 const ENUM_STAT = ENUMS.ENUM_STAT;
 const ENUM_GENDER = ENUMS.ENUM_GENDER;
 const ENUM_NATURE = ENUMS.ENUM_NATURE;
+const MDO = ENUMS.MDO;
 const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
 const utils = require("../engine/utils");
@@ -19,6 +20,9 @@ class Game
     this.players = [];
     this.ias = [];
     this.objects = [];
+    this.spawn_points_ia = [];
+    this.spawn_point_player = null;
+    this.stairs = null;
     this.turn = 0;
     this.genericPokemonDBs = [];
     this.world = JSON.parse(fs.readFileSync(__dirname + "/../generation/maps/test.json"));
@@ -32,9 +36,30 @@ class Game
     this.generation = new Generation();
     this.generation.generate();
     this.map = this.generation.map;
+    this.mapId = this.generation.id;
     this.generation.objects.forEach((jsonObject)=>
-    {
-      this.objects.push(MdoFactory.createMdoObject(jsonObject.x, jsonObject.y, jsonObject.type));
+    { 
+      let obj = MdoFactory.createMdoObject(jsonObject.x, jsonObject.y, jsonObject.type);
+      if(obj.collectable)
+      {
+        this.objects.push(obj);
+      }
+      else if(obj.type == MDO.SPAWN_POINT_PLAYER)
+      {
+        this.spawn_point_player = obj;
+      }
+      else if (obj.type == MDO.SPAWN_POINT_IA)
+      {
+        this.spawn_points_ia.push(obj);
+      }
+      else if (obj.type == MDO.UPSTAIRS)
+      {
+        this.stairs = obj;
+      }
+      else if (obj.type == MDO.DOWNSTAIRS)
+      {
+        this.stairs = obj;
+      }
     })
   }
 

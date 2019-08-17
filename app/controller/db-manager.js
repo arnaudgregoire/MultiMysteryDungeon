@@ -187,7 +187,6 @@ class DbManager
 
   static savePlayer(player) 
   {
-
     return new Promise(
       function (resolve, reject) 
       {
@@ -210,7 +209,8 @@ class DbManager
                 name: player.name,
                 belly: player.belly,
                 status: player.status,
-                inventory: player.inventory
+                inventory: player.inventory,
+                mapId: player.mapId
               }
             ).then((res) =>
             {
@@ -232,7 +232,8 @@ class DbManager
                 name: player.name,
                 belly: player.belly,
                 status: player.status,
-                inventory: player.inventory
+                inventory: player.inventory,
+                mapId: player.mapId
               }
             ).then((res) =>
             {

@@ -56,6 +56,10 @@ const PlayerSchema = new Schema({
     type: Number,
     required:true
   },
+  mapId:{
+    type:String,
+    required:true
+  },
   status:{
     type:String,
     required:true,

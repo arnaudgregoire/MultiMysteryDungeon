@@ -7,9 +7,10 @@ id : the id of the player
 */
 class Player extends Entity
 {
-  constructor(userId, x, y, name, pokemonId, belly, status)
+  constructor(userId, x, y, name, pokemonId, belly, status, mapId)
   {
     super(x,y,name);
+    this.mapId = mapId;
     this.entityType = 'player';
     this.userId = userId;
     this.pokemonId = pokemonId;

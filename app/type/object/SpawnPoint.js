@@ -8,7 +8,7 @@ class SpawnPoint extends MdoObject
 
 class SpawnPointPlayer extends SpawnPoint
 {
-    constructor()
+    constructor(x, y)
     {
         super(x
             , y
@@ -21,7 +21,7 @@ class SpawnPointPlayer extends SpawnPoint
 
 class SpawnPointIa extends SpawnPoint
 {
-    constructor()
+    constructor(x,y)
     {
         super(x
             , y

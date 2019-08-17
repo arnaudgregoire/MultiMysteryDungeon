@@ -179,7 +179,7 @@ class GameController
               console.log("creating player with user id : " + userId);
               let pokemonId = uniqid();
               // TODO Replace 25 25 with spawn coordinate spawn coordinate
-              player = new Player(userId, 25, 25, name, pokemonId, 100, ENUM_STATUS.NORMAL);  
+              player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId);  
               console.log("creating pokemon with uniqid : " + pokemonId);
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }

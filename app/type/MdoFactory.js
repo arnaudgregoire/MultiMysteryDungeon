@@ -2,6 +2,7 @@ const Food = require('./object/Food');
 const Gummi = require('./object/Gummi');
 const Berry = require('./object/Berry');
 const Stairs  = require('./object/Stairs');
+const SpawnPoint = require('./object/SpawnPoint');
 const MDO = require('./enums').MDO;
 
 class MdoFactory{
@@ -91,6 +92,12 @@ class MdoFactory{
             
             case MDO.UPSTAIRS:
                 return new Stairs.UpStairs(x, y);
+
+            case MDO.SPAWN_POINT_IA:
+                return new SpawnPoint.SpawnPointIa(x, y);
+                
+            case MDO.SPAWN_POINT_PLAYER:
+                return new SpawnPoint.SpawnPointPlayer(x, y);
                 
             default:
                 return new Error('Object type not found');
