@@ -176,11 +176,10 @@ class GameController
             }
             // if no player found, create a pokemon and a player
             else if(player == 0 && pokemon == 0){
-              console.log("creating player with user id : " + userId);
+              console.log("creating player with name : " + name);
               let pokemonId = uniqid();
-              // TODO Replace 25 25 with spawn coordinate spawn coordinate
               player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId);  
-              console.log("creating pokemon with uniqid : " + pokemonId);
+              console.log("creating pokemon with name : " + name);
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }
             // no pokemon found but player found
@@ -192,6 +191,14 @@ class GameController
               return new Error("pokemon found (id : "+ pokemon.uniqid +") but no player found");
             }
             player.socketId = socket.id;
+
+            // if player coordinates refers to an old stage, place the player at the spawn point of the new stage
+            if(player.mapId != self.game.mapId)
+            {
+              player.x = self.game.spawn_point_player.x;
+              player.y = self.game.spawn_point_player.y;
+              player.mapId = self.game.mapId;
+            }
             self.game.addPlayer(player);
             let controller = new PlayerController(socket, self.eventEmitter);
             controller.initialize(player);
@@ -206,6 +213,7 @@ class GameController
       }
     })
   }
+  
 
   removeObjectFromArray(object, array)
   {
