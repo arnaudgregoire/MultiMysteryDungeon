@@ -164,18 +164,22 @@ class GameController
       {
         //console.log("player doesnt exist in world");
         DbManager.loadPlayer(userId)
-        .then((playerDB)=>{
+        .then((playerDB)=>
+        {
           // if no player corresponding to the id in db, then create a new player and his pokemon
           let player = playerDB;
           DbManager.loadPokemon(player.pokemonId)
-          .then((pokemonDB)=>{
+          .then((pokemonDB)=>
+          {
             let pokemon = pokemonDB;
             //if pokemon found, attach it to the player
-            if(pokemon != 0 && player != 0){
+            if(pokemon != 0 && player != 0)
+            {
               player.pokemon = pokemon;
             }
             // if no player found, create a pokemon and a player
-            else if(player == 0 && pokemon == 0){
+            else if(player == 0 && pokemon == 0)
+            {
               console.log("creating player with name : " + name);
               let pokemonId = uniqid();
               player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId);  
@@ -183,11 +187,13 @@ class GameController
               player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
             }
             // no pokemon found but player found
-            else if(pokemon == 0 && player != 0){
+            else if(pokemon == 0 && player != 0)
+            {
               player.pokemon =self.game.createPokemon(player.pokemonId,randomPokedexNumber);
             }
             // no player but pokemon => error
-            else if(pokemon != 0 && player == 0){
+            else if(pokemon != 0 && player == 0)
+            {
               return new Error("pokemon found (id : "+ pokemon.uniqid +") but no player found");
             }
             player.socketId = socket.id;

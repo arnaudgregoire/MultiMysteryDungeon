@@ -18,8 +18,8 @@ date : far too late
 */
 
 const Rarities = require('../../type/enums').ENUM_RARITY;
-const Types = require('../../type/enums').MDO;
-
+const MDO = require('../../type/enums').MDO;
+const MdoFactory = require('../../type/MdoFactory');
 /*
 
 Function to generate the map of items of a level + spawn point of player + location of stairs
@@ -35,27 +35,28 @@ format of input config : a list of items (rarity should be a member of item, oth
 */
 class ItemGeneration{
 	
-	static addItems(roomList,config)
+	static addItems(roomList,items)
 	{
-		const numberOfItems = config.itemCount;
 		var itemList = [];
-		for(let i=0;i<numberOfItems;i++)
+
+		for(let i=0;i<items.length;i++)
 		{
-			var itemToSpawn = {
+			var itemToSpawn = 
+			{
 				x : 0,
 				y : 0,
 				type : null
 			}
 			const rarity = ItemGeneration.computeSpawnRarity();
 			var itemOfCurrentRarityList = [];
-			for(let j=0;j<config.items.length;j++)
+			for(let j=0;j< items.length;j++)
 			{
-				if(config.items[j].rarity == rarity)
+				if(MdoFactory.getRarity(items[j].rarity) == rarity)
 				{
-					itemOfCurrentRarityList.push(config.items[j]);
+					itemOfCurrentRarityList.push(items[j]);
 				}
 			}
-			const itemNumberToSpawn = Math.floor((Math.random()*itemOfCurrentRarityList.length));
+			const itemNumberToSpawn = Math.floor((Math.random()*items.length));
 			const roomNumber = Math.floor((Math.random()*roomList.length));
 			const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
 			const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
@@ -71,7 +72,7 @@ class ItemGeneration{
 			{
 				itemToSpawn.x = spawnPointX;
 				itemToSpawn.y = spawnPointY;
-				itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn].type;
+				itemToSpawn.type = items[itemNumberToSpawn];
 				itemList.push(itemToSpawn);
 			} else 
 			{
@@ -81,13 +82,13 @@ class ItemGeneration{
 		var playerSpawnPoint = {
 			x: 0,
 			y: 0,
-			type: Types.SPAWN_POINT_PLAYER
+			type: MDO.SPAWN_POINT_PLAYER
 		}
 		
 		var stairsPosition = {
 			x: 0,
 			y: 0,
-			type: Types.DOWNSTAIRS
+			type: MDO.DOWNSTAIRS
 		}
 		
 		let isPlayerSpawnPointValid = false;

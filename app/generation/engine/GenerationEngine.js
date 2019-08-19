@@ -41,9 +41,6 @@ class GenerationEngine{
 
 	
 	generateMap(){
-		
-
-		
 		while(this.roomNumberCreated<this.config.RoomCount)
 		{
 			var A=getRandomInt(this.config.sizeY-this.config.minimumSize-1)+1
@@ -187,16 +184,14 @@ class GenerationEngine{
 
 	generateObject()
 	{
-		return Items.addItems(this.rooms, this.config.itemConfig);
+		return Items.addItems(this.rooms, this.config.items);
 	}
 	
 	addExtras(TileNumber)
 	{
 		
 		var cover = 0;
-		
 		var minsize=2;
-		
 		var lenY=this.map.length;
 		var lenX=this.map[0].length;
 		
