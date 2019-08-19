@@ -9,12 +9,14 @@ const pokemonMath = require("./pokemonMath");
 const fs = require("fs");
 const utils = require("../engine/utils");
 const MdoFactory = require("../type/MdoFactory");
+const DungeonFactory = require("../generation/dungeon/DungeonFactory");
 const Generation = require('../generation/Generation');
 
 class Game
 {
   constructor(config) 
   {
+    this.dungeon = DungeonFactory.getDungeonFromType(config.dungeon);
     this.width = config.width;
     this.height = config.height;
     this.players = [];
@@ -25,15 +27,23 @@ class Game
     this.stairs = null;
     this.turn = 0;
     this.genericPokemonDBs = [];
-    this.world = JSON.parse(fs.readFileSync(__dirname + "/../generation/maps/test.json"));
-    this.loadMap();
     this.eventEmitter = null;
+    this.loadMap();
   }
 
 
   loadMap()
   {
-    this.generation = new Generation();
+    this.generation = new Generation(
+      {
+      sizeX:this.height,
+      sizeY:this.width,
+      RoomCount:10,
+      minimumSize:3,	
+      maximumSize:10,
+      items: this.dungeon.objects
+    });
+
     this.generation.generate();
     this.map = this.generation.map;
     this.mapId = this.generation.id;

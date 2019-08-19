@@ -10,7 +10,7 @@ class DungeonFactory
     {
         switch (type) {
             case MDO_DUNGEON.TINY_WOODS:
-                return Dungeon.Tiny_Woods();
+                return new Dungeon.Tiny_Woods();
         
             default:
                 return new Error('no dungeon corresponding to given id');

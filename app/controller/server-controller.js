@@ -1,14 +1,17 @@
 const GameController = require("./game-controller");
+const ENUM_DUNGEON = require("../type/enums").ENUM_DUNGEON;
 
 class ServerController {
   constructor(websocket) {
     this.websocket = websocket;
     this.gameControllers = [];
     // TODO: move default GameController config to GameController
-    this.defaultConfiguration = {
+    this.defaultConfiguration = 
+    {
       width: 50,
       height: 40,
-      tilesize: 24
+      tilesize: 24,
+      dungeon: ENUM_DUNGEON.TINY_WOODS
     };
   }
 

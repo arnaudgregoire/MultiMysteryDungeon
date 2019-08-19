@@ -19,6 +19,7 @@ class Tiny_Woods extends Dungeon
         super(
         "TINY_WOODS"
         , "Tiny Woods"
+        , "tiny_woods.png"
         , 3
         , [MDO.APPLE
             , MDO.CHERI_BERRY
