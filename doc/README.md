@@ -20,8 +20,8 @@ The generation engine has 3 outputs:
 
 1) the array of type tiles, defining the different terrains by ids
 
-    - 0: ground, all pokemons can walk on it
-    - 1: wall, no pokemons except ghost type can walk on it
+    - 0: wall, no pokemons except ghost type can walk on it
+    - 1: ground, all pokemons can walk on it
     - 2: water, only pokemon with water, ghost, fly, levitate ability
     - 3: lava, only pokemon with fire, ghost, fly, levitate ability
     - 4: Abyss, only pokemon with fly and ghost and levitate ability
