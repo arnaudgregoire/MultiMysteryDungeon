@@ -1,4 +1,9 @@
 // TODO : do all items https://www.serebii.net/dungeon2/items.shtml
+const MDO_TERRAIN = Object.freeze({
+    WATER:2,
+    LAVA:3,
+    ABYSS:4
+})
 
 const ENUM_STATUS = Object.freeze({
     NORMAL:'NORMAL',
@@ -407,5 +412,6 @@ module.exports= {
     MDO_LOOK,
     ENUM_STATUS,
     ENUM_RARITY,
-    ENUM_DUNGEON
+    ENUM_DUNGEON,
+    MDO_TERRAIN
 }

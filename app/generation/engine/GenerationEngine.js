@@ -59,7 +59,8 @@ class GenerationEngine{
 			
 			for (var i=0;i<this.roomNumberCreated;i++)
 			{
-				if(this.rooms[i].isOver(this.rooms[this.roomNumberCreated])){
+				if(this.rooms[i].isOver(this.rooms[this.roomNumberCreated]))
+				{
 					valid = false;
 				}
 			}
@@ -189,14 +190,12 @@ class GenerationEngine{
 	
 	addExtras(TileNumber)
 	{
-		
 		var cover = 0;
 		var minsize=2;
 		var lenY=this.map.length;
 		var lenX=this.map[0].length;
 		
 		while (cover<TileNumber){
-			
 			var maxsize=Math.ceil(Math.sqrt(TileNumber-cover)*Math.min(lenY,lenX)/10);
 		
 			var posX=getRandomInt(lenX-minsize);
@@ -205,9 +204,12 @@ class GenerationEngine{
 			var sizeX=minsize+getRandomInt(Math.min(lenX-posX-minsize,maxsize));
 			var sizeY=minsize+getRandomInt(Math.min(lenY-posY-minsize,maxsize));
 		
-			for(var i=posY;i<posY+sizeY;i++){
-				for(var j=posX;j<posX+sizeX;j++){
-					if(this.map[i][j]!==1){
+			for(var i=posY;i<posY+sizeY;i++)
+			{
+				for(var j=posX;j<posX+sizeX;j++)
+				{
+					if(this.map[i][j]!==1)
+					{
 						this.map[i][j]=2;
 					}
 					cover++;

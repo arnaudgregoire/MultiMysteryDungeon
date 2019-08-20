@@ -44,7 +44,7 @@ class Generation
 	createMap()
 	{	
 		this.map = this.generator.generateMap();
-		this.map = this.generator.addExtras(this.map, 400);
+		this.map = this.generator.addExtras(400);
 	}
 	
 	createObjects()
