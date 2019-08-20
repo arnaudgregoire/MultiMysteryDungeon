@@ -7,16 +7,17 @@ function ClientController() {
 
 ClientController.prototype.initialize = function ()
 {
-  this.socket.on("get-map", this.initializeWorld.bind(this));
+  this.socket.on("get-stage", this.initializeWorld.bind(this));
 };
 
-ClientController.prototype.initializeWorld = function (typeMap) 
+ClientController.prototype.initializeWorld = function (stage) 
 {
   this.chatController = new ChatController();
   this.gameView = new GameView();
-  window.typeMap = typeMap;
-  // auto tile the world and reshape the result as 1D Array for phaser
-  window.map = AutoTiling.tileMatrix(8, typeMap, this.gameView.config.autoTilingConversion);
+  window.typeMap = stage.map;
+  window.dungeon = stage.dungeon;
+  // auto tile the world 
+  window.map = AutoTiling.tileMatrix(8, window.typeMap, this.gameView.config.autoTilingConversion);
   window.tilesize = this.gameView.config.tilesize;
 
   window.addEventListener("gameSceneCreated", ()=>
@@ -42,7 +43,6 @@ ClientController.prototype.onSceneCreation = function()
 
 ClientController.prototype.initializeConnection = function ()
 {
-  
   // id of the socket that server gave to the connection
   this.socket.on("sendPlayer", function (player)
   {

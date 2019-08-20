@@ -70,8 +70,9 @@ class GameScene extends Phaser.Scene{
         [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,12,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,83,142,144,147,148,149,150].forEach((number)=>{
             this.load.multiatlas(String(number), "../../assets/sprites/" + number + "/" + number + ".json");
         });
+        
         this.load.multiatlas('objects_picture','../../assets/objects/objects.json');
-        this.load.image('tiles','../../assets/tilesets/tiny_woods.png');
+        this.load.image('tiles','../../assets/tilesets/' + window.dungeon.fileName);
     }
 
     create() {
@@ -280,7 +281,7 @@ class GameScene extends Phaser.Scene{
         var camera = self.cameras.main;
         camera.startFollow(hero);
         camera.setBounds(0, 0, self.map.widthInPixels, self.map.heightInPixels);
-        camera.zoom = 3;
+        camera.zoom = 2;
     }
 
     /**

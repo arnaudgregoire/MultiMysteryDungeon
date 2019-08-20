@@ -35,7 +35,7 @@ class Game
   loadMap()
   {
     this.generation = new Generation(
-      {
+    {
       sizeX:this.height,
       sizeY:this.width,
       RoomCount:10,
@@ -382,8 +382,10 @@ class Game
   {
     let found = false;
     let foundPlayer;
-    this.players.forEach(player => {
-      if (player.userId == id) {
+    this.players.forEach(player => 
+    {
+      if (player.userId == id) 
+      {
         found = true;
         foundPlayer = player;
       }
@@ -392,7 +394,8 @@ class Game
     {
       return foundPlayer;
     }
-    else {
+    else 
+    {
       return new Error("no player for given id ( " + id +" ) found");
     }
   }
