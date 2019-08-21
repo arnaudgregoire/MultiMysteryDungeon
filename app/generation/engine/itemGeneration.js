@@ -35,11 +35,11 @@ format of input config : a list of items (rarity should be a member of item, oth
 */
 class ItemGeneration{
 	
-	static addItems(roomList,items)
+	static addItems(roomList,items,numberOfItems)
 	{
 		var itemList = [];
 
-		for(let i=0;i<items.length;i++)
+		for(let i=0;i<numberOfItems;i++)
 		{
 			var itemToSpawn = 
 			{
@@ -47,13 +47,19 @@ class ItemGeneration{
 				y : 0,
 				type : null
 			}
-			const rarity = ItemGeneration.computeSpawnRarity();
 			var itemOfCurrentRarityList = [];
-			for(let j=0;j< items.length;j++)
-			{
-				if(MdoFactory.getRarity(items[j]) == rarity)
+			var IsThereAValidItem = false;
+			while(!IsThereAValidItem){
+				const rarity = ItemGeneration.computeSpawnRarity();
+				for(let j=0;j< items.length;j++)
 				{
-					itemOfCurrentRarityList.push(items[j]);
+					if(MdoFactory.getRarity(items[j]) == rarity)
+					{
+						itemOfCurrentRarityList.push(items[j]);
+					}
+				}
+				if(itemOfCurrentRarityList.length>0){
+					IsThereAValidItem=true;
 				}
 			}
 			const itemNumberToSpawn = Math.floor((Math.random()*itemOfCurrentRarityList.length));
