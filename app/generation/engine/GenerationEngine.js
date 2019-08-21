@@ -184,7 +184,7 @@ class GenerationEngine{
 
 	generateObject()
 	{
-		return Items.addItems(this.rooms, this.config.items);
+		return Items.addItems(this.rooms, this.config.items, this.config.numberOfItems);
 	}
 	
 	/**

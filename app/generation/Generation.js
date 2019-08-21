@@ -16,6 +16,7 @@ class Generation
 				RoomCount:10,
 				minimumSize:3,	
 				maximumSize:10,
+				numberOfItems:10,
 				items: [
 					MDO.APPLE
 					, MDO.RED_GUMMI

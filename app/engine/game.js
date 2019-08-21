@@ -43,7 +43,8 @@ class Game
       minimumSize:3,	
       maximumSize:10,
       items: this.dungeon.objects,
-      terrain: this.dungeon.terrain
+      terrain: this.dungeon.terrain,
+      numberOfItems:10
     });
 
     this.generation.generate();
