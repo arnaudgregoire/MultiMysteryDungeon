@@ -51,7 +51,7 @@ class ItemGeneration{
 			var itemOfCurrentRarityList = [];
 			for(let j=0;j< items.length;j++)
 			{
-				if(MdoFactory.getRarity(items[j].rarity) == rarity)
+				if(MdoFactory.getRarity(items[j]) == rarity)
 				{
 					itemOfCurrentRarityList.push(items[j]);
 				}
