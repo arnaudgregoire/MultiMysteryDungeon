@@ -52,12 +52,7 @@ class Generation
 	{
 		this.objects = this.generator.generateObject();
 	}
-	
-	static defaultExport() 
-	{
-		var tempmap=GenerationEngine.generateMap(config);
-		return GenerationEngine.exportMapToCsv(addExtras(tempmap, 300), "app/generation/maps/testMap.csv");
-	}
+
 }
 
 module.exports = Generation;
