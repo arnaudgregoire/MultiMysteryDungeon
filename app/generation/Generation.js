@@ -38,13 +38,16 @@ class Generation
 	{
 		this.generator = new GenerationEngine(this.config);
 		this.id = uniqid();
+		console.log('generating map...');
 		this.createMap();
+		console.log('generating objects...');
 		this.createObjects();
 	}
 
 	createMap()
 	{	
 		this.map = this.generator.generateMap();
+		console.log('generating additional terrains...')
 		this.map = this.generator.addExtras(400, this.config.terrain);
 	}
 	

@@ -126,9 +126,10 @@ class GameController
     let y = 0;
     while (this.game.map[y][x] != 1)
     {
-      x = utils.randomIntFromInterval(0,49);
-      y = utils.randomIntFromInterval(0,49);
+      x = utils.randomIntFromInterval(0,this.game.map[0].length - 1);
+      y = utils.randomIntFromInterval(0,this.game.map.length - 1);
     }
+    
     return new Ia(id,x,y,pokemon.name,pokemon);
   }
 

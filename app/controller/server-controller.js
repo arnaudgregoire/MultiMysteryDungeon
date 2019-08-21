@@ -8,8 +8,8 @@ class ServerController {
     // TODO: move default GameController config to GameController
     this.defaultConfiguration = 
     {
-      width: 50,
-      height: 40,
+      width: 60,
+      height: 60,
       tilesize: 24,
       dungeon: ENUM_DUNGEON.TINY_WOODS
     };

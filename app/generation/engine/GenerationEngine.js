@@ -178,7 +178,6 @@ class GenerationEngine{
 				this.map[chemin[z][0]][chemin[z][1]]=1;
 			}
 		}
-		console.log(this.mapToString());
 		return(this.map);
 	}
 	
@@ -274,7 +273,7 @@ RoomCount: nombre de salles
 
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
-*/
+
 var config = {
 	sizeX:30,
 	sizeY:30,
@@ -282,7 +281,6 @@ var config = {
 	minimumSize:3,
 	maximumSize:9
 };
+*/
 
 module.exports = GenerationEngine;
-var GE = new GenerationEngine(config);
-GE.generateMap();

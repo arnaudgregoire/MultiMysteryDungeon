@@ -63,7 +63,7 @@ class ItemGeneration{
 			let isPositionFree = true;
 			itemList.forEach(item=>
 				{
-				if((item[0]==spawnPointX)&&(item[1]==spawnPointY))
+				if((item.x==spawnPointX)&&(item.y==spawnPointY))
 				{
 					isPositionFree = false;
 				}
@@ -103,7 +103,7 @@ class ItemGeneration{
 
 			itemList.forEach(item=>
 				{
-				if((item[0]==playerSpawnPointX)&&(item[1]==playerSpawnPointY)){
+				if((item.x==playerSpawnPointX)&&(item.y==playerSpawnPointY)){
 					isPlayerSpawnPointValid = false;
 				}
 			});
@@ -123,7 +123,7 @@ class ItemGeneration{
 			isStairsPositionValid = true;
 			itemList.forEach(item=>
 				{
-				if((item[0]==stairsLocationX)&&(item[1]==stairsLocationY)){
+				if((item.x==stairsLocationX)&&(item.y==stairsLocationY)){
 					isStairsPositionValid = false;
 				}
 			});
@@ -161,7 +161,5 @@ class ItemGeneration{
 		return rarity;
 	}
 }
-
-
 
 module.exports = ItemGeneration;

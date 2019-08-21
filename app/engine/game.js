@@ -29,6 +29,7 @@ class Game
     this.genericPokemonDBs = [];
     this.eventEmitter = null;
     this.loadMap();
+
   }
 
 
