@@ -127,7 +127,7 @@ class GenerationEngine{
 			{
 				for (var t=b;t<b+d;t++)
 				{
-					this.map[s][t]=1;
+					this.map[t][s]=1;
 				}
 			}
 		}
@@ -176,9 +176,10 @@ class GenerationEngine{
 			//console.log(chemin);
 			for (var z=0; z<chemin.length;z++)
 			{
-				this.map[chemin[z][0]][chemin[z][1]]=1;
+				this.map[chemin[z][1]][chemin[z][0]]=1;
 			}
 		}
+		console.log(this.mapToString());
 		return(this.map);
 	}
 	
@@ -249,10 +250,10 @@ class GenerationEngine{
 	 * 0 1 1 \n
 	 * 1 1 0 \n
 	 */
-	static mapToString(map) {
+	mapToString() {
 		let mapString = "";
-		for (let i = 0; i < map.length; i++) {
-			mapString += map[i];
+		for (let i = 0; i < this.map.length; i++) {
+			mapString += this.map[i];
 			mapString += "\n";
 		}
 		return mapString;
@@ -274,14 +275,15 @@ RoomCount: nombre de salles
 
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
-
-var this.config = {
+*/
+var config = {
 	sizeX:30,
 	sizeY:30,
 	RoomCount:6,
 	minimumSize:3,
 	maximumSize:9
 };
-*/
+
 module.exports = GenerationEngine;
-//generateMap(this.config);
+var GE = new GenerationEngine(config);
+GE.generateMap();

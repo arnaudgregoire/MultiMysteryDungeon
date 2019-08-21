@@ -56,7 +56,7 @@ class ItemGeneration{
 					itemOfCurrentRarityList.push(items[j]);
 				}
 			}
-			const itemNumberToSpawn = Math.floor((Math.random()*items.length));
+			const itemNumberToSpawn = Math.floor((Math.random()*itemOfCurrentRarityList.length));
 			const roomNumber = Math.floor((Math.random()*roomList.length));
 			const spawnPointX = Math.floor((Math.random()*roomList[roomNumber].sizeX)+roomList[roomNumber].posX);
 			const spawnPointY = Math.floor((Math.random()*roomList[roomNumber].sizeY)+roomList[roomNumber].posY);
@@ -72,7 +72,7 @@ class ItemGeneration{
 			{
 				itemToSpawn.x = spawnPointX;
 				itemToSpawn.y = spawnPointY;
-				itemToSpawn.type = items[itemNumberToSpawn];
+				itemToSpawn.type = itemOfCurrentRarityList[itemNumberToSpawn];
 				itemList.push(itemToSpawn);
 			} else 
 			{
