@@ -182,7 +182,7 @@ class GameScene extends Phaser.Scene{
     */
    buildAndDisplayEntity(entityInfo)
    {
-        var entity = this.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3);
+        var entity = this.add.sprite(entityInfo.x * window.tilesize, entityInfo.y * window.tilesize).setOrigin(0,0.3).setDepth(1);
         entity.entityType = entityInfo.entityType;
         entity.orientation = entityInfo.orientation;
         entity.action = entityInfo.action;
