@@ -4,9 +4,9 @@ const ENUMS = require("../type/enums");
 const ENUM_STAT = ENUMS.ENUM_STAT;
 const ENUM_GENDER = ENUMS.ENUM_GENDER;
 const ENUM_NATURE = ENUMS.ENUM_NATURE;
+const ENUM_TYPE = ENUMS.ENUM_TYPE;
 const MDO = ENUMS.MDO;
 const pokemonMath = require("./pokemonMath");
-const fs = require("fs");
 const utils = require("../engine/utils");
 const MdoFactory = require("../type/MdoFactory");
 const DungeonFactory = require("../generation/dungeon/DungeonFactory");
@@ -356,11 +356,52 @@ class Game
     if(y >= this.map.length || y < 0 || x >= this.map[0].length || x < 0){
       return true;
     }
-    // check for walls
-    if(this.map[y][x] == 0)
-    {
-      return true;
+
+    switch (this.map[y][x]) {
+      // check for walls, only ghost type can walk across
+      case 0:
+        if(!entity.pokemon.types.includes(ENUM_TYPE.GHOST))
+        {
+          return true;
+        }
+        break;
+      
+      // ground is walkable for all entities
+      case 1:
+        break; 
+
+      // check for water
+      case 2:
+        if(!entity.pokemon.types.includes(ENUM_TYPE.WATER) 
+        && !entity.pokemon.types.includes(ENUM_TYPE.GHOST)
+        && !entity.pokemon.types.includes(ENUM_TYPE.FLYING))
+        {
+          return true;
+        }
+        break;
+        
+      // check for lava
+      case 3:
+        if(!entity.pokemon.types.includes(ENUM_TYPE.FIRE) 
+        && !entity.pokemon.types.includes(ENUM_TYPE.GHOST)
+        && !entity.pokemon.types.includes(ENUM_TYPE.FLYING))
+        {
+          return true;
+        }
+        break;
+
+      //check for abyss
+      case 4:
+          if(!entity.pokemon.types.includes(ENUM_TYPE.GHOST))
+          {
+            return true;
+          }
+          break;
+
+      default:
+        break;
     }
+
     // check for other players
     for (let i = 0; i < this.players.length; i++) 
     {
