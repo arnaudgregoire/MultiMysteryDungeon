@@ -1,6 +1,5 @@
 const Ability = require('./ability');
 const Move = require('./move');
-const Type = require('./type');
 
 class GenericPokemonDB{
     constructor(doc){
@@ -45,7 +44,7 @@ class GenericPokemonDB{
 
         self.types = [];
         doc.types.forEach((type) =>{
-            self.types.push(new Type(type.slot, type.type))
+            self.types.push(type.type.name)
         });
     }
 }

@@ -65,9 +65,10 @@ class UIScene extends Phaser.Scene{
     this.dashboardLevel = this.add.text(200,910, "Lvl " + player.pokemon.level, this.textStyle);
     this.gender = this.add.text(200, 950, player.pokemon.gender, this.textStyle);
     this.types = [];
+    
     for (var i = 0; i < player.pokemon.types.length; i++) 
     {
-      this.types.push(this.add.sprite(420, 850 + 50 * i, "typeIcons", player.pokemon.types[i].type.name));
+      this.types.push(this.add.sprite(420, 850 + 50 * i, "typeIcons", player.pokemon.types[i]));
     }
     this.healthBarBackground = this.add.graphics({
       x:480, y:835,

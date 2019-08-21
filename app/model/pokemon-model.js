@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ENUMS = require("../type/enums");
-const ENUM_STAT = ENUMS.ENUM_STAT;
 const ENUM_NATURE = ENUMS.ENUM_NATURE;
 const ENUM_TYPE = ENUMS.ENUM_TYPE;
 
@@ -43,23 +42,6 @@ const StatsSchema = new Schema({
     }
 });
 
-const TypeSchema = new Schema({
-    slot:{
-        type:Number,
-        required:true
-    },
-    type:{
-        name:{
-            type:String,
-            enum: ENUM_TYPE,
-            required:true
-        },
-        url:{
-            type:String
-        }
-    }
-});
-
 const PokemonSchema = new Schema({
     level:{
         type: Number,
@@ -93,7 +75,11 @@ const PokemonSchema = new Schema({
         type:String,
         required:false
     },
-    types:[TypeSchema],
+    types:[{
+        type:String,
+        enum: Object.values(ENUM_TYPE),
+        required:true
+    }],
     ability:AbilitySchema,
     health:{
         type:Number,

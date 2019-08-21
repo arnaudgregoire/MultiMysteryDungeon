@@ -1,6 +1,6 @@
 const GenerationEngine = require('./engine/GenerationEngine');
 const MDO = require('../type/enums').MDO;
-const Rarity = require('../type/enums').ENUM_RARITY;
+const MDO_TERRAIN = require('../type/enums').MDO_TERRAIN;
 const uniqid = require('uniqid');
 
 class Generation
@@ -22,7 +22,8 @@ class Generation
 					, MDO.CHERI_BERRY
 					, MDO.RAWST_BERRY
 					, MDO.PECHA_BERRY
-					]
+					],
+				terrain: MDO_TERRAIN.WATER
 			}
 		}
 		else
@@ -44,7 +45,7 @@ class Generation
 	createMap()
 	{	
 		this.map = this.generator.generateMap();
-		this.map = this.generator.addExtras(400);
+		this.map = this.generator.addExtras(400, this.config.terrain);
 	}
 	
 	createObjects()

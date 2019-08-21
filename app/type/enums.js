@@ -348,28 +348,30 @@ const MODIFIER_NATURE = Object.freeze(
     }
 )
 
-const ENUM_TYPE = Object.freeze([
-    "normal",
-    "fighting",
-    "flying",
-    "poison",
-    "ground",
-    "rock",
-    "bug",
-    "ghost",
-    "steel",
-    "fire",
-    "water",
-    "grass",
-    "electric",
-    "psychic",
-    "ice",
-    "dragon",
-    "dark",
-    "fairy",
-    "unknown",
-    "shadow"    
-]);
+const ENUM_TYPE = Object.freeze(
+    {
+        NORMAL:'normal',
+        FIGHTING:'fighting',
+        FLYING:'flying',
+        POISON:'poison',
+        GROUND:'ground',
+        ROCK:'rock',
+        BUG:'bug',
+        GHOST:'ghost',
+        STEEL:'steel',
+        FIRE:'fire',
+        WATER:'water',
+        GRASS:'grass',
+        ELECTRIC:'electric',
+        PSYCHIC:'psychic',
+        ICE:'ice',
+        DRAGON:'dragon',
+        DARK:'dark',
+        FAIRY:'fairy',
+        UNKNOWN:'unknown',
+        SHADOW:'shadow'
+    }
+);
 
 const ENUM_MOVE_LEARN_METHOD = Object.freeze([
     "level-up",

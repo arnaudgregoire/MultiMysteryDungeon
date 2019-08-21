@@ -16,6 +16,18 @@ ClientController.prototype.initializeWorld = function (stage)
   this.gameView = new GameView();
   window.typeMap = stage.map;
   window.dungeon = stage.dungeon;
+  // We have to convert water (2) lava (3) abyss (4) to 2 cause AutoTiling only takes 2.
+  let tileMatrixMap = JSON.parse(JSON.stringify(stage.map));
+  for (let i = 0; i < tileMatrixMap.length; i++) 
+  {
+    for (let j = 0; j < tileMatrixMap[0].length; j++) 
+    {
+      if( tileMatrixMap[i][j] != 0 && tileMatrixMap[i][j] != 1)
+      {
+        tileMatrixMap[i][j] = 2; 
+      } 
+    }
+  }  
   // auto tile the world 
   window.map = AutoTiling.tileMatrix(8, window.typeMap, this.gameView.config.autoTilingConversion);
   window.tilesize = this.gameView.config.tilesize;

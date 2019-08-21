@@ -71,7 +71,7 @@ const TypeSchema = new Schema({
     type:{
         name:{
             type:String,
-            enum: ENUM_TYPE,
+            enum: Object.values(ENUM_TYPE),
             required:true
         },
         url:{

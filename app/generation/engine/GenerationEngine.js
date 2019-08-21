@@ -188,15 +188,20 @@ class GenerationEngine{
 		return Items.addItems(this.rooms, this.config.items);
 	}
 	
-	addExtras(TileNumber)
+	/**
+	 * add additional terrains like water, lava or abyss
+	 * @param {Number} tileNumber unknwown effect, the bigger, the more lake ther is 
+	 * @param {MDO_TERRAIN} terrain the MDO_TERRAIN defined in enums.js
+	 */
+	addExtras(tileNumber, terrain)
 	{
 		var cover = 0;
 		var minsize=2;
 		var lenY=this.map.length;
 		var lenX=this.map[0].length;
 		
-		while (cover<TileNumber){
-			var maxsize=Math.ceil(Math.sqrt(TileNumber-cover)*Math.min(lenY,lenX)/10);
+		while (cover<tileNumber){
+			var maxsize=Math.ceil(Math.sqrt(tileNumber-cover)*Math.min(lenY,lenX)/10);
 		
 			var posX=getRandomInt(lenX-minsize);
 			var posY=getRandomInt(lenY-minsize);
@@ -210,7 +215,7 @@ class GenerationEngine{
 				{
 					if(this.map[i][j]!==1)
 					{
-						this.map[i][j]=2;
+						this.map[i][j]=terrain;
 					}
 					cover++;
 				}

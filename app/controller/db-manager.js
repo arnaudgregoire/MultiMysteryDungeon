@@ -114,7 +114,7 @@ class DbManager
   };
 
   static savePokemon(pokemon)
-  {
+  {    
     return new Promise(
       function (resolve, reject) 
       {

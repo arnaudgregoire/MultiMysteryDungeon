@@ -41,7 +41,8 @@ class Game
       RoomCount:10,
       minimumSize:3,	
       maximumSize:10,
-      items: this.dungeon.objects
+      items: this.dungeon.objects,
+      terrain: this.dungeon.terrain
     });
 
     this.generation.generate();
