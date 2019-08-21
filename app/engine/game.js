@@ -67,10 +67,12 @@ class Game
       else if (obj.type == MDO.UPSTAIRS)
       {
         this.stairs = obj;
+        this.objects.push(obj);
       }
       else if (obj.type == MDO.DOWNSTAIRS)
       {
         this.stairs = obj;
+        this.objects.push(obj);
       }
     })
   }
