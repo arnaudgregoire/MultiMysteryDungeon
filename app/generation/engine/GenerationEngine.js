@@ -123,11 +123,11 @@ class GenerationEngine{
 			var c=this.rooms[i].sizeX;
 			var d=this.rooms[i].sizeY;
 			
-			for (var s=a;s<a+c;s++)
+			for (var s=b;s<b+d;s++)
 			{
-				for (var t=b;t<b+d;t++)
+				for (var t=a;t<a+c;t++)
 				{
-					this.map[t][s]=1;
+					this.map[s][t]=1;
 				}
 			}
 		}
@@ -151,32 +151,31 @@ class GenerationEngine{
 			{
 				for (var t=BX;t<=AX;t++)
 				{
-					chemin.push([t,BY]);
+					chemin.push([BY,t]);
 				}
 			} else 
 			{
 				for (var t=BX;t>=AX;t--)
 				{
-					chemin.push([t,BY]);
-				}
+					chemin.push([BY,t]);				}
 			}
 			
 			if (AY>=BY)
 			{
 				for (var t=BY;t<=AY;t++)
 				{
-					chemin.push([AX,t]);
+					chemin.push([t,AX]);
 				}
 			} else {
 				for (var t=BY;t>=AY;t--)
 				{
-					chemin.push([AX,t]);
+					chemin.push([t,AX]);
 				}
 			}
 			//console.log(chemin);
 			for (var z=0; z<chemin.length;z++)
 			{
-				this.map[chemin[z][1]][chemin[z][0]]=1;
+				this.map[chemin[z][0]][chemin[z][1]]=1;
 			}
 		}
 		console.log(this.mapToString());
