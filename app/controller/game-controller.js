@@ -131,7 +131,6 @@ class GameController
       x = utils.randomIntFromInterval(0,this.game.map[0].length - 1);
       y = utils.randomIntFromInterval(0,this.game.map.length - 1);
     }
-    
     return new Ia(id,x,y,pokemon.name,pokemon);
   }
 
@@ -160,7 +159,6 @@ class GameController
       socket.emit("get-stage",{'map':self.game.map,'dungeon':self.game.dungeon});
       let userId = socket.handshake.session.passport.user._id;
       let name = socket.handshake.session.passport.user.name;
-      let randomPokedexNumber = self.pokedex[utils.randomIntFromInterval(0,self.pokedex.length - 1)];
       
       // if no player id corresponding in game players,then try to load it from db
       if(!self.game.isPlayer(userId))

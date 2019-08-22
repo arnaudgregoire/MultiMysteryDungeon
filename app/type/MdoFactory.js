@@ -92,9 +92,6 @@ class MdoFactory{
             
             case MDO.UPSTAIRS:
                 return new Stairs.UpStairs(x, y);
-
-            case MDO.SPAWN_POINT_IA:
-                return new SpawnPoint.SpawnPointIa(x, y);
                 
             case MDO.SPAWN_POINT_PLAYER:
                 return new SpawnPoint.SpawnPointPlayer(x, y);
