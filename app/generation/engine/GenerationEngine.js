@@ -41,6 +41,7 @@ class GenerationEngine{
 
 	
 	generateMap(){
+		var AbortedAttempts = 0;
 		while(this.roomNumberCreated<this.config.RoomCount)
 		{
 			var A=getRandomInt(this.config.sizeY-this.config.minimumSize-1)+1
@@ -52,6 +53,7 @@ class GenerationEngine{
 			
 			if(this.rooms[this.roomNumberCreated].isOutOfMap(this.config.sizeX,this.config.sizeY))
 			{
+				AbortedAttempts++;
 				continue;
 			}
 			
@@ -61,8 +63,14 @@ class GenerationEngine{
 			{
 				if(this.rooms[i].isOver(this.rooms[this.roomNumberCreated]))
 				{
+					AbortedAttempts++;
 					valid = false;
 				}
+			}
+			if(AbortedAttempts>500)
+			{
+				console.log("map not fully created, too many aborted attemps");
+				return(this.map);
 			}
 			if(valid===true)
 			{
