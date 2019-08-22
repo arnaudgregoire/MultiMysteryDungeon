@@ -6,7 +6,7 @@ Doc de la config de generateMap :
 sizeX: taille de la carte ( abcisse )
 sizeY: taille de la carte ( ordonnees )
 
-RoomCount: nombre de salles
+roomCount: nombre de salles
 
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
@@ -42,7 +42,7 @@ class GenerationEngine{
 	
 	generateMap(){
 		var AbortedAttempts = 0;
-		while(this.roomNumberCreated<this.config.RoomCount)
+		while(this.roomNumberCreated<this.config.roomCount)
 		{
 			var A=getRandomInt(this.config.sizeY-this.config.minimumSize-1)+1
 			var B=getRandomInt(this.config.sizeX-this.config.minimumSize-1)+1
@@ -277,7 +277,7 @@ Doc de la this.config de generateMap :
 sizeX: taille de la carte ( abcisse )
 sizeY: taille de la carte ( ordonnees )
 
-RoomCount: nombre de salles
+roomCount: nombre de salles
 
 minimumSize: taille minimale d'une salle ( taille en X ou en Y )
 maximumSize: taille maximale d'une salle ( taille en X ou en Y )
@@ -285,7 +285,7 @@ maximumSize: taille maximale d'une salle ( taille en X ou en Y )
 var config = {
 	sizeX:30,
 	sizeY:30,
-	RoomCount:6,
+	roomCount:6,
 	minimumSize:3,
 	maximumSize:9
 };

@@ -17,8 +17,7 @@ class Game
   constructor(config) 
   {
     this.dungeon = DungeonFactory.getDungeonFromType(config.dungeon);
-    this.width = config.width;
-    this.height = config.height;
+    this.config = config;
     this.players = [];
     this.ias = [];
     this.objects = [];
@@ -37,14 +36,14 @@ class Game
   {
     this.generation = new Generation(
     {
-      sizeX:this.height,
-      sizeY:this.width,
-      RoomCount:10,
-      minimumSize:3,	
-      maximumSize:10,
-      items: this.dungeon.objects,
-      terrain: this.dungeon.terrain,
-      numberOfItems:10
+      'sizeX':this.config.height,
+      'sizeY':this.config.width,
+      'roomCount':this.config.roomCount,
+      'minimumSize':this.config.minimumSize,	
+      'maximumSize':this.config.maximumSize,
+      'items': this.dungeon.objects,
+      'terrain': this.dungeon.terrain,
+      'numberOfItems':this.config.numberOfItems
     });
 
     this.generation.generate();

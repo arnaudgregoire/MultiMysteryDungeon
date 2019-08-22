@@ -13,7 +13,7 @@ class Generation
 			{
 				sizeX:50,
 				sizeY:50,
-				RoomCount:10,
+				roomCount:10,
 				minimumSize:3,	
 				maximumSize:10,
 				numberOfItems:10,
