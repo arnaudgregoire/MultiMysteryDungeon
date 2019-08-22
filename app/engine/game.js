@@ -75,14 +75,14 @@ class Game
     })
   }
 
-  createPokemon(uniqid, gameIndex)
+  createPokemon(uniqid, name, level)
   {
-      let level = 5;
       let happiness = 0;
       let nickname = "";
       let nature = ENUM_NATURE[utils.randomIntFromInterval(0,ENUM_NATURE.length - 1)];
       let gender = ENUM_GENDER[utils.randomIntFromInterval(0,ENUM_GENDER.length - 1)];
-      let genericPokemon = this.getGenericPokemonDbByGameIndex(gameIndex);
+      let genericPokemon = this.getGenericPokemonDbByName(name);
+      
       let ability = genericPokemon.abilities[utils.randomIntFromInterval(0, genericPokemon.abilities.length - 1)].ability;
       let ivs = {};
       let evs = {};
@@ -116,7 +116,7 @@ class Game
         ability,
         hp,
         uniqid,
-        gameIndex) 
+        genericPokemon.gameIndex) 
   }
 
   getVisibleObjects()
@@ -133,12 +133,12 @@ class Game
     return visibleObjs;
   }
 
-  getGenericPokemonDbByGameIndex(gameIndex)
+  getGenericPokemonDbByName(name)
   {
     let pokemonFound =  null;
     this.genericPokemonDBs.forEach((genericPokemon)=>
     {
-      if(gameIndex ==  genericPokemon.gameIndex)
+      if(name ==  genericPokemon.name)
       {
         pokemonFound = genericPokemon;
       }

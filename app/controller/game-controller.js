@@ -121,7 +121,9 @@ class GameController
   createIa()
   {
     let id = uniqid();
-    let pokemon = this.game.createPokemon(id,this.pokedex[utils.randomIntFromInterval(0,this.pokedex.length - 1)]);
+    let encounter = this.game.dungeon.encounters[utils.randomIntFromInterval(0,this.game.dungeon.encounters.length - 1)];
+    
+    let pokemon = this.game.createPokemon(id, encounter.name, encounter.levels[utils.randomIntFromInterval(0, encounter.levels.length)]);
     let x = 0;
     let y = 0;
     while (this.game.map[y][x] != 1)
@@ -185,12 +187,12 @@ class GameController
               let pokemonId = uniqid();
               player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId);  
               console.log("creating pokemon with name : " + name);
-              player.pokemon =self.game.createPokemon(pokemonId,randomPokedexNumber);
+              player.pokemon =self.game.createPokemon(pokemonId,'pikachu',5);
             }
             // no pokemon found but player found
             else if(pokemon == 0 && player != 0)
             {
-              player.pokemon =self.game.createPokemon(player.pokemonId,randomPokedexNumber);
+              player.pokemon =self.game.createPokemon(player.pokemonId,'pikachu',5);
             }
             // no player but pokemon => error
             else if(pokemon != 0 && player == 0)

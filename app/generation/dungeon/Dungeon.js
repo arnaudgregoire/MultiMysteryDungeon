@@ -65,8 +65,8 @@ class Tiny_Woods extends Dungeon
             new Encounter('pidgey',[1,3],[1],0)
             , new Encounter('caterpie',[1,3],[1],0)
             , new Encounter('weedle',[1,3],[1],0)
-        ]),
-        [4,38]
+        ],
+        [4,38])
     }
 }
 
