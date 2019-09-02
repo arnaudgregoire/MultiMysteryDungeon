@@ -72,6 +72,7 @@ class UIScene extends Phaser.Scene{
     this.healthBar = new LifeBar(this, 350, 825, player.pokemon.stats.HP);
     this.bellyBar = new LifeBar(this, 350, 880, 100);
     this.setHealth(player);
+    this.setBelly(player);
 
     this.ability = this.add.text(350, 920, "Talent  : " + player.pokemon.ability.name, this.textStyle);
     this.nature = this.add.text(350,960, "Nature : " + player.pokemon.nature, this.textStyle);
