@@ -4,9 +4,6 @@ class UIScene extends Phaser.Scene{
   {
     super({ key: "uiScene", active: true });
     this.rectangleGeometry = new Phaser.Geom.Rectangle(0,0,140,140);
-    this.healthBarLength = 150;
-    this.maxHealthBarGeometry = new Phaser.Geom.Rectangle(0,0,this.healthBarLength,20);
-    this.healthBarGeometry = new Phaser.Geom.Rectangle(0,0,this.healthBarLength,20);
   }
 
   preload()
@@ -59,34 +56,25 @@ class UIScene extends Phaser.Scene{
 
   setDashboard(player)
   {
-    this.dashboardPortrait = this.add.sprite(100,900,"portraits","portrait" + player.pokemon.gameIndex).setScale(3,3);
-    this.dashboardName = this.add.text(200,830,player.name,this.textStyle);
-    this.dashboardPokemonName = this.add.text(200,870,player.pokemon.name, this.textStyle);
-    this.dashboardLevel = this.add.text(200,910, "Lvl " + player.pokemon.level, this.textStyle);
-    this.gender = this.add.text(200, 950, player.pokemon.gender, this.textStyle);
+    this.dashboardPortrait = this.add.sprite(80,880,"portraits","portrait" + player.pokemon.gameIndex).setScale(3,3);
+    this.dashboardName = this.add.text(160,830,player.name,this.textStyle);
+    this.dashboardPokemonName = this.add.text(160,870,player.pokemon.name, this.textStyle);
+    this.dashboardLevel = this.add.text(160,910, "Lvl " + player.pokemon.level, this.textStyle);
+    this.gender = this.add.text(160, 950, player.pokemon.gender, this.textStyle);
     this.types = [];
     
     for (var i = 0; i < player.pokemon.types.length; i++) 
     {
-      this.types.push(this.add.sprite(420, 850 + 50 * i, "typeIcons", player.pokemon.types[i]));
+      this.types.push(this.add.sprite(50 + 70 * i, 970, "typeIcons", player.pokemon.types[i]));
     }
-    this.healthBarBackground = this.add.graphics({
-      x:480, y:835,
-      fillStyle: { color: 0xff0000},
-      add:true
-    });
-    this.healthBar = this.add.graphics({
-      x:480, y:835,
-      fillStyle:{ color: 0x32CD32 },
-      add:true
-    });
-
-    this.health = this.add.text(480, 860, player.pokemon.health + " / "+ player.pokemon.HP + " HP", this.textStyle);
-    this.healthBarBackground.fillRectShape(this.maxHealthBarGeometry);
+    this.health = this.add.text(510, 820, player.pokemon.health + " / "+ player.pokemon.stats.HP + " HP", this.textStyle);
+    this.belly = this.add.text(510, 870, player.belly + " / 100", this.textStyle); 
+    this.healthBar = new LifeBar(this, 350, 825, player.pokemon.stats.HP);
+    this.bellyBar = new LifeBar(this, 350, 880, 100);
     this.setHealth(player);
 
-    this.ability = this.add.text(385, 920, "Talent  : " + player.pokemon.ability.name, this.textStyle);
-    this.nature = this.add.text(385,960, "Nature : " + player.pokemon.nature, this.textStyle);
+    this.ability = this.add.text(350, 920, "Talent  : " + player.pokemon.ability.name, this.textStyle);
+    this.nature = this.add.text(350,960, "Nature : " + player.pokemon.nature, this.textStyle);
 
     this.hp = this.add.text(700, 830, "Hp  : " + player.pokemon.stats.HP, this.textStyle);
     this.atk = this.add.text(700, 860, "Atk : " + player.pokemon.stats.ATTACK, this.textStyle);
@@ -109,10 +97,14 @@ class UIScene extends Phaser.Scene{
 
   setHealth(player)
   {
-    this.healthBarGeometry.setSize(Math.round(this.healthBarLength * player.pokemon.health/player.pokemon.stats.HP),20);
-    this.healthBar.clear();
-    this.healthBar.fillRectShape(this.healthBarGeometry);
-    this.health.setText(player.pokemon.health + " / "+ player.pokemon.stats.HP);
+    this.health.setText(player.pokemon.health + " / "+ player.pokemon.stats.HP + " HP");
+    this.healthBar.setLife(player.pokemon.health);
+  }
+
+  setBelly(player)
+  {
+    this.belly.setText(player.belly + " / 100");
+    this.bellyBar.setLife(player.belly);
   }
 
   setInventory(player)
@@ -165,6 +157,7 @@ class UIScene extends Phaser.Scene{
       if (players[index].socketId == self.socketId)
       {
         self.setHealth(players[index]);
+        self.setBelly(players[index]);
       }
       self.portraits.iterate(function (portrait)
       {
