@@ -178,11 +178,36 @@ class Game
         // if the player really moved
         if(this.move(player))
         {
+            this.updateBelly(player);
             // then his turn is played
             player.turnPlayed = true;
         }
       }
     });
+  }
+
+  updateBelly(player)
+  {
+    if(player.belly > 0)
+    {
+      player.belly -= 1;
+    }
+    else
+    {
+      if(player.pokemon.health <= 0)
+      {  
+        this.onEntityKO(player);
+      }
+      else
+      {
+        this.eventEmitter.emit('server-message',
+        {
+          message: player.name + ' ( ' + player.pokemon.name + ' ) ' + ' took 1 damage from starvation',
+          username:"Server"
+        });
+        player.pokemon.health -= 1;  
+      }
+    }
   }
 /**
  * check if all playe played their turn
