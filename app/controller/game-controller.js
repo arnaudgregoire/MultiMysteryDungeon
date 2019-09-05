@@ -183,7 +183,7 @@ class GameController
             {
               console.log("creating player with name : " + name);
               let pokemonId = uniqid();
-              player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId);  
+              player = new Player(userId, self.game.spawn_point_player.x, self.game.spawn_point_player.y, name, pokemonId, 100, ENUM_STATUS.NORMAL,self.game.mapId, false);  
               console.log("creating pokemon with name : " + name);
               player.pokemon =self.game.createPokemon(pokemonId,'pikachu',5);
             }

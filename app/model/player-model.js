@@ -65,7 +65,11 @@ const PlayerSchema = new Schema({
     required:true,
     enum:Object.values(ENUM_STATUS)
   },
-  inventory:[ObjectSchema]
+  inventory:[ObjectSchema],
+  stageCompleted:{
+    type:Boolean,
+    required:true
+  }
 });
 
 const playerModel = mongoose.model("player", PlayerSchema);

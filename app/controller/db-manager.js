@@ -37,7 +37,7 @@ class DbManager
           if (docs.length == 1) 
           {
             let doc = docs[0];
-            let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id, doc.belly, doc.status, doc.mapId);
+            let player = new Player(doc.user_id, doc.x, doc.y, doc.name, doc.pokemon_id, doc.belly, doc.status, doc.mapId, doc.stageCompleted);
             doc.inventory.forEach(item => {
               let obj = MdoFactory.createMdoObject(item.x, item.y, item.type);
               obj.id = item.id;
@@ -210,7 +210,8 @@ class DbManager
                 belly: player.belly,
                 status: player.status,
                 inventory: player.inventory,
-                mapId: player.mapId
+                mapId: player.mapId,
+                stageCompleted: player.stageCompleted
               }
             ).then((res) =>
             {
@@ -233,7 +234,8 @@ class DbManager
                 belly: player.belly,
                 status: player.status,
                 inventory: player.inventory,
-                mapId: player.mapId
+                mapId: player.mapId,
+                stageCompleted: player.stageCompleted
               }
             ).then((res) =>
             {
