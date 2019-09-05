@@ -15,6 +15,8 @@ class UIScene extends Phaser.Scene{
     this.load.image("inventory", "../../assets/ui/inventory.png");
     this.load.image("whiteBackground", "../../assets/ui/whiteBackground.png");
     this.load.image("yellowBackground", "../../assets/ui/yellowBackground.png");
+    this.load.image("redstage","../../assets/ui/redstage.png");
+    this.load.image("greenstage","../../assets/ui/greenstage.png");
   }
 
   create()
@@ -135,6 +137,14 @@ class UIScene extends Phaser.Scene{
     portrait.add(rectangle);
     portrait.add(sprite);
     portrait.add(text);
+    
+    this.imageStageCompleted = new Phaser.GameObjects.Image(this,40,40,'redstage');
+
+    if(playerInfo.stageCompleted)
+    {
+      this.imageStageCompleted.setTexture('greenstage');
+    }
+    portrait.add(this.imageStageCompleted);
     types.forEach(function(type) { portrait.add(type); });
     self.portraits.add(portrait);
   }

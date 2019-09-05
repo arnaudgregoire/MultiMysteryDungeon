@@ -1,7 +1,8 @@
 const EventEmitter = require('events');
 
 class PlayerController{
-  constructor(socket, eventEmitter){
+  constructor(socket, eventEmitter)
+  {
     this.userId = socket.handshake.session.passport.user._id;
     this.name = socket.handshake.session.passport.user.name;
     this.email = socket.handshake.session.passport.user.email;
@@ -16,7 +17,8 @@ class PlayerController{
     console.log(this.email + " connected");
   }
 
-  initialize(player){
+  initialize(player)
+  {
     let self = this;
     self.socket.on('onClientLoad', function(){
       self.socket.emit("sendPlayer", player);
@@ -24,7 +26,8 @@ class PlayerController{
     })
   }
 
-  onClientLoad(){
+  onClientLoad()
+  {
     let self = this;
     // send the players object to the new player
     self.eventEmitter.emit('currentEntities', self);
@@ -50,7 +53,8 @@ class PlayerController{
     })
   }
 
-  onInventoryUpdate(player){
+  onInventoryUpdate(player)
+  {
     this.socket.emit('update-inventory', player);
   }
 }
