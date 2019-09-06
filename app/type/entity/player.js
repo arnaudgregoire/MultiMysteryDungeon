@@ -21,6 +21,7 @@ class Player extends Entity
     this.belly = belly;
     this.status = status;
     this.stageCompleted = stageCompleted;
+    this.hungerStep = 0;
   }
 }
 

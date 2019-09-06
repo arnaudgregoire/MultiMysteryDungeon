@@ -29,6 +29,7 @@ class Edible extends Consumable
     consume(player)
     {
         player.belly += this.hungerValue;
+        player.belly = Math.min(player.belly, 100);
     }
 }
 

@@ -190,7 +190,15 @@ class Game
   {
     if(player.belly > 0)
     {
-      player.belly -= 1;
+      if(player.hungerStep > 5)
+      {
+        player.belly -= 1;
+        player.hungerStep = 0;
+      }
+      else
+      {
+        player.hungerStep += 1;
+      }
     }
     else
     {
@@ -600,6 +608,20 @@ class Game
       default:
         break;
     }
+  }
+
+  onItemClick(player, item)
+  {
+    player.inventory.forEach(obj=>{
+      if(item.id == obj.id && obj.consumable)
+      {
+        obj.consume(player);
+        let index = player.inventory.indexOf(obj);
+        if (index > -1) {
+          player.inventory.splice(index, 1);
+        }
+      }
+    });
   }
 
   dropInventory(entity)

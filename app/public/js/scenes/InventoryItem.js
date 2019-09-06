@@ -13,13 +13,12 @@ class InventoryItem extends Phaser.GameObjects.Container
         .on('pointerout', () => this.enterButtonRestState() )
         .on('pointerdown', () => this.enterButtonActiveState() )
         .on('pointerup', () => this.enterButtonHoverState() );
-        scene.add.existing(this);
     }
 
     enterButtonHoverState() {
       let self = this;
       self.background.setTexture('yellowBackground');
-      window.dispatchEvent(new CustomEvent('setItemDescription',{detail:self.item}))
+      window.dispatchEvent(new CustomEvent('setItemDescription',{detail:self.item}));
     }
     
       enterButtonRestState() {
@@ -27,7 +26,8 @@ class InventoryItem extends Phaser.GameObjects.Container
     }
     
     enterButtonActiveState() {
-      console.log('Impressive usage of object comsumption');
+      let self = this;
+      window.dispatchEvent(new CustomEvent('item-click',{detail:self.item}));
     }
 
 }

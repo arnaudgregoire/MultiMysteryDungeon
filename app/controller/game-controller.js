@@ -84,7 +84,18 @@ class GameController
     {
       let controller = self.getPlayerControllerById(player.userId);
       controller.onInventoryUpdate(player);
-    })
+    });
+    self.eventEmitter.on('item-click', (userId, item)=>
+    {
+      self.onItemClick(userId, item);
+    });
+  }
+
+  onItemClick(userId, item)
+  {
+    let player = this.game.getPlayerById(userId);
+    this.game.onItemClick(player, item);
+    this.eventEmitter.emit('update-inventory', player);
   }
 
   onObjectSuppression(obj)

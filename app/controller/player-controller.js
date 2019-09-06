@@ -50,7 +50,11 @@ class PlayerController{
       {
         username:self.name,
         message:chatline});
-    })
+    });
+    self.socket.on("item-click", function(item)
+    {      
+      self.eventEmitter.emit('item-click', self.userId, item);
+    });
   }
 
   onInventoryUpdate(player)

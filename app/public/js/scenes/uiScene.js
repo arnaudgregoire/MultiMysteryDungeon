@@ -110,9 +110,13 @@ class UIScene extends Phaser.Scene{
     this.bellyBar.setLife(player.belly);
   }
 
-  setInventory(player)
+  updateInventory(player)
   {
-    this.inventory =player.inventory;
+    this.inventory = player.inventory;
+    if(this.inventoryUI != undefined)
+    {
+      this.inventoryUI.updateInventory(this.inventory);
+    }
   }
 
   displayPortrait(playerInfo)

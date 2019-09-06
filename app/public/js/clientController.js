@@ -59,7 +59,7 @@ ClientController.prototype.initializeConnection = function ()
   this.socket.on("sendPlayer", function (player)
   {
     this.gameView.game.scene.getScene("uiScene").setDashboard(player);
-    this.gameView.game.scene.getScene("uiScene").setInventory(player);
+    this.gameView.game.scene.getScene("uiScene").updateInventory(player);
     this.gameView.game.scene.getScene("uiScene").setSocketId(player.socketId);
     this.gameView.game.scene.getScene("gameScene").setSocketId(player.socketId);
   }.bind(this));
@@ -95,7 +95,7 @@ ClientController.prototype.initializeConnection = function ()
 
   this.socket.on("update-inventory",function (player)
   {
-    this.gameView.game.scene.getScene("uiScene").setInventory(player);
+    this.gameView.game.scene.getScene("uiScene").updateInventory(player);
   }.bind(this));
 
   this.socket.on("newPlayer", function (playerInfo)
@@ -167,6 +167,11 @@ ClientController.prototype.initializeConnection = function ()
   {
     this.socket.emit("submit-chatline", e.detail);
   }.bind(this));
+
+  window.addEventListener("item-click", (e) =>
+  {
+    this.socket.emit("item-click",e.detail);
+  });
 
   this.socket.emit("onClientLoad");
   window.dispatchEvent(new CustomEvent("onClientLoad"));
